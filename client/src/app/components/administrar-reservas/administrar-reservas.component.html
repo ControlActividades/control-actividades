@@ -1,0 +1,73 @@
+<app-navigation></app-navigation>
+
+<div class="container-fluid mb-5">
+    <div id="myTabContent" class="tab-content bg-light mt-5">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" data-bs-toggle="tab" href="#adminTab" aria-selected="true"
+                    role="tab">Administrador</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3 p-3">
+            <div class="tab-pane fade active show" id="adminTab" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Administrador de reservaciones</h1>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fecha Asignada</th>
+                                <th scope="col">Hora de Inicio</th>
+                                <th scope="col">Hora de Término</th>
+                                <th scope="col">Razón del Uso</th>
+                                <th scope="col">Área a Usar</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Ejemplo de fila editable -->
+                            <tr> <td><input type="date" class="form-control"></td>
+                                <td><input type="time" class="form-control"></td>
+                                <td><input type="time" class="form-control"></td>
+                                <td contenteditable="true">Evento cultural</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option selected>Seleccionar área</option>
+                                        <option value="1">Danza Folclórica</option>
+                                        <option value="2">Taekwondo</option>
+                                        <option value="3">Baloncesto y voleibol</option>
+                                        <option value="4">Ajedrez</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="estado1" id="aceptado1">
+                                        <label class="form-check-label" for="aceptado1">
+                                            <i class="fa-regular fa-circle-check fa-2x text-success"></i> Aceptado
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="estado1" id="rechazado1">
+                                        <label class="form-check-label" for="rechazado1">
+                                            <i class="fa-regular fa-circle-check fa-2x text-danger"></i> Rechazado
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-success btn-sm mb-1 ">Guardar</button>
+                                    <button class="btn btn-danger btn-sm mb-1">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

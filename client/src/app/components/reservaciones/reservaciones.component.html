@@ -1,0 +1,138 @@
+
+<app-navigation></app-navigation>
+<div class="container-fluid px-4 mb-5">
+  <div id="myTabContent" class="tab-content bg-light mt-5">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" data-bs-toggle="tab" href="/reservaciones" aria-selected="true" role="tab">
+          Reservaciones
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" data-bs-toggle="tab" href="/reservanos" aria-selected="false" role="tab" tabindex="-1">
+          Reservanos
+        </a>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-2 p-1">
+      <div class="tab-pane fade active show" id="profile" role="tabpanel">
+        <div>
+          <div class="mt-5 d-flex justify-content-between align-items-center">
+            <h1>Reservaciones</h1>
+            <div class="fa-3x">
+              <i class="fa-regular fa-square-plus" routerLink="/reservanos" routerLinkActive="active"></i>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Hora de Inicio</th>
+                  <th scope="col">Hora de Término</th>
+                  <th scope="col">Razón del Uso</th>
+                  <th scope="col">Área a Usar</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-active">
+                  <td>
+                    <div class="row mt-5">
+                      <div class="col-lg-10">
+                        <h2>--/--/----</h2>
+                      </div>
+                      <div class="col-lg-2">
+                        <i class="fa-solid fa-calendar-days fa-2x"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="row mt-5">
+                      <div class="col-lg-10">
+                        <h2>--/--/----</h2>
+                      </div>
+                      <div class="col-lg-2">
+                        <i class="fa-solid fa-calendar-days fa-2x"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="card text-center" style="width: 20rem">
+                      <div class="card-body">
+                        <p>
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus sequi libero enim.
+                          Id eum, dicta at voluptate sunt saepe quia.
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      <div class="row">
+                        <div class="col-lg-8 mt-2">
+                          <h5>Danza Folclórica</h5>
+                        </div>
+                        <div class="col-lg-2 fa-2x">
+                          <i class="fa-solid fa-music"></i>
+                        </div>
+                      </div>
+                      <div class="row-hover">
+                        <div class="col-lg-8 mt-2">
+                          <h5>Taekwondo</h5>
+                        </div>
+                        <div class="col-lg-2 fa-2x">
+                          <i class="fa-solid fa-person-walking"></i>
+                        </div>
+                      </div>
+                      <div class="row-hover">
+                        <div class="col-lg-8 mt-2">
+                          <h5>Baloncesto y voleibol</h5>
+                        </div>
+                        <div class="col-lg-2 fa-2x">
+                          <i class="fa-solid fa-basketball"></i>
+                        </div>
+                        <div class="col-lg-2 fa-2x">
+                          <i class="fa-solid fa-hand"></i>
+                        </div>
+                      </div>
+                      <div class="row-hover">
+                        <div class="col-lg-8 mt-2">
+                          <h5>Ajedrez</h5>
+                        </div>
+                        <div class="col-lg-2 fa-2x">
+                          <i class="fa-solid fa-chess"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="align-middle text-center">
+                    <div class="verificacion-positive">
+                      <i class="fa-regular fa-circle-check fa-3x"></i>
+                    </div>
+                  </td>
+                  <td class="align-middle text-center">
+                    <div class="text-center mt-1">
+                      <button type="button" class="btn btn-light" routerLink="/oficios-reservas" routerLinkActive="active">
+                        <i class="fas fa-print fa-lg"  ></i>
+                      </button>
+                    </div>
+                    <div class="text-center mt-1">
+                      <button type="button" class="btn btn-danger">
+                        <i class="fa-solid fa-circle-minus"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

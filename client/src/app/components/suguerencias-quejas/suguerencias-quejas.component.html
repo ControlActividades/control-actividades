@@ -1,0 +1,73 @@
+<app-navigation></app-navigation>
+<div class="container-fluid px-4 mb-5">
+    <div id="myTabContent" class="tab-content bg-light mt-5">
+        <div class="tab-content mt-3 p-3">
+            <div class="tab-pane fade active show" id="profile" role="tabpanel">
+                <div class="mt-5">
+                    <h1 class="text-center">Sugerencias y quejas</h1>
+                </div>
+
+
+
+                <form class="h5">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nombre" class="form-label ">Nombre Completo (opcional)</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre Completo">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="correo" class="form-label">Correo(opcional)</label>
+                            <input type="email" class="form-control" id="correo" placeholder="Correo">
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label">Teléfono (opcional)</label>
+                            <input type="tel" class="form-control" id="telefono" placeholder="Teléfono">
+                        </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Tipo de queja o sugerencia</label>
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipo" id="tipo1" value="servicio">
+                                <label class="form-check-label" for="tipo1">Servicio a los usuarios</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipo" id="tipo2"
+                                value="instalaciones">
+                                <label class="form-check-label" for="tipo2">Instalaciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipo" id="tipo3" value="otro">
+                                <label class="form-check-label" for="tipo3">Otro</label>
+                            </div>
+                        </div>
+                    </div>
+                     </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción sugerencia o queja</label>
+                        <textarea class="form-control" id="descripcion" rows="3"
+                            placeholder="Descripción sugerencia o queja"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de queja o sugerencia</label>
+                        <div class="btn-group btn-group-toggle d-flex w-100 queja"  data-toggle="buttons">
+                            <label class="btn btn-outline-success flex-fill">
+                                <input  type="radio" name="tipo" id="sugerencia" value="sugerencia"> Sugerencia
+                            </label>
+                            <label class="btn btn-outline-danger flex-fill">
+                                <input type="radio" name="tipo" id="queja" value="queja"> Queja
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

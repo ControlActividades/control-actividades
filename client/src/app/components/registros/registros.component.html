@@ -1,0 +1,102 @@
+<app-navigation></app-navigation>
+
+<div class="container-fluid mb-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-6">
+            <!-- Tarjetas de registros previos -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center h1">Usuario 1</h5>
+                    <p class="card-text">Número de Teléfono: 1234567890</p>
+                    <p class="card-text">Correo: correoAexample.com</p>
+                    <p class="card-text">Nombres: John</p>
+                    <p class="card-text">Apellidos: Doe</p>
+                    <p class="card-text">Número de Control o ID Empleado: 12345</p>
+                    <p class="card-text">Cargo: Personal Docente</p>
+                    <div class="d-flex justify-content-end">
+                        <a href="#editarUsuario" class="btn btn-info me-2">Editar</a>
+
+                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                            data-target="#">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de edición -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title" id="editarUsuario">Editar Usuario</h3>
+                </div>
+                
+                <div class="card-body">
+                    <form class="h6">
+                        <div class=" row mb-3">
+                            
+                            <div class="col">
+                                <label for="Telefono" class="form-label ">Número de Teléfono</label>
+                                <input type="text" class="form-control" id="Telefono"
+                                    placeholder="Ingrese teléfono" >
+                            </div>
+                            <div class="col">
+                                <label for="Correo" class="form-label">Correo Electrónico</label>
+                                <input type="text" class="form-control" id="Correo"
+                                    placeholder="Ingrese correo" >
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombres"
+                                placeholder="Ingrese nombres" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="appPaterno" class="form-label">Apellido Paterno</label>
+                                <input type="text" class="form-control" id="nombres"
+                                    placeholder="Ingrese apellido paterno" required>
+                            </div>
+                            <div class="col">
+                                <label for="appMaterno" class="form-label">Apellido Materno</label>
+                                <input type="text" class="form-control" id="apellidos"
+                                    placeholder="Ingrese apellido materno" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                        <div class="col">
+                            <label for="usuario" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="usuario"
+                                placeholder="Ingrese usuario" required>
+                        </div>
+                        <div class="col">
+                            <label for="contrasena" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="contrasena"
+                                placeholder="Ingrese contraseña" required>
+                        </div>
+                    </div>
+                        <div class="mb-3">
+                            <label for="numeroControl" class="form-label">Número de Control o ID de
+                                Empleado</label>
+                            <input type="text" class="form-control" id="numeroControl"
+                                placeholder="Ingrese número de control o ID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cargo" class="form-label">Cargo</label>
+                            <select class="form-select" id="cargo" required>
+                                <option selected disabled>Seleccione el cargo</option>
+                                <option value="docente">Personal Docente</option>
+                                <option value="administrativo">Administrativo</option>
+                                <option value="alumno">Alumnado</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success me-2">Guardar</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                        data-target="#eliminarUsuarioModal">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

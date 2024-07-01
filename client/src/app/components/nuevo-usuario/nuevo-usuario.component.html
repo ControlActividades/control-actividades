@@ -1,0 +1,61 @@
+<div class="general">
+    <img class="logo-loger img-fluid order-first" src="https://www.utng.edu.mx/assets/principal/carreras/mapasC/logo-utng.png" alt="UTNG Logo">
+    <div class="container-loger create-account p-4">
+        <h2>Crear cuenta</h2>
+        <form action="#">
+            <div class="row p-4">
+                <div class="col-lg-6 col-md-12">
+                    <label for="usuario">Usuario</label>
+                    <input type="text-loger" id="usuario" name="usuario" placeholder="Ingrese su nombre de usuario" class="form-control" required>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="telefono">Número de teléfono</label>
+                    <input type="tel-loger" id="telefono" name="telefono" class="form-control" placeholder="Ingrese su número de teléfono" ><!--Validar que obligue este o el email-->
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="nueva-contrasena">Nueva contraseña</label>
+                    <input class="password-loger form-control" type="password" id="nueva-contrasena" name="nueva-contrasena" placeholder="Nueva contraseña" required>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email-loger" id="email" name="email" class="form-control" placeholder="Ingrese su correo electrónico"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" >
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="conf-contrasena">Confirma contraseña</label>
+                    <input class="password-loger form-control" type="password" id="conf-contrasena" name="conf-contrasena" placeholder="Confirme su contraseña" required>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="nombres">Nombres</label>
+                    <input type="text-loger" id="nombres" name="nombres" class="form-control" placeholder="Ingrese su(s) nombre(s)" required>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="apellido-paterno">Apellido Paterno</label>
+                    <input type="text-loger" id="apellido-paterno" name="apellido-paterno" class="form-control" placeholder="Ingrese su apellido paterno" required>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="apellido-materno">Apellido Materno</label>
+                    <input type="text-loger" id="apellido-materno" name="apellido-materno" class="form-control" placeholder="Ingrese su apellido materno" required>
+                </div>
+                
+                <div class="col-lg-6 col-md-12">
+                    <label for="num-control">Número de control o Id empleado</label>
+                    <input type="text-loger" id="num-control" name="num-control" class="form-control" placeholder="Ingrese su número de control o Id empleado" required>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <label for="cargo">Cargo en la UTNG</label>
+                    <select id="cargo" name="cargo" class="form-control" required>
+                        <option value="" disabled selected>Seleccione su cargo</option>
+                        <option value="docente">Personal docente</option>
+                        <option value="administrativo">Personal administrativo</option>
+                        <option value="alumno">Alumnado</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="text-center mt-3">
+                <button class="h5 btn btn-primary" type="submit" routerLink="/ingresar">Crear usuario</button>
+            </div>
+        </form>
+    </div>
+</div>
+<app-footer></app-footer>
