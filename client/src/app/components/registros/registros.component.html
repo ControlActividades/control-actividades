@@ -34,12 +34,12 @@
                             
                             <div class="col">
                                 <label for="Telefono" class="form-label ">Número de Teléfono</label>
-                                <input type="text" class="form-control" id="Telefono"
+                                <input type="number" class="form-control" id="Telefono"
                                     placeholder="Ingrese teléfono" >
                             </div>
                             <div class="col">
                                 <label for="Correo" class="form-label">Correo Electrónico</label>
-                                <input type="text" class="form-control" id="Correo"
+                                <input type="email" class="form-control" id="Correo"
                                     placeholder="Ingrese correo" >
                             </div>
                         </div>
@@ -87,12 +87,12 @@
                                 <option value="alumno">Alumnado</option>
                             </select>
                         </div>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success me-2">Guardar</button>
+                            <button type="button" class="btn btn-danger" 
+                                >Eliminar</button>
+                        </div>
                     </form>
-                </div>
-                <div class="card-footer d-flex justify-content-end">
-                    <button type="submit" class="btn btn-success me-2">Guardar</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                        data-target="#eliminarUsuarioModal">Eliminar</button>
                 </div>
             </div>
         </div>
