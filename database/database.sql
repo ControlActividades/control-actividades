@@ -19,3 +19,20 @@ CREATE TABLE responsable (
     numControl VARCHAR(12) NOT NULL,
     grupo VARCHAR(20) NOT NULL,
 );
+
+CREATE TABLE reservas (
+    idReserva INT PRIMARY KEY,
+    horaInicio TIME,
+    horaFin TIME,
+    dia DATE,
+    mes DATE,
+    anio DATE,
+    idResp INT,
+    FOREIGN KEY (idResp) REFERENCES otra_tabla(idResp) 
+);
+
+CREATE TABLE roles (
+    idRoles INT PRIMARY KEY, 
+    rol VARCHAR(10)
+);
+
