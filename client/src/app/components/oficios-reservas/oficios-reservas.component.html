@@ -63,13 +63,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="cargoUTNG">Cargo en la UTNG:</label>
-                                    <input type="text" class="form-control" id="cargoUTNG"
-                                        placeholder="Cargo en la UTNG" />
+                                    <select class="form-select" id="cargo" required>
+                                        <option selected disabled>Seleccione el cargo</option>
+                                        <option value="docente">Personal Docente</option>
+                                        <option value="administrativo">Administrativo</option>
+                                        <option value="alumno">Alumnado</option>
+                                        <option value="visitante">Visitante</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="areaUtilizar">Área a Utilizar:</label>
-                                    <input type="text" class="form-control" id="areaUtilizar"
-                                        placeholder="Área a Utilizar" />
+                                    <select class="form-select" id="areaUso" required>
+                                        <option selected disabled>Seleccione el Área</option>
+                                        <option value="danzaFolclorica">Danza Folclorica</option>
+                                        <option value="taekwando">Taekwando</option>
+                                        <option value="baloncesto-voleibol">Baloncesto o Voleibol</option>
+                                        <option value="ajedrez">Ajedrez</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="razonesReservacion">Razones de la Reservación:</label>
@@ -91,9 +101,14 @@
                                     <input type="text" class="form-control" id="nombreCompleto" placeholder="Nombre Completo" />
                                 </div>
                                 <div class="form-group text-center">
-                                    <label for="departamento">Departamento o Área:</label>
-                                    <input type="text" class="form-control" id="departamento"
-                                        placeholder="Departamento o Área" />
+                                    <label for="edificio">Edificio:</label>
+                                    <select class="form-select" id="edificio" required>
+                                        <option selected disabled>Seleccione el edificio</option>
+                                        <option value="docente">A</option>
+                                        <option value="administrativo">B</option>
+                                        <option value="alumno">C</option>
+                                        <option value="visitante">D</option>
+                                    </select>
                                 </div>
                                 <p>Universidad Tecnológica del Norte de Guanajuato</p>
                             </div>
@@ -161,8 +176,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="areaUtilizar">Área a Utilizar:</label>
-                                    <input type="text" class="form-control" id="areaUtilizar"
-                                        placeholder="Área a Utilizar" />
+                                    <select class="form-select" id="areaUso" required>
+                                        <option selected disabled>Seleccione el área</option>
+                                        <option value="danzaFolclorica">Danza Folclorica</option>
+                                        <option value="taekwando">Taekwando</option>
+                                        <option value="baloncesto-voleibol">Baloncesto o Voleibol</option>
+                                        <option value="ajedrez">Ajedrez</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="razonesReservacion">Razones de la Reservación:</label>
@@ -186,9 +206,14 @@
                                     <input type="text" class="form-control" id="nombreCompleto" placeholder="Nombre Completo" />
                                 </div>
                                 <div class="form-group text-center">
-                                    <label for="departamento">Departamento o Área:</label>
-                                    <input type="text" class="form-control" id="departamento"
-                                        placeholder="Departamento o Área" />
+                                    <label for="edificio">Edificio:</label>
+                                    <select class="form-select" id="edificio" required>
+                                        <option selected disabled>Seleccione el edificio</option>
+                                        <option value="docente">A</option>
+                                        <option value="administrativo">B</option>
+                                        <option value="alumno">C</option>
+                                        <option value="visitante">D</option>
+                                    </select>
                                 </div>
                                 <p class="font-weight-bold">
                                     Universidad Tecnológica del Norte de Guanajuato
