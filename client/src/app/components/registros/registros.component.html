@@ -11,7 +11,8 @@
                     <p class="card-text">Correo: correoAexample.com</p>
                     <p class="card-text">Nombres: John</p>
                     <p class="card-text">Apellidos: Doe</p>
-                    <p class="card-text">Número de Control o ID Empleado: 12345</p>
+                    <p class="card-text">Número de Control: 12345</p>
+                    <p class="card-text">Grupo: GDS0632</p>
                     <p class="card-text">Cargo: Personal Docente</p>
                     <div class="d-flex justify-content-end">
                         <a href="#editarUsuario" class="btn btn-info me-2">Editar</a>
@@ -34,12 +35,12 @@
                             
                             <div class="col">
                                 <label for="Telefono" class="form-label ">Número de Teléfono</label>
-                                <input type="text" class="form-control" id="Telefono"
+                                <input type="number" class="form-control" id="Telefono"
                                     placeholder="Ingrese teléfono" >
                             </div>
                             <div class="col">
                                 <label for="Correo" class="form-label">Correo Electrónico</label>
-                                <input type="text" class="form-control" id="Correo"
+                                <input type="email" class="form-control" id="Correo"
                                     placeholder="Ingrese correo" >
                             </div>
                         </div>
@@ -57,7 +58,7 @@
                             <div class="col">
                                 <label for="appMaterno" class="form-label">Apellido Materno</label>
                                 <input type="text" class="form-control" id="apellidos"
-                                    placeholder="Ingrese apellido materno" required>
+                                    placeholder="Ingrese apellido materno" >
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -72,11 +73,16 @@
                                 placeholder="Ingrese contraseña" required>
                         </div>
                     </div>
-                        <div class="mb-3">
-                            <label for="numeroControl" class="form-label">Número de Control o ID de
-                                Empleado</label>
+                        <div class="row mb-3">
+                            <div class="col-lg-6 col-md-12">
+                            <label for="numeroControl" class="form-label">Número de Control</label>
                             <input type="text" class="form-control" id="numeroControl"
-                                placeholder="Ingrese número de control o ID" required>
+                                placeholder="Ingrese número de control" >
+                            </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <label for="Grupo">Grupo</label>
+                                    <input type="text-loger" id="grupo" name="grupo" class="form-control" placeholder="Ingrese su grupo (alumno)" >
+                                </div>
                         </div>
                         <div class="mb-3">
                             <label for="cargo" class="form-label">Cargo</label>
@@ -85,19 +91,13 @@
                                 <option value="docente">Personal Docente</option>
                                 <option value="administrativo">Administrativo</option>
                                 <option value="alumno">Alumnado</option>
+                                <option value="visitante">Visitante</option>
                             </select>
                         </div>
-                        <!--Nuevo input para el grupo-->
-                        <div class="mb-3">
-                            <label for="grupo" class="form-label">Grupo</label>
-                            <input type="text" class="form-control" id="grupo" placeholder="Ingrese el grupo">
+                    
+                          
                         </div>
                     </form>
-                </div>
-                <div class="card-footer d-flex justify-content-end">
-                    <button type="submit" class="btn btn-success me-2">Guardar</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                        data-target="#eliminarUsuarioModal">Eliminar</button>
                 </div>
             </div>
         </div>

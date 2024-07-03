@@ -31,7 +31,7 @@ CREATE TABLE reservas (
     FOREIGN KEY (idResp) REFERENCES otra_tabla(idResp) 
 );
 
-CREATE TABLE roles (
+CREATE TABLE rol (
     idRoles INT PRIMARY KEY, 
     rol VARCHAR(10)
 );

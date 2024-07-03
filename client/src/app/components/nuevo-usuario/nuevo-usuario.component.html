@@ -3,7 +3,7 @@
     <div class="container-loger create-account p-4">
         <h2>Crear cuenta</h2>
         <form action="#">
-            <div class="row p-4">
+            <div class="row ">
                 <div class="col-lg-6 col-md-12">
                     <label for="usuario">Usuario</label>
                     <input type="text-loger" id="usuario" name="usuario" placeholder="Ingrese su nombre de usuario" class="form-control" required>
@@ -34,26 +34,32 @@
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <label for="apellido-materno">Apellido Materno</label>
-                    <input type="text-loger" id="apellido-materno" name="apellido-materno" class="form-control" placeholder="Ingrese su apellido materno" required>
+                    <input type="text-loger" id="apellido-materno" name="apellido-materno" class="form-control" placeholder="Ingrese su apellido materno" >
                 </div>
                 
                 <div class="col-lg-6 col-md-12">
-                    <label for="num-control">Número de control o Id empleado</label>
-                    <input type="text-loger" id="num-control" name="num-control" class="form-control" placeholder="Ingrese su número de control o Id empleado" required>
+                    <label for="num-control">Número de control</label>
+                    <input type="text-loger" id="num-control" name="num-control" class="form-control" placeholder="Ingrese su número de control">
                 </div>
                 <div class="col-lg-6 col-md-12">
+                    <label for="Grupo">Grupo</label>
+                    <input type="text-loger" id="grupo" name="grupo" class="form-control" placeholder="Ingrese su grupo (alumno)" >
+                </div>
+                <div class="col-md-12">
                     <label for="cargo">Cargo en la UTNG</label>
                     <select id="cargo" name="cargo" class="form-control" required>
                         <option value="" disabled selected>Seleccione su cargo</option>
                         <option value="docente">Personal docente</option>
                         <option value="administrativo">Personal administrativo</option>
                         <option value="alumno">Alumnado</option>
+                        <option value="visitante">Visitante</option>
                     </select>
                 </div>
                 
+                
             </div>
             <div class="text-center mt-3">
-                <button class="h5 btn btn-primary" type="submit" routerLink="/ingresar">Crear usuario</button>
+                <button class="h5 btn btn-primary" type="submit" >Crear usuario</button>
             </div>
         </form>
     </div>
