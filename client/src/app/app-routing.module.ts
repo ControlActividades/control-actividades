@@ -11,32 +11,65 @@ import { OficiosReservasComponent } from './components/oficios-reservas/oficios-
 import { RecuperarContrasComponent } from './components/recuperar-contras/recuperar-contras.component';
 import { SuguerenciasQuejasComponent } from './components/suguerencias-quejas/suguerencias-quejas.component';
 import { RegistrosComponent } from './components/registros/registros.component';
+import { NavegacionComponent } from './components/navegacion/navegacion.component';
 
 
 const routes: Routes = [
   {
     path : '',
-    redirectTo : '/ingresar' ,
+    redirectTo : '/inicio' ,
     pathMatch : 'full'
   },
   {
-    path : 'reservaciones',
-    component :  ReservacionesComponent
-  },
-  {
-    path : 'contrato',
-    component :  ContratoComponent
-    
-  },
-  {
-    path : 'reservanos',
-    component :  ReservanosComponent
-    
-  },
-  {
-    path : 'reglamento',
-    component :  ReglamentoComponent
-    
+    path : 'inicio',
+    component :  NavegacionComponent,
+    children : [
+      {
+        path: 'reservanos', // ruta vacía para /inicio (es el componente principal)
+        component: ReservanosComponent // por ejemplo, el componente principal de inicio
+      },
+      {
+        path: 'reservaciones',
+        component: ReservacionesComponent
+      },
+      {
+        path : 'contrato',
+        component :  ContratoComponent
+        
+      },
+      {
+        path : 'reservanos',
+        component :  ReservanosComponent
+        
+      },
+      {
+        path : 'reglamento',
+        component :  ReglamentoComponent
+        
+      },
+     
+      {
+        path : 'administrar-reservaciones',
+        component :  AdministrarReservasComponent
+        
+      },
+      {
+        path : 'oficios-reservas',
+        component :  OficiosReservasComponent
+        
+      } ,
+      
+      {
+        path : 'sugerencias-quejas',
+        component :  SuguerenciasQuejasComponent
+        
+      },
+      {
+        path : 'registros',
+        component :  RegistrosComponent
+        
+      }
+    ]
   },
   {
     path : 'ingresar',
@@ -44,37 +77,16 @@ const routes: Routes = [
     
   },
   {
-    path : 'administrar-reservaciones',
-    component :  AdministrarReservasComponent
+    path : 'recuperar-contras',
+    component :  RecuperarContrasComponent
     
   },
   {
     path : 'nuevo-usuario',
     component :  NuevoUsuarioComponent
     
-  } ,
-  {
-    path : 'oficios-reservas',
-    component :  OficiosReservasComponent
-    
-  } ,
-  {
-    path : 'recuperar-contras',
-    component :  RecuperarContrasComponent
-    
-  } ,
-  {
-    path : 'sugerencias-quejas',
-    component :  SuguerenciasQuejasComponent
-    
-  },
-  {
-    path : 'registros',
-    component :  RegistrosComponent
-    
-  }
+  } 
   
-
 ];
 
 @NgModule({
