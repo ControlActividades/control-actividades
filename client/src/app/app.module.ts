@@ -16,6 +16,7 @@ import { ContratoComponent } from './components/contrato/contrato.component';
 import { ReservanosComponent } from './components/reservanos/reservanos.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegistrosComponent } from './components/registros/registros.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { RegistrosComponent } from './components/registros/registros.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
