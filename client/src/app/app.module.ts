@@ -17,6 +17,12 @@ import { ReservanosComponent } from './components/reservanos/reservanos.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { RegistrosComponent } from './components/registros/registros.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NavegacionComponent } from './components/navegacion/navegacion.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -33,11 +39,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ContratoComponent,
     ReservanosComponent,
     FooterComponent,
-    RegistrosComponent
+    RegistrosComponent,
+    NavegacionComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     provideAnimationsAsync()
