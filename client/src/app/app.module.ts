@@ -3,7 +3,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NavigationComponent } from './components/navigation/navigation.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatNativeDateModule } from '@angular/material/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { ReservacionesComponent } from './components/reservaciones/reservaciones.component';
 import { ReglamentoComponent } from './components/reglamento/reglamento.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
@@ -18,16 +38,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RegistrosComponent } from './components/registros/registros.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { ReservasComponent } from './components/reservas/reservas.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     ReservacionesComponent,
     ReglamentoComponent,
     IngresarComponent,
@@ -40,7 +57,9 @@ import { MatListModule } from '@angular/material/list';
     ReservanosComponent,
     FooterComponent,
     RegistrosComponent,
-    NavegacionComponent
+    NavegacionComponent,
+    InicioComponent,
+    ReservasComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +68,25 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatTableModule, 
+    MatSortModule, 
+    MatPaginatorModule,
+    FormsModule,
+    ReactiveFormsModule
+    
   ],
   providers: [
     provideAnimationsAsync()

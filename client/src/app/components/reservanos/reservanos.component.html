@@ -1,72 +1,62 @@
-
 <div class="container-fluid px-4 mb-5">
   <div id="myTabContent" class="tab-content bg-light mt-5">
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" data-bs-toggle="tab" href="/inicio/reservaciones" aria-selected="true" role="tab">Reservaciones</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" data-bs-toggle="tab" href="/inicio/reservanos" aria-selected="false" role="tab"
-          tabindex="-1">Reservanos</a>
-      </li>
-    </ul>
-
     <div class="tab-content mt-3 p-3">
       <div class="tab-pane fade active show" id="profile" role="tabpanel">
         <div class="mt-5">
           <h1>Reservanos</h1>
         </div>
-        <form action="" class="h5">
+        <form (ngSubmit)="enviarFormulario()" class="h5">
           <div class="row mt-3">
-
             <div class="col-lg-4">
-              <div>
-                <label class="col-form-label mt-4">Hora de inicio</label>
-                <input type="time" class="form-control" placeholder="Hora de inicio" />
+              <div class="row">
+                <div class="col">
+                  <mat-form-field [appearance]="formAppearance" class="width">
+                    <mat-label>Hora de inicio</mat-label>
+                    <input matInput type="time" placeholder="Hora de inicio" [(ngModel)]="horaInicio">
+                  </mat-form-field>
+                </div>
               </div>
-              <div>
-                <label class="col-form-label mt-4">Hora de fin</label>
-                <input type="time" class="form-control" placeholder="Hora de fin" />
+              <div class="row">
+                <div class="col">
+                  <mat-form-field [appearance]="formAppearance" class="width">
+                    <mat-label>Hora de fin</mat-label>
+                    <input matInput type="time" placeholder="Hora de fin" [(ngModel)]="horaFin">
+                  </mat-form-field>
+                </div>
               </div>
-              <div>
-                <label class="col-form-label mt-4">Fecha</label>
-                <input type="date" class="form-control" placeholder="" />
+              <div class="row">
+                <div class="col">
+                  <mat-form-field [appearance]="formAppearance" class="width">
+                    <mat-label>Fecha de reservación</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="fechaReservacion">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                  </mat-form-field>
+                </div>
               </div>
             </div>
             <div class="col-lg-4">
-              <div>
-                <label class="col-form-label mt-4">Razones de la reservación</label>
-                <textarea class="form-control" id="razonesReservacion" rows="5"
-                  placeholder="Razones de la Reservación"></textarea>
-              </div>
+              <mat-form-field [appearance]="formAppearance" class="width">
+                <mat-label>Razones de la reservación</mat-label>
+                <textarea matInput rows="7" placeholder="Razones de la Reservación" [(ngModel)]="razonesReservacion"></textarea>
+                <mat-hint align="end">{{razonesReservacion.length}} / 256</mat-hint>
+              </mat-form-field>
             </div>
             <div class="col-lg-4">
-              <div>
-                <legend class="mt-4">Área a usar</legend>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="danzaFolclorica" id="danzaFolclorica" value="danzaFolclorica" />
-                  <label class="form-check-label" for="danzaFolclorica">Danza Folclórica</label>
+              <legend>Área a usar</legend>
+              <mat-radio-group [(ngModel)]="areaUsar">
+                <mat-radio-button value="danzaFolclorica">Danza Folclórica</mat-radio-button>
+                <mat-radio-button value="taekwando">Taekwando</mat-radio-button>
+                <mat-radio-button value="baloncesto-voleibol">Baloncesto y voleibol</mat-radio-button>
+                <mat-radio-button value="ajedrez">Ajedrez</mat-radio-button>
+              </mat-radio-group>
+              <div class="row mt-5">
+                <div class="col">
+                  <button type="button" class="btn btn-warning" (click)="limpiarFormulario()">Limpiar</button>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="taekwando" id="taekwando" value="taekwando" />
-                  <label class="form-check-label" for="taekwando">Taekwando</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="baloncesto-voleibol" id="baloncesto-voleibol" value="baloncesto-voleibol" />
-                  <label class="form-check-label" for="baloncesto-voleibol">Baloncesto y voleibol</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="ajedrez" id="ajedrez" value="option4" />
-                  <label class="form-check-label" for="ajedrez">Ajedrez</label>
-                </div>
-                <div class="row mt-5">
-                  <div class="col-lg-4">
-                    <button type="button" class="btn btn-warning">Limpiar</button>
-                  </div>
-                  <div class="col-lg-4">
-                    <button type="submit"
-                      class="btn btn-success">Enviar</button>
-                  </div>
+                <div class="col">
+                  <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
               </div>
             </div>
