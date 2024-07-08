@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReservacionesComponent } from './components/reservaciones/reservaciones.component';
-import { ContratoComponent } from './components/contrato/contrato.component';
 import { ReservanosComponent } from './components/reservanos/reservanos.component';
-import { ReglamentoComponent } from './components/reglamento/reglamento.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
 import { AdministrarReservasComponent } from './components/administrar-reservas/administrar-reservas.component';
 import { NuevoUsuarioComponent } from './components/nuevo-usuario/nuevo-usuario.component';
@@ -12,6 +10,8 @@ import { RecuperarContrasComponent } from './components/recuperar-contras/recupe
 import { SuguerenciasQuejasComponent } from './components/suguerencias-quejas/suguerencias-quejas.component';
 import { RegistrosComponent } from './components/registros/registros.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { ReservasComponent } from './components/reservas/reservas.component';
 
 
 const routes: Routes = [
@@ -25,29 +25,22 @@ const routes: Routes = [
     component :  NavegacionComponent,
     children : [
       {
-        path: 'reservanos', // ruta vacía para /inicio (es el componente principal)
-        component: ReservanosComponent // por ejemplo, el componente principal de inicio
+        path: 'inicio', 
+        component: InicioComponent 
+      },
+      {
+        path: 'reservanos',
+        component: ReservanosComponent 
       },
       {
         path: 'reservaciones',
         component: ReservacionesComponent
       },
       {
-        path : 'contrato',
-        component :  ContratoComponent
-        
-      },
-      {
         path : 'reservanos',
         component :  ReservanosComponent
         
-      },
-      {
-        path : 'reglamento',
-        component :  ReglamentoComponent
-        
-      },
-     
+      },   
       {
         path : 'administrar-reservaciones',
         component :  AdministrarReservasComponent
@@ -68,7 +61,12 @@ const routes: Routes = [
         path : 'registros',
         component :  RegistrosComponent
         
-      }
+      },
+      {
+        path : 'reservas',
+        component :  ReservasComponent
+        
+      } 
     ]
   },
   {
