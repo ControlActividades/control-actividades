@@ -39,17 +39,17 @@
             <div class="col-lg-4">
               <mat-form-field [appearance]="formAppearance" class="width">
                 <mat-label>Razones de la reservación</mat-label>
-                <textarea matInput rows="7" placeholder="Razones de la Reservación" [(ngModel)]="razonesReservacion"></textarea>
-                <mat-hint align="end">{{razonesReservacion.length}} / 256</mat-hint>
+                <textarea matInput rows="7" placeholder="Razones de la Reservación" [(ngModel)]="razonesReservacion" name="razonesReservacion"></textarea>
+                <mat-hint align="end">{{razonesReservacion.length}} / 4000</mat-hint>
               </mat-form-field>
             </div>
             <div class="col-lg-4">
               <legend>Área a usar</legend>
               <mat-radio-group [(ngModel)]="areaUsar">
-                <mat-radio-button value="danzaFolclorica">Danza Folclórica</mat-radio-button>
-                <mat-radio-button value="taekwando">Taekwando</mat-radio-button>
-                <mat-radio-button value="baloncesto-voleibol">Baloncesto y voleibol</mat-radio-button>
-                <mat-radio-button value="ajedrez">Ajedrez</mat-radio-button>
+                <mat-radio-button class="h6in" value="danzaFolclorica">Danza Folclórica</mat-radio-button>
+                <mat-radio-button class="h6in" value="taekwando">Taekwando</mat-radio-button>
+                <mat-radio-button class="h6in" value="baloncesto-voleibol">Baloncesto y voleibol</mat-radio-button>
+                <mat-radio-button class="h6in" value="ajedrez">Ajedrez</mat-radio-button>
               </mat-radio-group>
               <div class="row mt-5">
                 <div class="col">
@@ -59,6 +59,7 @@
                   <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
               </div>
+              
             </div>
           </div>
         </form>

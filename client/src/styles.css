@@ -11868,9 +11868,15 @@ h5,
 .h5,
 h6,
 .h6 {
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: 3px;
 }
+.h6in {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rebeccapurple; /* Color del texto del radio button */
+}
+
 
 .text-secondary {
   color: #55595c !important;
@@ -11878,7 +11884,7 @@ h6,
 
 th {
   font-size: 0.875rem;
-  text-transform: uppercase;
+ text-transform: uppercase;
 }
 
 .table th,

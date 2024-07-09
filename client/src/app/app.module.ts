@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+//material angular
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -18,12 +18,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+
+//imports componentes
 import { ReservacionesComponent } from './components/reservaciones/reservaciones.component';
 import { ReglamentoComponent } from './components/reglamento/reglamento.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
@@ -36,10 +35,16 @@ import { ContratoComponent } from './components/contrato/contrato.component';
 import { ReservanosComponent } from './components/reservanos/reservanos.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegistrosComponent } from './components/registros/registros.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { ReservasComponent } from './components/reservas/reservas.component';
+
+//imports sErvicios
+import { ReservasService } from './services/reservas.service';
+import { ResponsableService } from './services/responsable.service';
+import { EdificioService } from './services/edificio.service';
+import { OficioService } from './services/oficio.service';
+import { RolService } from './services/rol.service';
 
 
 @NgModule({
@@ -89,7 +94,12 @@ import { ReservasComponent } from './components/reservas/reservas.component';
     
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    ReservasService,
+    ResponsableService,
+    EdificioService,
+    OficioService,
+    RolService    
   ],
   bootstrap: [AppComponent]
 })

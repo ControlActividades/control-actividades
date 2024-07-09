@@ -37,7 +37,7 @@ export class ReservacionesComponent implements AfterViewInit {
       { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
       { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
       { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      // Agrega más datos según necesites
+      // Agrega más datos
     ];
 
     this.dataSource = new MatTableDataSource(reservaciones);
