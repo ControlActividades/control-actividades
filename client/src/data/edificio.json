@@ -1,0 +1,12 @@
+{
+  "edificio": [
+     {
+        "idEdificio": "1",
+        "nombEdificio": "A"
+     },
+     {
+        "idEdificio": "2",
+        "nombEdificio": "B"
+     }
+  ]
+}

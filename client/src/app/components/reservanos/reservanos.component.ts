@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
-
 
 @Component({
   selector: 'app-reservanos',
@@ -21,7 +19,6 @@ export class ReservanosComponent {
 
   constructor() {}
 
-  // Ejemplo de método para manejar la limpieza del formulario
   limpiarFormulario() {
     this.horaInicio = '';
     this.horaFin = '';
@@ -32,6 +29,12 @@ export class ReservanosComponent {
 
   // Ejemplo de método para enviar el formulario
   enviarFormulario() {
+    //Validacion de la hora
+    if (this.horaInicio > this.horaFin){
+  
+      return;
+    }
+
     // Aquí puedes procesar y enviar los datos del formulario
     console.log('Datos del formulario:', {
       horaInicio: this.horaInicio,
@@ -40,5 +43,7 @@ export class ReservanosComponent {
       razonesReservacion: this.razonesReservacion,
       areaUsar: this.areaUsar,
     });
+
+    this
   }
 }

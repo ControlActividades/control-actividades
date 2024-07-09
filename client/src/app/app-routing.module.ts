@@ -17,7 +17,7 @@ import { ReservasComponent } from './components/reservas/reservas.component';
 const routes: Routes = [
   {
     path : '',
-    redirectTo : '/inicio' ,
+    redirectTo : '/inicio/inicio' ,
     pathMatch : 'full'
   },
   {
