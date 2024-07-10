@@ -1,0 +1,27 @@
+{
+    "rol": [
+        {
+            "idRol": "1",
+            "rol": "Administrativo"
+        },
+        {
+            "idRol": "2",
+            "rol": "Coordinador de actividad deportiva/cultural"  
+        },
+        {
+            "idRol": "3",
+            "rol": "Maestro"
+        },
+        {
+            "idRol": "4",
+            "rol": "Alumno"
+        },
+        {
+            "idRol": "5",
+            "rol": "Externo de la universidad"
+        }
+    ]
+}
+
+
+
