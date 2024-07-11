@@ -46,6 +46,16 @@ import { EdificioService } from './services/edificio.service';
 import { OficioService } from './services/oficio.service';
 import { RolService } from './services/rol.service';
 
+//backend
+import { HttpClientModule } from '@angular/common/http';
+import { VerEdificiosComponent } from './components/ver-edificios/ver-edificios.component';
+import { VerRolesComponent } from './components/ver-roles/ver-roles.component';
+import { AdminEdificiosComponent } from './components/admin-edificios/admin-edificios.component';
+import { AdminRolesComponent } from './components/admin-roles/admin-roles.component';
+import { EdificiosComponent } from './components/edificios/edificios.component';
+import { RolesComponent } from './components/roles/roles.component';
+
+
 
 @NgModule({
   declarations: [
@@ -64,11 +74,23 @@ import { RolService } from './services/rol.service';
     RegistrosComponent,
     NavegacionComponent,
     InicioComponent,
-    ReservasComponent
+    ReservasComponent,
+    VerEdificiosComponent,
+    VerRolesComponent,
+    AdminEdificiosComponent,
+    AdminRolesComponent,
+    EdificiosComponent,
+    RolesComponent
   ],
   imports: [
+    //browser
+    BrowserAnimationsModule,
     BrowserModule,
+
+    //routing
     AppRoutingModule,
+
+    //Material
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -82,7 +104,6 @@ import { RolService } from './services/rol.service';
     MatFormFieldModule,
     MatRadioModule,
     MatDatepickerModule,
-    BrowserAnimationsModule,
     MatNativeDateModule,
     MatFormFieldModule, 
     MatInputModule, 
@@ -90,8 +111,10 @@ import { RolService } from './services/rol.service';
     MatSortModule, 
     MatPaginatorModule,
     FormsModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+
+    //backend
+    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync(),

@@ -1,26 +1,25 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/inicio/inicio">Inicio</a>
       <a mat-list-item routerLink="/inicio/reservas">Reservas</a>
-      <a mat-list-item routerLink="/inicio/administrar-reservaciones">Administrar Reservaciones</a>
       <a mat-list-item routerLink="/inicio/oficios-reservas">Oficios Reservas</a>
       <a mat-list-item routerLink="/inicio/sugerencias-quejas">Sugerencias y Quejas</a>
+      <a mat-list-item routerLink="/inicio/administrar-reservaciones">Administrar Reservaciones</a>
       <a mat-list-item routerLink="/inicio/registros">Registros</a>
+      <a mat-list-item routerLink="/inicio/edificios">Edificios</a>
+      <a mat-list-item routerLink="/inicio/roles">Roles</a>
+      <a class="text-center" mat-list-item routerLink="/ingresar" >Salir  <i class="fa-solid fa-plug-circle-xmark fs-4"></i></a>
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <!-- Main toolbar -->
     <mat-toolbar>
       <!-- Toggle button for sidenav (if handset) -->
-      <button *ngIf="isHandset$ | async"
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
+      <button *ngIf="isHandset$ | async" type="button" aria-label="Toggle sidenav" mat-icon-button
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>

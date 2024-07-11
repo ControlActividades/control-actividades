@@ -12,6 +12,8 @@ import { RegistrosComponent } from './components/registros/registros.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { ReservasComponent } from './components/reservas/reservas.component';
+import { EdificiosComponent } from './components/edificios/edificios.component';
+import { RolesComponent } from './components/roles/roles.component';
 
 
 const routes: Routes = [
@@ -66,7 +68,18 @@ const routes: Routes = [
         path : 'reservas',
         component :  ReservasComponent
         
-      } 
+      },
+      {
+        path : 'edificios',
+        component :  EdificiosComponent
+        
+      },
+      {
+        path : 'roles',
+        component :  RolesComponent
+        
+      }
+      
     ]
   },
   {

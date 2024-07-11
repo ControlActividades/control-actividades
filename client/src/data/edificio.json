@@ -7,7 +7,11 @@
      {
         "idEdificio": "2",
         "nombEdificio": "B"
-     }
+     },
+     {
+      "idEdificio": "3",
+      "nombEdificio": "CGTI"
+      }
   ]
 }
 
