@@ -36,3 +36,8 @@ CREATE TABLE rol (
     rol VARCHAR(10)
 );
 
+DROP TABLE IF EXISTS edificio;
+CREATE TABLE edificio (
+    idEdificio INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    nombEdificio VARCHAR(50) NOT NULL UNIQUE
+);

@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
+
 //imports componentes
 import { ReservacionesComponent } from './components/reservaciones/reservaciones.component';
 import { ReglamentoComponent } from './components/reglamento/reglamento.component';
@@ -112,6 +113,7 @@ import { RolesComponent } from './components/roles/roles.component';
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
+    
 
     //backend
     HttpClientModule

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
+import { Edificios } from '../../models/Edificio';
+import { EdificioService } from '../../services/edificio.service';
 
 @Component({
   selector: 'app-admin-edificios',
@@ -6,5 +8,22 @@ import { Component } from '@angular/core';
   styleUrl: './admin-edificios.component.css'
 })
 export class AdminEdificiosComponent {
+  
+  @HostBinding('class') classes = 'row'
+  edificio : Edificios ={
 
+    idEdificio : 0,
+    nombEdificio : ''
+  }
+
+  constructor(private edificioService : EdificioService){}
+  ngOnInit(){}
+
+  saveEdificio(){
+
+    this.edificioService.saveEdificio(this.edificio).subscribe(
+      resp => {console.log(resp)},
+      err => console.log(err)
+    )
+  }
 }
