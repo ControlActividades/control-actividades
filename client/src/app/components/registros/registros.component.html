@@ -30,61 +30,51 @@
                 
                 <div class="card-body">
                     <form class="h6">
-                        <div class=" row mb-3">
-                            
-                            <div class="col">
-                                <label for="Telefono" class="form-label ">Número de Teléfono</label>
-                                <input type="number" class="form-control" id="Telefono"
-                                    placeholder="Ingrese teléfono" >
+                        <div class="row mb-3">
+                            <div class="col form-floating mb-3">
+                                <input type="number" class="form-control" id="Telefono" placeholder="Número de Teléfono">
+                                <label for="Telefono">Número de Teléfono</label>
                             </div>
-                            <div class="col">
-                                <label for="Correo" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="Correo"
-                                    placeholder="Ingrese correo" >
+                            <div class="col form-floating mb-3">
+                                <input type="email" class="form-control" id="Correo" placeholder="Correo Electrónico">
+                                <label for="Correo">Correo Electrónico</label>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="nombres" class="form-label">Nombres</label>
-                            <input type="text" class="form-control" id="nombres"
-                                placeholder="Ingrese nombres" required>
+                        <div class="mb-3 form-floating">
+                            <input type="text" class="form-control" id="nombres" placeholder="Nombres" required>
+                            <label for="nombres">Nombres</label>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">
-                                <label for="appPaterno" class="form-label">Apellido Paterno</label>
-                                <input type="text" class="form-control" id="nombres"
-                                    placeholder="Ingrese apellido paterno" required>
+                            <div class="col form-floating mb-3">
+                                <input type="text" class="form-control" id="appPaterno" placeholder="Apellido Paterno" required>
+                                <label for="appPaterno">Apellido Paterno</label>
                             </div>
-                            <div class="col">
-                                <label for="appMaterno" class="form-label">Apellido Materno</label>
-                                <input type="text" class="form-control" id="apellidos"
-                                    placeholder="Ingrese apellido materno" >
+                            <div class="col form-floating mb-3">
+                                <input type="text" class="form-control" id="appMaterno" placeholder="Apellido Materno">
+                                <label for="appMaterno">Apellido Materno</label>
                             </div>
                         </div>
                         <div class="row mb-3">
-                        <div class="col">
-                            <label for="usuario" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="usuario"
-                                placeholder="Ingrese usuario" required>
-                        </div>
-                        <div class="col">
-                            <label for="contrasena" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="contrasena"
-                                placeholder="Ingrese contraseña" required>
-                        </div>
-                    </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-6 col-md-12">
-                            <label for="numeroControl" class="form-label">Número de Control</label>
-                            <input type="text" class="form-control" id="numeroControl"
-                                placeholder="Ingrese número de control" >
+                            <div class="col form-floating mb-3">
+                                <input type="text" class="form-control" id="usuario" placeholder="Usuario" required>
+                                <label for="usuario">Usuario</label>
                             </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <label for="Grupo">Grupo</label>
-                                    <input type="text-loger" id="grupo" name="grupo" class="form-control" placeholder="Ingrese su grupo (alumno)" >
-                                </div>
+                            <div class="col form-floating mb-3">
+                                <input type="password" class="form-control" id="contrasena" placeholder="Contraseña" required>
+                                <label for="contrasena">Contraseña</label>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="cargo" class="form-label">Cargo</label>
+                        <div class="row mb-3">
+                            <div class="col-lg-6 col-md-12 form-floating mb-3">
+                                <input type="text" class="form-control" id="numeroControl" placeholder="Número de Control">
+                                <label for="numeroControl">Número de Control</label>
+                            </div>
+                            <div class="col-lg-6 col-md-12 form-floating mb-3">
+                                <input type="text" class="form-control" id="grupo" placeholder="Grupo">
+                                <label for="grupo">Grupo</label>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-floating">
                             <select class="form-select" id="cargo" required>
                                 <option selected disabled>Seleccione el cargo</option>
                                 <option value="docente">Personal Docente</option>
@@ -92,11 +82,13 @@
                                 <option value="alumno">Alumnado</option>
                                 <option value="visitante">Visitante</option>
                             </select>
+                            <label for="cargo">Cargo</label>
                         </div>
-                    <div>
-                          <input type="button" value="">Aceptar
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>

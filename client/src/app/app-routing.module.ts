@@ -14,6 +14,8 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { ReservasComponent } from './components/reservas/reservas.component';
 import { EdificiosComponent } from './components/edificios/edificios.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { VerEdificiosComponent } from './components/ver-edificios/ver-edificios.component';
+import { AdminEdificiosComponent } from './components/admin-edificios/admin-edificios.component';
 
 
 const routes: Routes = [
@@ -74,10 +76,11 @@ const routes: Routes = [
         component :  EdificiosComponent
         
       },
+      { path : 'ver-edificios', component : VerEdificiosComponent},
+      { path : 'admin-edificio', component : AdminEdificiosComponent},
       {
         path : 'roles',
         component :  RolesComponent
-        
       }
       
     ]

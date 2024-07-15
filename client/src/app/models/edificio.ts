@@ -1,4 +1,5 @@
 export interface Edificios{
-    idEdficio?:number;
+
+    idEdificio?:number;
     nombEdificio?:string;
 }
