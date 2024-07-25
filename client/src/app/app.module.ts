@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-//material angular
+
+// Angular Material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -15,15 +16,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
+
+// Angular Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+// HTTP
+import { HttpClientModule } from '@angular/common/http';
 
-
-//imports componentes
+// Components
 import { ReservacionesComponent } from './components/reservaciones/reservaciones.component';
 import { ReglamentoComponent } from './components/reglamento/reglamento.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
@@ -39,16 +42,6 @@ import { RegistrosComponent } from './components/registros/registros.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { ReservasComponent } from './components/reservas/reservas.component';
-
-//imports sErvicios
-import { ReservasService } from './services/reservas.service';
-import { ResponsableService } from './services/responsable.service';
-import { EdificioService } from './services/edificio.service';
-import { OficioService } from './services/oficio.service';
-import { RolService } from './services/rol.service';
-
-//backend
-import { HttpClientModule } from '@angular/common/http';
 import { VerEdificiosComponent } from './components/ver-edificios/ver-edificios.component';
 import { VerRolesComponent } from './components/ver-roles/ver-roles.component';
 import { AdminEdificiosComponent } from './components/admin-edificios/admin-edificios.component';
@@ -56,7 +49,15 @@ import { AdminRolesComponent } from './components/admin-roles/admin-roles.compon
 import { EdificiosComponent } from './components/edificios/edificios.component';
 import { RolesComponent } from './components/roles/roles.component';
 
+// Services
+import { ReservasService } from './services/reservas.service';
+import { ResponsableService } from './services/responsable.service';
+import { EdificioService } from './services/edificio.service';
+import { OficioService } from './services/oficio.service';
+import { RolService } from './services/rol.service';
 
+// Common Module
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -76,22 +77,17 @@ import { RolesComponent } from './components/roles/roles.component';
     NavegacionComponent,
     InicioComponent,
     ReservasComponent,
-    VerEdificiosComponent,
-    VerRolesComponent,
-    AdminEdificiosComponent,
-    AdminRolesComponent,
     EdificiosComponent,
-    RolesComponent
+    AdminEdificiosComponent,
+    VerEdificiosComponent,
+    RolesComponent,
+    AdminRolesComponent,
+    VerRolesComponent
   ],
   imports: [
-    //browser
-    BrowserAnimationsModule,
     BrowserModule,
-
-    //routing
+    BrowserAnimationsModule,
     AppRoutingModule,
-
-    //Material
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -106,25 +102,17 @@ import { RolesComponent } from './components/roles/roles.component';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatTableModule, 
-    MatSortModule, 
-    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
-    
-
-    //backend
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [
-    provideAnimationsAsync(),
     ReservasService,
     ResponsableService,
     EdificioService,
     OficioService,
-    RolService    
+    RolService
   ],
   bootstrap: [AppComponent]
 })

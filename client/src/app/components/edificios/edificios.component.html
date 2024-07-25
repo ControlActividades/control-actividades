@@ -1,11 +1,13 @@
-<!-- Componente principal que contiene ambos componentes -->
-<div class="mt-3">
-  <mat-tab-group #tabGroup class="fondo" mat-align-tabs="center" mat-stretch-tabs="false">
-    <mat-tab label="Administrar Edificios">
-      <app-admin-edificios></app-admin-edificios>
-    </mat-tab>
-    <mat-tab label="Ver Edificios">
-      <app-ver-edificios></app-ver-edificios>
-    </mat-tab>
-  </mat-tab-group>
+
+<div class="container">
+  <div class="content mt-4">
+    <mat-tab-group #tabGroup class="fondo" mat-align-tabs="center" mat-stretch-tabs="false">
+      <mat-tab label="Administrar Edificios">
+        <app-admin-edificios [tabGroup]="tabGroup" (tabChange)="selectTab($event)"></app-admin-edificios>
+      </mat-tab>
+      <mat-tab label="Ver Edificios">
+        <app-ver-edificios [tabGroup]="tabGroup"></app-ver-edificios>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
