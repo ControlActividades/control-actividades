@@ -31,9 +31,10 @@ CREATE TABLE reservas (
     FOREIGN KEY (idResp) REFERENCES otra_tabla(idResp) 
 );
 
+DROP TABLE IF EXISTS rol;
 CREATE TABLE rol (
-    idRoles INT PRIMARY KEY, 
-    rol VARCHAR(10)
+    idRoles INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE, 
+    rol VARCHAR(10) NOT NULL UNIQUE
 );
 
 DROP TABLE IF EXISTS edificio;

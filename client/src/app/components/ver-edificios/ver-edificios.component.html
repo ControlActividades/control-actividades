@@ -1,4 +1,3 @@
-<!-- ver-edificios.component.html -->
 <div class="body table-responsive">
   <mat-form-field>
     <mat-label>Filtro</mat-label>
@@ -20,7 +19,7 @@
     </ng-container>
 
     <!-- Acciones Column -->
-    <ng-container matColumnDef="acciones">
+     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let edificio">
         <button type="button" class="btn btn-info" [routerLink]="['/inicio/edificio/edit', edificio.idEdificio]">

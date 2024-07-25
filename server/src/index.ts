@@ -1,8 +1,12 @@
+//funcionalidad
 import express, {Application} from 'express';
-import edificiosRoutes from './routes/edificiosRoutes';
-import indexRoutes from './routes/indexRoutes';
 import morgan from 'morgan';
 import cors from 'cors';
+
+//rutas
+import indexRoutes from './routes/indexRoutes';
+import edificiosRoutes from './routes/edificiosRoutes';
+import rolesRoutes from './routes/rolesRoutes';
 
 class Server {
     public app:Application;
@@ -21,6 +25,7 @@ class Server {
     routes():void{
         this.app.use('/',indexRoutes);
         this.app.use('/edificios',edificiosRoutes);
+        this.app.use('/roles',rolesRoutes);
     }
     start():void{
         this.app.listen(this.app.get('port'), () => {
