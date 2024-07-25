@@ -10,6 +10,10 @@ class EdificiosRoutes {
     config() : void{
         this.router.get('/',edificiosControllers.index);
         this.router.post('/',edificiosControllers.create);
+        this.router.delete('/:idEdificio',edificiosControllers.delete);
+        this.router.put('/:idEdificio', edificiosControllers.updateEdificio);
+        this.router.get('/:idEdificio', edificiosControllers.getEdificio);
+
     }
 }
 const edificiosRoutes = new EdificiosRoutes();

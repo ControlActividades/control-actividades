@@ -17,90 +17,31 @@ import { RolesComponent } from './components/roles/roles.component';
 import { VerEdificiosComponent } from './components/ver-edificios/ver-edificios.component';
 import { AdminEdificiosComponent } from './components/admin-edificios/admin-edificios.component';
 
-
 const routes: Routes = [
   {
-    path : '',
-    redirectTo : '/inicio/inicio' ,
-    pathMatch : 'full'
+    path: '',
+    redirectTo: '/inicio',
+    pathMatch: 'full'
   },
   {
-    path : 'inicio',
-    component :  NavegacionComponent,
-    children : [
-      {
-        path: 'inicio', 
-        component: InicioComponent 
-      },
-      {
-        path: 'reservanos',
-        component: ReservanosComponent 
-      },
-      {
-        path: 'reservaciones',
-        component: ReservacionesComponent
-      },
-      {
-        path : 'reservanos',
-        component :  ReservanosComponent
-        
-      },   
-      {
-        path : 'administrar-reservaciones',
-        component :  AdministrarReservasComponent
-        
-      },
-      {
-        path : 'oficios-reservas',
-        component :  OficiosReservasComponent
-        
-      } ,
-      
-      {
-        path : 'sugerencias-quejas',
-        component :  SuguerenciasQuejasComponent
-        
-      },
-      {
-        path : 'registros',
-        component :  RegistrosComponent
-        
-      },
-      {
-        path : 'reservas',
-        component :  ReservasComponent
-        
-      },
-      {
-        path : 'edificios',
-        component :  EdificiosComponent
-        
-      },
-      { path : 'ver-edificios', component : VerEdificiosComponent},
-      { path : 'admin-edificio', component : AdminEdificiosComponent},
-      {
-        path : 'roles',
-        component :  RolesComponent
-      }
-      
+    path: 'inicio',
+    component: NavegacionComponent,
+    children: [
+      { path: 'inicio', component: InicioComponent },
+      { path: 'reservanos', component: ReservanosComponent },
+      { path: 'reservaciones', component: ReservacionesComponent },
+      { path: 'administrar-reservaciones', component: AdministrarReservasComponent },
+      { path: 'oficios-reservas', component: OficiosReservasComponent },
+      { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
+      { path: 'registros', component: RegistrosComponent },
+      { path: 'reservas', component: ReservasComponent },
+      { path: 'edificios', component: EdificiosComponent },
+      { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent }
     ]
   },
-  {
-    path : 'ingresar',
-    component :  IngresarComponent
-    
-  },
-  {
-    path : 'recuperar-contras',
-    component :  RecuperarContrasComponent
-    
-  },
-  {
-    path : 'nuevo-usuario',
-    component :  NuevoUsuarioComponent
-    
-  } 
-  
+  { path: 'ingresar', component: IngresarComponent },
+  { path: 'recuperar-contras', component: RecuperarContrasComponent },
+  { path: 'nuevo-usuario', component: NuevoUsuarioComponent }
 ];
 
 @NgModule({
