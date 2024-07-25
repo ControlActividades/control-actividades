@@ -14,15 +14,16 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { ReservasComponent } from './components/reservas/reservas.component';
 import { EdificiosComponent } from './components/edificios/edificios.component';
 import { RolesComponent } from './components/roles/roles.component';
-import { VerEdificiosComponent } from './components/ver-edificios/ver-edificios.component';
 import { AdminEdificiosComponent } from './components/admin-edificios/admin-edificios.component';
+import { AdminRolesComponent } from './components/admin-roles/admin-roles.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/inicio',
+    redirectTo: '/inicio/inicio',
     pathMatch: 'full'
   },
+   
   {
     path: 'inicio',
     component: NavegacionComponent,
@@ -35,8 +36,12 @@ const routes: Routes = [
       { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
       { path: 'registros', component: RegistrosComponent },
       { path: 'reservas', component: ReservasComponent },
+      //edificios
       { path: 'edificios', component: EdificiosComponent },
-      { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent }
+      { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent },
+      //roles
+      { path: 'roles', component: RolesComponent },
+      { path: 'roles/edit/:idRoles', component: AdminRolesComponent }
     ]
   },
   { path: 'ingresar', component: IngresarComponent },

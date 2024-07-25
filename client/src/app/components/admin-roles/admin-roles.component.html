@@ -1,1 +1,18 @@
-<p>admin-roles works!</p>
+ 
+<div class="body">
+    <div class="wrapper">
+      <form [formGroup]="rolForm" (ngSubmit)="edit ? updateRol() : saveRol()">
+        <h1>{{ edit ? 'Editar rol' : 'Agregar rol' }}</h1>
+        <h6>Usuario</h6>
+        <div class="input-box">
+          <input type="text" formControlName="rol" placeholder="Nombre del rol" required autofocus>
+          <i class="bi bi-buildings-fill"></i>
+        </div>
+  
+        <button class="btn" type="submit" [disabled]="rolForm.invalid">
+          {{ edit ? 'Actualizar' : 'Guardar' }} <i class="bi bi-building-up"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+  
