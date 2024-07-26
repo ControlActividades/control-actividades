@@ -95,7 +95,7 @@
                     </div>
                     <div class="mb-3 form-floating">
                         <select class="form-select" formControlName="idRoles" required>
-                            <option value="" disabled selected>Seleccione un rol</option>
+                            <option value="" selected>Seleccione un rol</option>
                             <option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol.rol}}</option>
                         </select>
                         <label for="cargo">Cargo</label>

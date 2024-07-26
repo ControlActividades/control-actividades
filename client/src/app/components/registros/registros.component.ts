@@ -77,7 +77,7 @@ export class RegistrosComponent implements OnInit {
       resp => {
         this.responsableFormEdit.patchValue({
           nombUsuario: resp.nombUsuario,
-          contrasenia: '', 
+          contrasenia: resp.contrasenia, 
           nombres: resp.nombres,
           appPaterno: resp.appPaterno,
           appMaterno: resp.appMaterno,

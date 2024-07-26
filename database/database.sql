@@ -13,8 +13,8 @@ CREATE TABLE responsable (
     nombres VARCHAR(50) NOT NULL,
     appPaterno VARCHAR(20) NOT NULL,
     appMaterno VARCHAR(20) NULL,
-    telefono VARCHAR(10) NULL,
-    correoElec VARCHAR(320) NULL,
+    telefono VARCHAR(10) NULL UNIQUE,
+    correoElec VARCHAR(320) NULL UNIQUE,
     numControl VARCHAR(20) NOT NULL,
     grupo VARCHAR(20) NOT NULL,
     idRoles INT NULL,
@@ -24,20 +24,21 @@ CREATE TABLE responsable (
 
 DROP TABLE IF EXISTS reservas;
 CREATE TABLE reservas (
-    idReserva INT PRIMARY KEY,
-    horaInicio TIME,
-    horaFin TIME,
-    dia DATE,
-    mes DATE,
-    anio DATE,
-    idResp INT,
-    FOREIGN KEY (idResp) REFERENCES otra_tabla(idResp) 
+    idReserva INT AUTO_INCREMENT PRIMARY KEY,
+    horaInicio TIME NOT NULL,
+    horaFin TIME NOT NULL,
+    estado VARCHAR(20) NULL,
+    areaUsar VARCHAR(20) NOT NULL,
+    fecha DATE NOT NULL,
+    razon VARCHAR(5000) NOT NULL,
+    idResp INT NULL,
+    FOREIGN KEY (idResp) REFERENCES responsable(idResp) 
 );
 
 DROP TABLE IF EXISTS rol;
 CREATE TABLE rol (
     idRoles INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    rol VARCHAR(10) NOT NULL UNIQUE
+    rol VARCHAR(20) NOT NULL UNIQUE
 );
 
 

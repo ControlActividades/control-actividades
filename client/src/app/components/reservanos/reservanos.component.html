@@ -2,17 +2,17 @@
   <div id="myTabContent" class="tab-content bg-light mt-5">
     <div class="tab-content mt-3 p-3">
       <div class="tab-pane fade active show" id="profile" role="tabpanel">
-        <div class="mt-5">
+        <div class="mt-5"> 
           <h1>Reservanos</h1> 
         </div>
-        <form (ngSubmit)="enviarFormulario()" class="h5">
+        <form [formGroup]="reservaForm" (ngSubmit)="saveReserva()" class="h5">
           <div class="row mt-3">
             <div class="col-lg-4">
               <div class="row">
                 <div class="col">
                   <mat-form-field [appearance]="formAppearance" class="width">
                     <mat-label>Hora de inicio</mat-label>
-                    <input matInput type="time" placeholder="Hora de inicio" [(ngModel)]="horaInicio">
+                    <input matInput type="time" placeholder="Hora de inicio" formControlName="horaInicio">
                   </mat-form-field>
                 </div>
               </div>
@@ -20,7 +20,7 @@
                 <div class="col">
                   <mat-form-field [appearance]="formAppearance" class="width">
                     <mat-label>Hora de fin</mat-label>
-                    <input matInput type="time" placeholder="Hora de fin" [(ngModel)]="horaFin">
+                    <input matInput type="time" placeholder="Hora de fin" formControlName="horaFin">
                   </mat-form-field>
                 </div>
               </div>
@@ -28,7 +28,7 @@
                 <div class="col">
                   <mat-form-field [appearance]="formAppearance" class="width">
                     <mat-label>Fecha de reservación</mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="fechaReservacion">
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="fecha">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-hint>MM/DD/YYYY</mat-hint>
@@ -39,21 +39,21 @@
             <div class="col-lg-4">
               <mat-form-field [appearance]="formAppearance" class="width">
                 <mat-label>Razones de la reservación</mat-label>
-                <textarea matInput rows="7" placeholder="Razones de la Reservación" [(ngModel)]="razonesReservacion" name="razonesReservacion"></textarea>
-                <mat-hint align="end">{{razonesReservacion.length}} / 4000</mat-hint>
+                <textarea matInput rows="7" placeholder="Razones de la Reservación" formControlName="razon"></textarea>
+                <mat-hint align="end">{{length}} / 4000</mat-hint>
               </mat-form-field>
             </div>
             <div class="col-lg-4">
               <legend>Área a usar</legend>
-              <mat-radio-group [(ngModel)]="areaUsar">
+              <mat-radio-group formControlName="areaUsar">
                 <mat-radio-button class="h6in" value="danzaFolclorica">Danza Folclórica</mat-radio-button>
                 <mat-radio-button class="h6in" value="taekwando">Taekwando</mat-radio-button>
-                <mat-radio-button class="h6in" value="baloncesto-voleibol">Baloncesto y voleibol</mat-radio-button>
+                <mat-radio-button class="h6in" value="baloncestoVoleibol">Baloncesto y voleibol</mat-radio-button>
                 <mat-radio-button class="h6in" value="ajedrez">Ajedrez</mat-radio-button>
               </mat-radio-group>
               <div class="row mt-5">
                 <div class="col">
-                  <button type="button" class="btn btn-warning" (click)="limpiarFormulario()">Limpiar</button>
+                  <button type="button" class="btn btn-warning" (click)="reset()" >Limpiar</button>
                 </div>
                 <div class="col">
                   <button type="submit" class="btn btn-success">Enviar</button>
