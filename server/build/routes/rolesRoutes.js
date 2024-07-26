@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const rolesControllers_1 = require("../controllers/rolesControllers");
-rolesControllers_1.rolesControllers;
 class RolesRoutes {
     constructor() {
         this.router = (0, express_1.Router)();

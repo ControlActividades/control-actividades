@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { rolesControllers } from "../controllers/rolesControllers";
-rolesControllers
+
 
 class RolesRoutes {
     public router : Router = Router();
