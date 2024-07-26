@@ -7,10 +7,7 @@ import { EdificioService } from '../../services/edificio.service';
   templateUrl: './oficios-reservas.component.html',
   styleUrl: './oficios-reservas.component.css'
 })
-export class OficiosReservasComponent {
-
-  
-
+export class OficiosReservasComponent { 
   edificios : any=[];
   constructor (private edificioService : EdificioService){}
 

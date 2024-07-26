@@ -34,8 +34,10 @@ const routes: Routes = [
       { path: 'administrar-reservaciones', component: AdministrarReservasComponent },
       { path: 'oficios-reservas', component: OficiosReservasComponent },
       { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
-      { path: 'registros', component: RegistrosComponent },
       { path: 'reservas', component: ReservasComponent },
+      //responsables
+      { path: 'registros', component: RegistrosComponent },
+      { path: 'registros/:idResp', component: RegistrosComponent },
       //edificios
       { path: 'edificios', component: EdificiosComponent },
       { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent },

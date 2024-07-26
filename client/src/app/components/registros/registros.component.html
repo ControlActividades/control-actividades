@@ -1,96 +1,112 @@
-
 <div class="container-fluid mb-5">
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-6">
-            <!-- Tarjetas de registros previos -->
-            <div class="card mb-3">
+    <div class="burbujas">
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+        <div class="burbuja"></div>
+    </div>
+    <div class="justify-content-center mt-5 row">
+        <!-- Tarjetas de registros previos -->
+        <div *ngFor="let responsable of responsables" class="col-md-4 mb-4">
+            <div class="card m-3" #card [attr.data-id]="responsable.idResp">
+                <div class="burbujas">
+                    <div class="burbuja"></div>
+                    <div class="burbuja"></div>
+                    <div class="burbuja"></div>
+                    
+                    <div class="burbuja"></div>
+                    <div class="burbuja"></div>
+                    <div class="burbuja"></div>
+                    <div class="burbuja"></div>
+                </div>
+                <h5 class="card-title text-center h1 mt-3">Usuario {{responsable.idResp}}</h5>
+                <p class="card-text mt-1">Número de Teléfono: {{responsable.telefono}}</p>
+                <p class="card-text mt-1">Correo: {{responsable.correoElec}}</p>
+                <p class="card-text mt-1">Nombres: {{responsable.nombres}}</p>
+                <p class="card-text mt-1">Apellidos: {{responsable.appPaterno}} {{responsable.appMaterno}}</p>
+                <p class="card-text mt-1">Número de Control: {{responsable.numControl}}</p>
+                <p class="card-text mt-1">Grupo: {{responsable.grupo}}</p>
+                <p class="card-text mt-1">Cargo: {{responsable.rol}}</p>
                 <div class="card-body">
-                    <h5 class="card-title text-center h1">Usuario 1</h5>
-                    <p class="card-text">Número de Teléfono: 1234567890</p>
-                    <p class="card-text">Correo: correoAexample.com</p>
-                    <p class="card-text">Nombres: John</p>
-                    <p class="card-text">Apellidos: Doe</p>
-                    <p class="card-text">Número de Control: 12345</p>
-                    <p class="card-text">Grupo: GDS0632</p>
-                    <p class="card-text">Cargo: Personal Docente</p>
-                    <div class="d-flex justify-content-end">
-                        <a href="#editarUsuario" class="btn btn-info me-2">Editar</a>
-
-                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                            data-target="#">Eliminar</button>
-                    </div>
+                    <a class="btn btn-info me-2" (click)="editResponsable(responsable.idResp)">Editar</a>
+                    <button type="button" class="btn btn-danger" (click)="deleteResponsable(responsable.idResp)">Eliminar</button>
                 </div>
             </div>
+        </div>
 
-            <!-- Formulario de edición -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title" id="editarUsuario">Editar Usuario</h3>
-                </div>
-                
-                <div class="card-body">
-                    <form class="h6">
-                        <div class="row mb-3">
-                            <div class="col form-floating mb-3">
-                                <input type="number" class="form-control" id="Telefono" placeholder="Número de Teléfono">
-                                <label for="Telefono">Número de Teléfono</label>
-                            </div>
-                            <div class="col form-floating mb-3">
-                                <input type="email" class="form-control" id="Correo" placeholder="Correo Electrónico">
-                                <label for="Correo">Correo Electrónico</label>
-                            </div>
+        <!-- Formulario de edición -->
+        <div class="card col-md-12 formulario" id="editForm">
+            <div class="card-header">
+                <h3 class="card-title" id="editarUsuario">Editar Usuario</h3>
+            </div>
+
+            <div class="card-body ">
+                <form [formGroup]="responsableFormEdit" class="h6" (ngSubmit)="updateResponsable()" >
+                    <!-- Campos del formulario -->
+                    <div class="row mb-3">
+                        <div class="col form-floating mb-3">
+                            <input type="number" class="form-control" formControlName="telefono" placeholder="Número de Teléfono">
+                            <label for="Telefono">Número de Teléfono</label>
                         </div>
-                        <div class="mb-3 form-floating">
-                            <input type="text" class="form-control" id="nombres" placeholder="Nombres" required>
-                            <label for="nombres">Nombres</label>
+                        <div class="col form-floating mb-3">
+                            <input type="email" class="form-control" formControlName="correoElec" placeholder="Correo Electrónico">
+                            <label for="Correo">Correo Electrónico</label>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col form-floating mb-3">
-                                <input type="text" class="form-control" id="appPaterno" placeholder="Apellido Paterno" required>
-                                <label for="appPaterno">Apellido Paterno</label>
-                            </div>
-                            <div class="col form-floating mb-3">
-                                <input type="text" class="form-control" id="appMaterno" placeholder="Apellido Materno">
-                                <label for="appMaterno">Apellido Materno</label>
-                            </div>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <input type="text" class="form-control" formControlName="nombres" placeholder="Nombres" required>
+                        <label for="nombres">Nombres</label>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="appPaterno" placeholder="Apellido Paterno" required>
+                            <label for="appPaterno">Apellido Paterno</label>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col form-floating mb-3">
-                                <input type="text" class="form-control" id="usuario" placeholder="Usuario" required>
-                                <label for="usuario">Usuario</label>
-                            </div>
-                            <div class="col form-floating mb-3">
-                                <input type="password" class="form-control" id="contrasena" placeholder="Contraseña" required>
-                                <label for="contrasena">Contraseña</label>
-                            </div>
+                        <div class="col form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="appMaterno" placeholder="Apellido Materno">
+                            <label for="appMaterno">Apellido Materno</label>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-6 col-md-12 form-floating mb-3">
-                                <input type="text" class="form-control" id="numeroControl" placeholder="Número de Control">
-                                <label for="numeroControl">Número de Control</label>
-                            </div>
-                            <div class="col-lg-6 col-md-12 form-floating mb-3">
-                                <input type="text" class="form-control" id="grupo" placeholder="Grupo">
-                                <label for="grupo">Grupo</label>
-                            </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="nombUsuario" placeholder="Usuario" required>
+                            <label for="usuario">Usuario</label>
                         </div>
-                        <div class="mb-3 form-floating">
-                            <select class="form-select" id="cargo" required>
-                                <option selected disabled>Seleccione el cargo</option>
-                                <option value="docente">Personal Docente</option>
-                                <option value="administrativo">Administrativo</option>
-                                <option value="alumno">Alumnado</option>
-                                <option value="visitante">Visitante</option>
-                            </select>
-                            <label for="cargo">Cargo</label>
+                        <div class="col form-floating mb-3">
+                            <input type="password" class="form-control" formControlName="contrasenia" placeholder="Contraseña" required>
+                            <label for="contrasena">Contraseña</label>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-6 col-md-12 form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="numControl" placeholder="Número de Control">
+                            <label for="numeroControl">Número de Control</label>
                         </div>
-                    </form>
-                    
-                </div>
+                        <div class="col-lg-6 col-md-12 form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="grupo" placeholder="Grupo">
+                            <label for="grupo">Grupo</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <select class="form-select" formControlName="idRoles" required>
+                            <option value="" disabled selected>Seleccione un rol</option>
+                            <option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol.rol}}</option>
+                        </select>
+                        <label for="cargo">Cargo</label>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+

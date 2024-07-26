@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Edificios } from '../../models/Edificio';
 import { EdificioService } from '../../services/edificio.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
-@Component({
+ @Component({
   selector: 'app-admin-edificios',
   templateUrl: './admin-edificios.component.html',
   styleUrls: ['./admin-edificios.component.css']
