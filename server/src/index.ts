@@ -8,6 +8,7 @@ import indexRoutes from './routes/indexRoutes';
 import edificiosRoutes from './routes/edificiosRoutes';
 import rolesRoutes from './routes/rolesRoutes';
 import responsablesRoutes from './routes/responsablesRoutes';
+import reservasRoutes from './routes/reservasRoutes';
 
 class Server {
     public app:Application;
@@ -28,6 +29,7 @@ class Server {
         this.app.use('/edificios',edificiosRoutes);
         this.app.use('/roles',rolesRoutes);
         this.app.use('/responsables',responsablesRoutes);
+        this.app.use('/reservas',reservasRoutes);
     }
     start():void{
         this.app.listen(this.app.get('port'), () => {

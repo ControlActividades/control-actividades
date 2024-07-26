@@ -10,3 +10,23 @@ table {
   td, th {
     width: 25%;
   }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    justify-content: flex-start; /* Alineación de los botones al inicio (izquierda) */
+  }
+  
+  .action-buttons .btn {
+    display: flex;
+    align-items: center; /* Alinear iconos verticalmente en el centro */
+  }
+  .acciones-header{
+    text-align: center;
+  }
+
+  .mat-header-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }  

@@ -1,16 +1,15 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Rol } from '../../models/Rol'; //models
 import { RolService } from '../../services/rol.service'; //servicios
 
-
 @Component({
   selector: 'app-admin-roles',
   templateUrl: './admin-roles.component.html',
-  styleUrl: './admin-roles.component.css'
+  styleUrls: ['./admin-roles.component.css']
 })
-export class AdminRolesComponent {
+export class AdminRolesComponent implements OnInit, AfterViewInit {
   rolForm: FormGroup;
   edit: boolean = false;
   @Input() tabGroup: any;
@@ -25,7 +24,8 @@ export class AdminRolesComponent {
     private fb: FormBuilder,
     private rolService: RolService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.rolForm = this.fb.group({
       rol: ['', Validators.required]
@@ -39,13 +39,24 @@ export class AdminRolesComponent {
       this.rolService.getRol(idRoles).subscribe(
         resp => {
           this.rol = resp;
-          this.rolForm.patchValue({
-            rol: this.rol.rol
-          });
-          this.edit = true;
+          setTimeout(() => {
+            this.rolForm.patchValue({
+              rol : this.rol.rol
+            });
+            this.edit = true;
+          }); // Forzar la detección de cambios
         },
         err => console.error(err)
       );
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.edit) {
+      this.rolForm.patchValue({
+        rol : this.rol.rol
+      });
+      this.cdr.detectChanges();
     }
   }
 
@@ -63,6 +74,7 @@ export class AdminRolesComponent {
           resp => {
             console.log(resp);
             this.tabChange.emit(1); // Cambia a la pestaña "Ver rol"
+            this.rolForm.reset();
           },
           err => console.log(err)
         );
@@ -78,6 +90,7 @@ export class AdminRolesComponent {
         resp => {
           console.log(resp);
           this.router.navigate(['/inicio/roles']);
+          this.rolForm.reset();
         },
         err => console.error(err)
       );

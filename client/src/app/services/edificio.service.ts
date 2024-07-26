@@ -1,4 +1,3 @@
-// edificio.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Edificios } from '../models/Edificio';
@@ -11,7 +10,7 @@ export class EdificioService {
   API_URI = 'http://localhost:3000/edificios'; //conexion
   private refreshSubject = new Subject<void>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { } 
 
   getEdificios() {
     return this.http.get<Edificios[]>(`${this.API_URI}`);
