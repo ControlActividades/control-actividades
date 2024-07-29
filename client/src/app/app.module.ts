@@ -31,7 +31,6 @@ import { ReservacionesComponent } from './components/reservaciones/reservaciones
 import { ReglamentoComponent } from './components/reglamento/reglamento.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
 import { RecuperarContrasComponent } from './components/recuperar-contras/recuperar-contras.component';
-import { NuevoUsuarioComponent } from './components/nuevo-usuario/nuevo-usuario.component';
 import { SuguerenciasQuejasComponent } from './components/suguerencias-quejas/suguerencias-quejas.component';
 import { OficiosReservasComponent } from './components/oficios-reservas/oficios-reservas.component';
 import { AdministrarReservasComponent } from './components/administrar-reservas/administrar-reservas.component';
@@ -66,7 +65,6 @@ import { CommonModule } from '@angular/common';
     ReglamentoComponent,
     IngresarComponent,
     RecuperarContrasComponent,
-    NuevoUsuarioComponent,
     SuguerenciasQuejasComponent,
     OficiosReservasComponent,
     AdministrarReservasComponent,
