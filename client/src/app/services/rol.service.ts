@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Rol } from '../models/Rol';
-import { Subject, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -51,6 +51,10 @@ export class RolService {
 
   get refresh$() {
     return this.refreshSubject.asObservable();
+  }
+
+  getRoleByName(rolNombre: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URI}/role/${rolNombre}`);
   }
 }
 

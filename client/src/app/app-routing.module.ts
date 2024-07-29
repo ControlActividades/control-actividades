@@ -4,7 +4,6 @@ import { ReservacionesComponent } from './components/reservaciones/reservaciones
 import { ReservanosComponent } from './components/reservanos/reservanos.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
 import { AdministrarReservasComponent } from './components/administrar-reservas/administrar-reservas.component';
-import { NuevoUsuarioComponent } from './components/nuevo-usuario/nuevo-usuario.component';
 import { OficiosReservasComponent } from './components/oficios-reservas/oficios-reservas.component';
 import { RecuperarContrasComponent } from './components/recuperar-contras/recuperar-contras.component';
 import { SuguerenciasQuejasComponent } from './components/suguerencias-quejas/suguerencias-quejas.component';
@@ -17,38 +16,35 @@ import { RolesComponent } from './components/roles/roles.component';
 import { AdminEdificiosComponent } from './components/admin-edificios/admin-edificios.component';
 import { AdminRolesComponent } from './components/admin-roles/admin-roles.component';
 
+import { RolUnoGuard } from './guards/rol-uno.guard';
+import { RolWeGuard } from './guards/we.guard';
+import { RolBossGuard } from './guards/boss.guard';
+import { RolDosGuard } from './guards/rol-dos.guard';
+import { RolTresGuard } from './guards/rol-tres.guard';
+import { NoAuthGuard } from './guards/logout.guard';
+
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/inicio/inicio',
-    pathMatch: 'full'
-  },
-   
+  { path: '', redirectTo: '/inicio/inicio', pathMatch: 'full' },
   {
     path: 'inicio',
     component: NavegacionComponent,
     children: [
       { path: 'inicio', component: InicioComponent },
-      { path: 'reservanos', component: ReservanosComponent },
-      { path: 'reservaciones', component: ReservacionesComponent },
-      { path: 'administrar-reservaciones', component: AdministrarReservasComponent },
-      { path: 'oficios-reservas', component: OficiosReservasComponent },
+      { path: 'administrar-reservaciones', component: AdministrarReservasComponent, canActivate: [RolUnoGuard] },
+      { path: 'oficios-reservas', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
       { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
-      { path: 'reservas', component: ReservasComponent },
-      //responsables
-      { path: 'registros', component: RegistrosComponent },
-      { path: 'registros/:idResp', component: RegistrosComponent },
-      //edificios
-      { path: 'edificios', component: EdificiosComponent },
-      { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent },
-      //roles
-      { path: 'roles', component: RolesComponent },
-      { path: 'roles/edit/:idRoles', component: AdminRolesComponent }
+      { path: 'reservaciones', component: ReservacionesComponent, canActivate : [NoAuthGuard] },
+      { path: 'reservas', component: ReservasComponent, canActivate: [RolDosGuard] },
+      { path: 'registros', component: RegistrosComponent, canActivate: [RolUnoGuard] },
+      { path: 'registros/:idResp', component: RegistrosComponent, canActivate: [RolBossGuard] },
+      { path: 'edificios', component: EdificiosComponent, canActivate: [RolUnoGuard] },
+      { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent, canActivate: [RolUnoGuard] },
+      { path: 'roles', component: RolesComponent, canActivate: [RolBossGuard] },
+      { path: 'roles/edit/:idRoles', component: AdminRolesComponent, canActivate: [RolBossGuard] }
     ]
   },
   { path: 'ingresar', component: IngresarComponent },
-  { path: 'recuperar-contras', component: RecuperarContrasComponent },
-  { path: 'nuevo-usuario', component: NuevoUsuarioComponent }
+  { path: 'recuperar-contras', component: RecuperarContrasComponent }
 ];
 
 @NgModule({

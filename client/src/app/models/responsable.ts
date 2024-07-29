@@ -1,7 +1,7 @@
 export interface Responsable {
     idResp?: number;
     nombUsuario?: string;
-    contrasenia?: Uint8Array;
+    contrasenia?: string;
     nombres?: string;
     appPaterno?: string;
     appMaterno?: string;

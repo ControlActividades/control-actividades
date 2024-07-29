@@ -14,6 +14,11 @@ class ResponsablesRoutes {
         this.router.delete('/:idResp',responsablesControllers.delete);
         this.router.put('/:idResp', responsablesControllers.updateResponsable);
         this.router.get('/:idResp', responsablesControllers.getResponsable);
+        this.router.get('/id/:nombUsuario',responsablesControllers.getIdByUsername);
+        this.router.post('/validate', responsablesControllers.validateUser);
+        this.router.post('/buscar', responsablesControllers.buscarResponsable); // Nueva ruta para buscar responsable
+        this.router.put('/contrasenia/:idResp', responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña
+        
 
     }
 }

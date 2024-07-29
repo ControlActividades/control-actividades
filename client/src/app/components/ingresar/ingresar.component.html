@@ -1,20 +1,77 @@
-<div class="general">
-    <img class="logo-loger img-fluid order-first" src="https://www.utng.edu.mx/assets/principal/carreras/mapasC/logo-utng.png" alt="UTNG Logo">
-    <div class="container-loger p-5">
-        <h2>Iniciar sesión</h2>
-        <form action="#">
-            <label for="usuario">Usuario</label>
-            <input type="text" id="usuario" name="usuario" required>
-            <label for="contrasena-loger">Contraseña</label>
-            <input class="password-loger" type="password" id="contrasena" name="contrasena" required>
-            <div class="text-center mt-3"><!--Borrar el link para que se remplace por la validacion-->
-                <button class="h5 btn btn-primary" type="submit" routerLink="/inicio/inicio" routerLinkActive="active">Iniciar Sesion</button>
+<div class="body">
+    <video autoplay muted loop id="background-video">
+        <source src="https://cdn.pixabay.com/video/2017/06/11/9825-221185540_large.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+
+    <div class="logo-font">
+        <img src="assets/logotipo.svg" alt="Logotipo">
+    </div>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form [formGroup]="responsableForm" (ngSubmit)="saveResponsable()">
+                <h1>Registrarse</h1>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" formControlName="nombUsuario" placeholder="Usuario">
+                    </div>
+                    <div class="col">
+                        <input type="tel"  formControlName="telefono" placeholder="Telefono">
+                    </div>
+                </div>
+                <input type="email" formControlName="correoElec" placeholder="Correo electrónico">
+                <div class="row">
+                    <div class="col"><input type="password" formControlName="contrasenia" placeholder="Nueva contraseña"></div>
+                    <div class="col"><input type="password" formControlName="confContrasenia" placeholder="Confirma la contraseña"></div>
+                </div>
+
+
+                <input type="text" formControlName="nombres" placeholder="Nombres">
+
+                <div class="row">
+                    <div class="col"><input type="text" formControlName="appPaterno" placeholder="Apellido Paterno"></div>
+                    <div class="col"><input type="text" formControlName="appMaterno" placeholder="Apellido Materno"></div>
+                </div>
+
+
+                <input type="text" formControlName="numControl" placeholder="Número de control">
+                <input type="text" formControlName="grupo" placeholder="Grupo">
+                <select class="form-select" formControlName="idRoles" required>
+                    <option class="o" value="" selected>Seleccione un rol</option>
+                    <option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol.rol}}</option>
+                  </select>
+                <button id="register2">Registrarse</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form [formGroup]="ingresarForm" (ngSubmit)="searchResponsable()">
+                <h1>Ingresar</h1>
+                <input type="text" formControlName="nombUsuario" placeholder="Usuario">
+                <input type="password" formControlName="contrasenia" placeholder="Contraseña">
+                <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
+                <button>Ingresar</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+
+                <div class="toggle-panel toggle-left">
+                    <div class="logo">
+                        <img src="assets/logotipo.svg" alt="Logotipo">
+                    </div>
+                    <h1>Hola de nuevo!</h1>
+                    <p>Ingresa tus credenciales para acceder</p>
+                    <button class="hidden" id="login">Ingresar</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <div class="logo">
+                        <img src="assets/logotipo.svg" alt="Logotipo">
+                    </div>
+                    <h1>Bienvenido!</h1>
+                    <p>Registrate para usar todos nuestros serivcios</p>
+                    <button class="hidden" id="register">Registrarse</button>
+                </div>
             </div>
-        </form>
-        <div class="text-center">
-            <p class="forgot-password-loger"><a href="/recuperar-contras">¿Olvidaste tu contraseña?</a></p>
-            <p class="create-account-loger"><a href="/nuevo-usuario">Crear cuenta nueva</a></p>
         </div>
     </div>
 </div>
-

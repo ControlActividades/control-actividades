@@ -70,5 +70,77 @@ class ResponsablesControllers {
             }
         });
     }
+    // Método para obtener ID por nombre de usuario
+    getIdByUsername(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { nombUsuario } = req.params;
+            try {
+                const result = yield database_1.default.query('SELECT idResp FROM responsable WHERE nombUsuario = ?', [nombUsuario]);
+                if (result.length > 0) {
+                    res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ message: 'Responsable no encontrado desde getId' });
+                }
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Error al obtener el responsable', error });
+            }
+        });
+    }
+    // Método para validar usuario
+    validateUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { nombUsuario, contrasenia } = req.body;
+            try {
+                const result = yield database_1.default.query('SELECT idResp, idRoles FROM responsable WHERE nombUsuario = ? AND contrasenia = ?', [nombUsuario, contrasenia]);
+                if (Array.isArray(result) && result.length > 0) {
+                    res.json(result[0]);
+                }
+                else {
+                    res.status(404).send('Usuario o contraseña incorrectos');
+                }
+            }
+            catch (err) {
+                console.error(err);
+                res.status(500).send('Error en la consulta validateUser');
+            }
+        });
+    }
+    buscarResponsable(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { correoElec, telefono } = req.body;
+            try {
+                const result = yield database_1.default.query('SELECT idResp FROM responsable WHERE correoElec = ? OR telefono = ?', [correoElec, telefono]);
+                if (result.length > 0) {
+                    res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ message: 'Responsable no encontrado' });
+                }
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Error al buscar el responsable', error });
+            }
+        });
+    }
+    updateContrasenia(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idResp } = req.params;
+            const { contrasenia } = req.body;
+            try {
+                const result = yield database_1.default.query('UPDATE responsable SET contrasenia = ? WHERE idResp = ?', [contrasenia, idResp]);
+                if (result.affectedRows > 0) {
+                    res.json({ message: 'Contraseña actualizada' });
+                }
+                else {
+                    res.status(404).json({ message: 'Responsable no encontrado para actualizar la contraseña' });
+                }
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Error al actualizar la contraseña', error });
+            }
+        });
+    }
 }
 exports.responsablesControllers = new ResponsablesControllers();

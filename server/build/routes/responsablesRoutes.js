@@ -13,6 +13,10 @@ class ResponsablesRoutes {
         this.router.delete('/:idResp', responsablesControllers_1.responsablesControllers.delete);
         this.router.put('/:idResp', responsablesControllers_1.responsablesControllers.updateResponsable);
         this.router.get('/:idResp', responsablesControllers_1.responsablesControllers.getResponsable);
+        this.router.get('/id/:nombUsuario', responsablesControllers_1.responsablesControllers.getIdByUsername);
+        this.router.post('/validate', responsablesControllers_1.responsablesControllers.validateUser);
+        this.router.post('/buscar', responsablesControllers_1.responsablesControllers.buscarResponsable); // Nueva ruta para buscar responsable
+        this.router.put('/contrasenia/:idResp', responsablesControllers_1.responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña
     }
 }
 const responsableRoutes = new ResponsablesRoutes();
