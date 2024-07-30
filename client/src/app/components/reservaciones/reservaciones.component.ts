@@ -1,53 +1,38 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, ViewChild, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort'; // Importa MatSort
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { ReservasService } from '../../services/reservas.service';
 
 @Component({
   selector: 'app-reservaciones',
   templateUrl: './reservaciones.component.html',
   styleUrls: ['./reservaciones.component.css']
 })
-export class ReservacionesComponent implements AfterViewInit {
-  displayedColumns: string[] = ['horaInicio', 'horaTermino', 'razonUso', 'areaUsar', 'estado', 'acciones'];
-  dataSource: MatTableDataSource<any>;
-  input: string = ''; // Propiedad para el filtro
+export class ReservacionesComponent {
+  displayedColumns: string[] = ['horaInicio', 'horaFin', 'razon', 'areaUsar', 'estado', 'acciones'];
+  dataSource!: MatTableDataSource<any>;
+
+  reservas : any[] | undefined;
+  @Input() tabGroup: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort; // ViewChild para MatSort
 
-  constructor() {
-    // Ejemplo de datos estáticos
-    const reservaciones = [
-      { horaInicio: '09:00 AM', horaTermino: '10:00 AM', razonUso: 'Reunión de equipo', areaUsar: 'Sala A', estado: 'Aprobada' },
-      { horaInicio: '11:00 AM', horaTermino: '12:00 PM', razonUso: 'Entrenamiento', areaUsar: 'Gimnasio', estado: 'Aprobada' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      { horaInicio: '02:00 PM', horaTermino: '04:00 PM', razonUso: 'Evento cultural', areaUsar: 'Auditorio', estado: 'Pendiente' },
-      // Agrega más datos
-    ];
+  constructor(private reservaService : ReservasService) { }
 
-    this.dataSource = new MatTableDataSource(reservaciones);
+  ngOnInit() {
+    this.getReservas();
+    this.reservaService.refresh$.subscribe(() => this.getReservas());
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort; // Asigna MatSort a dataSource
+    // Verifica si dataSource está definido antes de asignar paginator y sort
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -56,4 +41,27 @@ export class ReservacionesComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  getReservas() {
+    this.reservaService.getReservas().subscribe(
+      resp => {
+        this.dataSource = new MatTableDataSource(resp);
+        // Asegúrate de que paginator y sort estén disponibles
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      err => console.error(err)
+    );
+  }
+
+  deleteReserva(idReserva: string) {
+    this.reservaService.deleteReserva(idReserva).subscribe(
+      resp => {
+        console.log(resp);
+        this.getReservas();
+      },
+      err => console.log(err)
+    );
+  }
+
 }

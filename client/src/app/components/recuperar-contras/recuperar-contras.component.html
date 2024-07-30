@@ -1,21 +1,37 @@
 <div class="general">
-    <img class="logo-loger img-fluid" src="https://www.utng.edu.mx/assets/principal/carreras/mapasC/logo-utng.png" alt="UTNG Logo">
-    <div class="container-loger create-account p-4 mb-5">
-        <h2>Recupera tu cuenta</h2>
-        <form id="recoverAccountForm">
-            <div class="form-group mb-1">
-                <input type="number" id="identifier" name="identifier" class="form-control" placeholder="Escribe número de teléfono para encontrar tu cuenta" >
-                <label class="text-center " for="">ó</label>
-                <input type="email" id="identifier" name="identifier" class="form-control" placeholder="Escribe tu correo  para encontrar tu cuenta" >
-                <label class="text-center mt-5" for="">Crea tu nueva contraseña</label>
-                <input type="password" id="identifier" name="identifier" class="form-control" placeholder="Nueva contraseña" >
-                <input type="password" id="identifier" name="identifier" class="form-control" placeholder="Confirma nueva contraseña" >
+    <div class="left-side">
+        <h2>Recuperar contraseña</h2>
+        <form [formGroup]="buscarForm" (ngSubmit)="onBuscar()">
+            <div class="form-group">
+                <label for="">Correo electrónico</label>
+                <input type="text" formControlName="correoElec" class="form-control" placeholder="Correo electrónico" >
+                <label for="">Teléfono</label>
+                <input type="tel" formControlName="telefono" class="form-control" placeholder="Teléfono" >
             </div>
-            <div class="form-group text-center mb-1">
-                <button class="btn btn-secondary mt-5" type="button" routerLink="/ingresar">Cancelar</button>
-                <button class="btn btn-primary mt-5 " type="submit">Cambiar</button>
+            <div class="form-group text-center">
+                <button class="btn btn-primary" type="submit" [disabled]="buscarForm.disabled">Buscar</button>
             </div>
         </form>
+        <div class="foundCorreo" *ngIf="usuarioEncontrado">
+            <h5 class="text-center">Nueva contraseña</h5>
+            <form [formGroup]="recuperarForm" (ngSubmit)="updateContrasenia()">
+                <div class="form-group">
+                    <label for="">Nueva contraseña</label>
+                    <input type="password" formControlName="contrasenia" class="form-control" placeholder="Nueva contraseña" required>
+                    <label for="">Confirma la contraseña</label>
+                    <input type="password" formControlName="confContrasenia" class="form-control" placeholder="Confirma la contraseña" required>
+                </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-primary" type="submit">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="right-side">
+        <img class="logo-loger" src="https://www.utng.edu.mx/assets/principal/carreras/mapasC/logo-utng.png"
+            alt="UTNG Logo">
+        <h2>Bienvenido!</h2>
+        <p>Regístrate para usar todos nuestros servicios</p>
+        <button class="btn btn-secondary" routerLink="/ingresar">REGISTRARSE</button>
     </div>
 </div>
-<app-footer></app-footer>

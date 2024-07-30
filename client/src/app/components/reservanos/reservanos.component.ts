@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { Reservas } from '../../models/Reservas';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReservasService } from '../../services/reservas.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservanos',
@@ -10,40 +14,95 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 export class ReservanosComponent {
   formAppearance: MatFormFieldAppearance = 'fill'; // Estilo para el formulario
 
-  // Variables para los campos del formulario
-  horaInicio: string = '';
-  horaFin: string = '';
-  fechaReservacion: Date | null = null;
-  razonesReservacion: string = '';
-  areaUsar: string = '';
+  //declaraciones
+  reservaForm: FormGroup;
+  @Input() tabGroup: any;
+  @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
+  length: number = 0;
 
-  constructor() {}
-
-  limpiarFormulario() {
-    this.horaInicio = '';
-    this.horaFin = '';
-    this.fechaReservacion = null;
-    this.razonesReservacion = '';
-    this.areaUsar = '';
+  reserva: Reservas = {
+    idReserva: 0,
+    horaInicio: new Date(),
+    horaFin: new Date(),
+    estado: '',
+    areaUsar: '',
+    fecha: new Date(),
+    razon: '',
+    idResp: 0
   }
 
-  // Ejemplo de método para enviar el formulario
-  enviarFormulario() {
-    //Validacion de la hora
-    if (this.horaInicio > this.horaFin){
-  
-      return;
-    }
-
-    // Aquí puedes procesar y enviar los datos del formulario
-    console.log('Datos del formulario:', {
-      horaInicio: this.horaInicio,
-      horaFin: this.horaFin,
-      fechaReservacion: this.fechaReservacion,
-      razonesReservacion: this.razonesReservacion,
-      areaUsar: this.areaUsar,
+  constructor(
+    private fb: FormBuilder,
+    private reservasService: ReservasService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
+    this.reservaForm = this.fb.group({
+      horaInicio: ['', Validators.required],
+      horaFin: ['', Validators.required],
+      estado: [''],
+      areaUsar: ['', Validators.required],
+      fecha: ['', Validators.required],
+      razon: ['', Validators.required],
+      idResp: [''],
     });
+  }
 
-    this
+  ngOnInit(): void {
+    const idReserva = this.activatedRoute.snapshot.paramMap.get('idReserva');
+
+    if (idReserva) {
+      this.reservasService.getReserva(idReserva).subscribe(
+        resp => {
+          this.reserva = resp;
+          this.reservaForm.patchValue({
+            horaInicio: this.reserva.horaInicio,
+            horaFin: this.reserva.horaFin,
+            estado: this.reserva.estado,
+            areaUsar: this.reserva.areaUsar,
+            fecha: this.reserva.fecha,
+            razon: this.reserva.razon
+          });
+        },
+        err => console.error(err)
+      );
+    }
+    this.onChanges();
+  }
+
+  onChanges(): void {
+    this.reservaForm.get('razon')?.valueChanges.subscribe(val => {
+      this.length = val.length;
+    });
+  }
+
+  saveReserva(): void {
+    if (this.reservaForm.valid) {
+      const reserva: Reservas = {
+        idReserva: this.reserva.idReserva,
+        horaInicio: this.reservaForm.get('horaInicio')?.value,
+        horaFin: this.reservaForm.get('horaFin')?.value,
+        estado: this.reservaForm.get('estado')?.value,
+        areaUsar: this.reservaForm.get('areaUsar')?.value,
+        fecha: this.reservaForm.get('fecha')?.value,
+        razon: this.reservaForm.get('razon')?.value
+      };
+
+
+      this.reservasService.saveReserva(reserva).subscribe(
+        resp => {
+          console.log(resp);
+          this.tabChange.emit(1); // Cambia a la pestaña "Reservaciones"
+          this.reservaForm.reset();
+
+        },
+        err => console.log(err)
+      );
+    }
+  }
+
+  reset(){
+    this.reservaForm.reset();
   }
 }
+

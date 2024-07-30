@@ -1,0 +1,16 @@
+<div class="body">
+  <div class="wrapper">
+    <form [formGroup]="edificioForm" (ngSubmit)="edit ? updateEdificio() : saveEdificio()">
+      <h1>{{ edit ? 'Editar edificio' : 'Agregar edificio' }}</h1>
+      <h6>Edificio</h6>
+      <div class="input-box">
+        <input type="text" formControlName="nombEdificio" placeholder="Nombre del edificio" required autofocus>
+        <i class="bi bi-buildings-fill"></i>
+      </div>
+ 
+      <button class="btn" type="submit" [disabled]="edificioForm.invalid">
+        {{ edit ? 'Actualizar' : 'Guardar' }} <i class="bi bi-building-up"></i>
+      </button>
+    </form>
+  </div>
+</div>

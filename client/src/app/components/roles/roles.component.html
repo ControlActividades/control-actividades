@@ -1,0 +1,13 @@
+<div class="container">
+<div class="content mt-4">
+    <mat-tab-group #tabGroup class="fondo" mat-align-tabs="center" mat-stretch-tabs="false">  
+      <mat-tab label="Administrar Roles">
+          <app-admin-roles [tabGroup]="tabGroup" (tabChange)="selectTab($event)"></app-admin-roles>
+      </mat-tab>
+      <mat-tab label="Ver Roles">
+          <app-ver-roles [tabGroup]="tabGroup"></app-ver-roles>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div> 
+   

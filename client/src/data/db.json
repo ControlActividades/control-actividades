@@ -1,0 +1,68 @@
+{
+  "edificio": [
+    {
+      "idEdificio": "1",
+      "nombEdificio": "A"
+    },
+    {
+      "idEdificio": "2",
+      "nombEdificio": "B"
+    },
+    {
+      "idEdificio": "3",
+      "nombEdificio": "CGTI"
+    },
+    {
+      "idEdificio": 0,
+      "nombEdificio": ""
+    },
+    {
+      "idEdificio": 0,
+      "nombEdificio": ""
+    },
+    {
+      "idEdificio": 0,
+      "nombEdificio": ""
+    },
+    {
+      "idEdificio": 0,
+      "nombEdificio": "dsdsd"
+    },
+    {
+      "idEdificio": 0,
+      "nombEdificio": "dsdsd"
+    },
+    {
+      "id": "e430",
+      "idEdificio": 0,
+      "nombEdificio": "dsdsd"
+    },
+    {
+      "id": 0,
+      "idEdificio": 0,
+      "nombEdificio": "dsdsd"
+    }
+  ],
+  "rol": [
+    {
+        "idRol": "1",
+        "rol": "Administrativo"
+    },
+    {
+        "idRol": "2",
+        "rol": "Coordinador de actividad deportiva/cultural"  
+    },
+    {
+        "idRol": "3",
+        "rol": "Maestro"
+    },
+    {
+        "idRol": "4",
+        "rol": "Alumno"
+    },
+    {
+        "idRol": "5",
+        "rol": "Externo de la universidad"
+    }
+]
+}

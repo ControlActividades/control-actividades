@@ -1,26 +1,25 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/inicio/inicio">Inicio</a>
-      <a mat-list-item routerLink="/inicio/reservas">Reservas</a>
-      <a mat-list-item routerLink="/inicio/administrar-reservaciones">Administrar Reservaciones</a>
-      <a mat-list-item routerLink="/inicio/oficios-reservas">Oficios Reservas</a>
-      <a mat-list-item routerLink="/inicio/sugerencias-quejas">Sugerencias y Quejas</a>
-      <a mat-list-item routerLink="/inicio/registros">Registros</a>
+      <a mat-list-item routerLink="/inicio/inicio" >Inicio</a>
+      <a mat-list-item routerLink="/inicio/reservas" *ngIf="canAccess([1, 2 , 4])">Reservas</a>
+      <a mat-list-item routerLink="/inicio/oficios-reservas" *ngIf="canAccess([1, 2 ,4])">Oficios Reservas</a>
+      <a mat-list-item routerLink="/inicio/sugerencias-quejas" >Sugerencias y Quejas</a>
+      <a *ngIf="!(isLoggedIn$ | async)" mat-list-item routerLink="/inicio/reservaciones">Reservaciones</a>
+      <a mat-list-item routerLink="/inicio/administrar-reservaciones" *ngIf="canAccess([1, 4])">Administrar Reservaciones</a>
+      <a mat-list-item routerLink="/inicio/registros" *ngIf="canAccess([1, 4])">Registros</a>
+      <a mat-list-item routerLink="/inicio/edificios" *ngIf="canAccess([1, 4])">Edificios</a>
+      <a mat-list-item routerLink="/inicio/roles" *ngIf="canAccess([4])">Roles</a>
+      <a class="text-center" mat-list-item (click)="logout()">Salir <i class="fa-solid fa-plug-circle-xmark fs-4"></i></a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <!-- Main toolbar -->
     <mat-toolbar>
       <!-- Toggle button for sidenav (if handset) -->
-      <button *ngIf="isHandset$ | async"
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
+      <button *ngIf="isHandset$ | async" type="button" aria-label="Toggle sidenav" mat-icon-button
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
@@ -28,11 +27,7 @@
     </mat-toolbar>
 
     <!-- Content area with router outlet -->
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-
-    <!-- Footer component -->
-    <app-footer></app-footer>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<app-footer></app-footer>

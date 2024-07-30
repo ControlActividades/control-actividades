@@ -32,7 +32,7 @@
                                 <div class="form-group">
                                     <label for="nombreCompleto">Nombre Completo:</label>
                                     <input type="text" class="form-control" id="nombreCompleto"
-                                        placeholder="Nombre Completo" />
+                                        placeholder="Nombre Completo" autofocus/>
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono">Teléfono:</label>
@@ -94,7 +94,7 @@
                                     Sin otro particular por el momento, aprovecho para enviarle un
                                     cordial saludo.
                                 </p>
-                                <div class="form-group text-center">
+                                <div class="form-group text-center"> 
                                     <label for="nombreCompleto">Atentamente:</label>
                                    <div class="signature-line"></div>
                                     <input type="text" class="form-control" id="nombreCompleto" placeholder="Nombre Completo" />
@@ -102,11 +102,8 @@
                                 <div class="form-group text-center">
                                     <label for="edificio">Edificio:</label>
                                     <select class="form-select" id="edificio" required>
-                                        <option selected disabled>Seleccione el edificio</option>
-                                        <option value="docente">A</option>
-                                        <option value="administrativo">B</option>
-                                        <option value="alumno">C</option>
-                                        <option value="visitante">D</option>
+                                        <option value="" disabled selected>Seleccione un edificio</option>
+                                        <option *ngFor="let edificio of edificios" value="{{edificio.nombEdificio}}">{{edificio.nombEdificio}}</option>
                                     </select>
                                 </div>
                                 <p>Universidad Tecnológica del Norte de Guanajuato</p>
@@ -207,12 +204,9 @@
                                 <div class="form-group text-center">
                                     <label for="edificio">Edificio:</label>
                                     <select class="form-select" id="edificio" required>
-                                        <option selected disabled>Seleccione el edificio</option>
-                                        <option value="docente">A</option>
-                                        <option value="administrativo">B</option>
-                                        <option value="alumno">C</option>
-                                        <option value="visitante">D</option>
-                                    </select>
+                                        <option value="" disabled selected>Seleccione un edificio</option>
+                                        <option *ngFor="let edificio of edificios" value="{{edificio.nombEdificio}}">{{edificio.nombEdificio}}</option>
+                                    </select> 
                                 </div>
                                 <p class="font-weight-bold">
                                     Universidad Tecnológica del Norte de Guanajuato
