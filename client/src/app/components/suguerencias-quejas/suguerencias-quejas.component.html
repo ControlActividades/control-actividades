@@ -5,22 +5,22 @@
                 <div class="mt-5">
                     <h1 class="text-center">Sugerencias y quejas</h1>
                 </div>
-
-                <form class="h5">
+                <!-- Formulario con atributos name añadidos -->
+                <form action="https://formsubmit.co/control.actividades.2024@gmail.com" method="POST" class="h5">
                     <div class="row mb-3">
-                        <div class="col-md-6 form-floating mb-3">
-                            <input type="text" class="form-control" id="nombre" placeholder="Nombre Completo">
-                            <label for="nombre">Nombre Completo (opcional)</label>
+                        <div class="col-md-6">
+                            <label for="nombre" class="form-label">Nombre Completo (opcional)</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Completo">
                         </div>
-                        <div class="col-md-6 form-floating mb-3">
-                            <input type="email" class="form-control" id="correo" placeholder="Correo">
-                            <label for="correo">Correo (opcional)</label>
+                        <div class="col-md-6">
+                            <label for="correo" class="form-label">Correo (opcional)</label>
+                            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo">
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6 form-floating mb-3">
-                            <input type="number" class="form-control" id="telefono" placeholder="Teléfono">
-                            <label for="telefono">Teléfono (opcional)</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label">Teléfono (opcional)</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Teléfono">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Tipo de queja o sugerencia</label>
@@ -40,9 +40,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 form-floating">
-                        <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción sugerencia o queja"></textarea>
-                        <label for="descripcion">Descripción sugerencia o queja</label>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción sugerencia o queja</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Descripción sugerencia o queja"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tipo de queja o sugerencia</label>
