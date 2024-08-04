@@ -1,4 +1,4 @@
-export interface Reservas {
+export interface ReservasImprimir {
     idReserva?:number;
     horaInicio?:Date;
     horaFin?:Date;
@@ -7,4 +7,9 @@ export interface Reservas {
     fecha?:string;
     razon?:string;
     idResp?:number;
+    nombCompleto?:string;
+    telefono?:string;
+    grupo?:string;
+    numControl?:string;
+    correoElec?:string;
 }

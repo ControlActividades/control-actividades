@@ -10,10 +10,10 @@ class RolesRoutes {
     }
     config() : void{
         this.router.get('/',rolesControllers.index);
+        this.router.get('/:idRoles', rolesControllers.getRol);
         this.router.post('/',rolesControllers.create);
         this.router.delete('/:idRoles',rolesControllers.delete);
         this.router.put('/:idRoles', rolesControllers.updateRol);
-        this.router.get('/:idRoles', rolesControllers.getRol);
 
     }
 }

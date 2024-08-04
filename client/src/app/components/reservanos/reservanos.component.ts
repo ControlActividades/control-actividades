@@ -4,6 +4,7 @@ import { Reservas } from '../../models/Reservas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReservasService } from '../../services/reservas.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ResponsableService } from '../../services/responsable.service';
 
 @Component({
   selector: 'app-reservanos',
@@ -25,8 +26,8 @@ export class ReservanosComponent {
     horaInicio: new Date(),
     horaFin: new Date(),
     estado: '',
-    areaUsar: '',
-    fecha: new Date(),
+    areaUsar: '', // Usar este nombre
+    fecha: '',
     razon: '',
     idResp: 0
   }
@@ -35,7 +36,8 @@ export class ReservanosComponent {
     private fb: FormBuilder,
     private reservasService: ReservasService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router, 
+    private responsableService : ResponsableService
   ) {
     this.reservaForm = this.fb.group({
       horaInicio: ['', Validators.required],
@@ -78,14 +80,16 @@ export class ReservanosComponent {
 
   saveReserva(): void {
     if (this.reservaForm.valid) {
+      const responsableId = this.responsableService.getUserRole()
       const reserva: Reservas = {
         idReserva: this.reserva.idReserva,
         horaInicio: this.reservaForm.get('horaInicio')?.value,
         horaFin: this.reservaForm.get('horaFin')?.value,
         estado: this.reservaForm.get('estado')?.value,
-        areaUsar: this.reservaForm.get('areaUsar')?.value,
+        areaUsar: this.reservaForm.get('areaUsar')?.value, // Usar este nombre
         fecha: this.reservaForm.get('fecha')?.value,
-        razon: this.reservaForm.get('razon')?.value
+        razon: this.reservaForm.get('razon')?.value,
+        idResp: responsableId
       };
 
 

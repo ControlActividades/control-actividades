@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-@Component({
+@Component({ 
   selector: 'app-ver-edificios',
   templateUrl: './ver-edificios.component.html',
   styleUrls: ['./ver-edificios.component.css']
@@ -47,7 +47,6 @@ export class VerEdificiosComponent implements OnInit, AfterViewInit {
     this.edificioService.getEdificios().subscribe(
       resp => {
         this.dataSource = new MatTableDataSource(resp);
-        // Asegúrate de que paginator y sort estén disponibles
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

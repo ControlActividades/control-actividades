@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-ingresar',
   templateUrl: './ingresar.component.html',
-  styleUrls: ['./ingresar.component.css']
+  styleUrls: ['./ingresar.component.css'] 
 })
 export class IngresarComponent implements AfterViewInit {
   responsableForm: FormGroup;

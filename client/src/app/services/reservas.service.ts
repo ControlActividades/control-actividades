@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, tap } from 'rxjs';
 //models
 import { Reservas } from '../models/Reservas'; 
+import { ReservasImprimir } from '../models/ReservaImprimir';
 
 @Injectable({
   providedIn: 'root'
@@ -52,4 +53,11 @@ export class ReservasService {
   get refresh$() {
     return this.refreshSubject.asObservable();
   }
+
+  //oficios de reservas
+  getReservaImprimir(idReserva: string | number) {
+    return this.http.get<ReservasImprimir>(`${this.API_URI}/imprimir/${idReserva}`);
+  }
+
 }
+ 

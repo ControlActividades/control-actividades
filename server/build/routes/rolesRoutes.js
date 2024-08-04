@@ -9,10 +9,10 @@ class RolesRoutes {
     }
     config() {
         this.router.get('/', rolesControllers_1.rolesControllers.index);
+        this.router.get('/:idRoles', rolesControllers_1.rolesControllers.getRol);
         this.router.post('/', rolesControllers_1.rolesControllers.create);
         this.router.delete('/:idRoles', rolesControllers_1.rolesControllers.delete);
         this.router.put('/:idRoles', rolesControllers_1.rolesControllers.updateRol);
-        this.router.get('/:idRoles', rolesControllers_1.rolesControllers.getRol);
     }
 }
 const rolesRoutes = new RolesRoutes();

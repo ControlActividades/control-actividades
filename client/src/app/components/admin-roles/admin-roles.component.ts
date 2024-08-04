@@ -44,7 +44,7 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
               rol : this.rol.rol
             });
             this.edit = true;
-          }); // Forzar la detección de cambios
+          });
         },
         err => console.error(err)
       );

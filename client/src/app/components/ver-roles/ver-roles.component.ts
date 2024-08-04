@@ -47,7 +47,6 @@ export class VerRolesComponent {
     this.rolService.getRoles().subscribe(
       resp => {
         this.dataSource = new MatTableDataSource(resp);
-        // Asegúrate de que paginator y sort estén disponibles
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

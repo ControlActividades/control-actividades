@@ -141,3 +141,12 @@
         transform: translateY(0);
     }
 }
+
+.btn{
+    margin: 10px;
+}
+
+.table-responsive{
+    margin: 100px;
+    width: 90%;
+}

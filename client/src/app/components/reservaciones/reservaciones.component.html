@@ -10,7 +10,7 @@
             </div>
           </div>
         </div>
-         <div class="table-responsive">
+        <div class="table-responsive">
           <mat-form-field>
             <mat-label>Filtro</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
@@ -45,27 +45,35 @@
             <ng-container matColumnDef="estado">
               <th mat-header-cell *matHeaderCellDef> Estado </th>
               <td mat-cell *matCellDef="let reserva">
-                <div class="verificacion-positive">
-                  <i class="fa-regular fa-circle-check fa-3x"></i>
+                <div class="estado-icon">
+                  <ng-container [ngSwitch]="reserva.estado">
+                    <i *ngSwitchCase="'Aceptado'" class="fa-regular fa-circle-check fa-3x"></i>
+                    <i *ngSwitchCase="'Rechazado'" class="fa-regular fa-circle-xmark fa-3x"></i>
+                    <i *ngSwitchDefault class="fa-regular fa-circle-question fa-3x"></i>
+                  </ng-container>
                 </div>
               </td>
             </ng-container>
 
             <!-- Acciones Column -->
-            <ng-container  matColumnDef="acciones">
+            <ng-container matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef class="acciones-header"> Acciones </th>
               <td mat-cell *matCellDef="let reserva">
                 <div class="action-buttons">
-                  <button type="button" class="btn btn-light" routerLink="/oficios-reservas" routerLinkActive="active">
+                  <a type="button" class="btn btn-light" [routerLink]="['../oficios-reservas/edit/',reserva.idReserva]">
                     <i class="fas fa-print fa-lg"></i>
-                  </button>
+                  </a>
                   <button type="button" class="btn btn-danger" (click)="deleteReserva(reserva.idReserva)">
                     <i class="bi bi-calendar2-x-fill"></i>
+                  </button>
+                  <button type="button" class="btn btn-success"
+                    [routerLink]="['/inicio/administrar-reservaciones', reserva.idReserva]">
+                    <i class="fas fa-edit"></i>
                   </button>
                 </div>
               </td>
             </ng-container>
-            
+
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
