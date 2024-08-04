@@ -1,6 +1,6 @@
 <div class="container-fluider px-5 mb-5">
     <div class="row mt-5">
-        <div class="col-lg-6">
+        <div class="col-lg-6 center">
             <div class="card shadow mb-4">
                 <div class="card-body mt-4">
                     <h1 class="card-title text-center mb-4">
@@ -9,104 +9,99 @@
                     <div class="content fs-4">
                         <div class="container mt-5">
                             <div class="border p-4">
-                                <div class="text-center mb-4">
-                                    <img class="img-fluid" src="../../../assets/encabezado.png" alt="" />
-                                    <h3>Universidad Tecnológica del Norte de Guanajuato</h3>
-                                    <p>Dirección de Espacios y Recursos</p>
-                                    <p>Ciudad de Dolores Hidalgo, <input type="date" /></p>
-                                </div>
-                                <p>Lic. Magda Mirthala Hernández González</p>
-                                <p>Encargada de la Subdirección de Formación Integral</p>
-                                <p>
-                                    Gimnasio Auditorio, Universidad Tecnológica del Norte de
-                                    Guanajuato
-                                </p>
-                                <h4 class="mt-4 text-center">
-                                    Solicitud de Reservación de Área en Gimnasio Auditorio
-                                </h4>
-                                <p>
-                                    Por este medio, me permito solicitar la reservación de un área
-                                    en el Gimnasio Auditorio de su institución, conforme a los
-                                    siguientes datos:
-                                </p>
-                                <div class="form-group">
-                                    <label for="nombreCompleto">Nombre Completo:</label>
-                                    <input type="text" class="form-control" id="nombreCompleto"
-                                        placeholder="Nombre Completo" autofocus/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="telefono">Teléfono:</label>
-                                    <input type="text" class="form-control" id="telefono" placeholder="Teléfono" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="correoElectronico">Correo Electrónico:</label>
-                                    <input type="email" class="form-control" id="correoElectronico"
-                                        placeholder="Correo Electrónico" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="grupo">Grupo:</label>
-                                    <input type="text" class="form-control" id="grupo" placeholder="Grupo" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="numeroControl">Número de Control (si aplica):</label>
-                                    <input type="text" class="form-control" id="numeroControl"
-                                        placeholder="Número de Control" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="horaInicio">Hora de Inicio:</label>
-                                    <input type="time" class="form-control" id="horaInicio" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="horaFin">Hora de Fin:</label>
-                                    <input type="time" class="form-control" id="horaFin" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="cargoUTNG">Cargo en la UTNG:</label>
-                                    <select class="form-select" id="cargo" required>
-                                        <option selected disabled>Seleccione el cargo</option>
-                                        <option value="docente">Personal Docente</option>
-                                        <option value="administrativo">Administrativo</option>
-                                        <option value="alumno">Alumnado</option>
-                                        <option value="visitante">Visitante</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="areaUtilizar">Área a Utilizar:</label>
-                                    <select class="form-select" id="areaUso" required>
-                                        <option selected disabled>Seleccione el Área</option>
-                                        <option value="danzaFolclorica">Danza Folclorica</option>
-                                        <option value="taekwando">Taekwando</option>
-                                        <option value="baloncesto-voleibol">Baloncesto o Voleibol</option>
-                                        <option value="ajedrez">Ajedrez</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="razonesReservacion">Razones de la Reservación:</label>
-                                    <textarea class="form-control" id="razonesReservacion" rows="5"
-                                        placeholder="Razones de la Reservación"></textarea>
-                                </div>
-                                <p>
-                                    Agradeceremos de antemano la confirmación de esta solicitud
-                                    para proceder con los preparativos necesarios. Quedo atento a
-                                    cualquier requerimiento adicional que pudiera surgir.
-                                </p>
-                                <p>
-                                    Sin otro particular por el momento, aprovecho para enviarle un
-                                    cordial saludo.
-                                </p>
-                                <div class="form-group text-center"> 
-                                    <label for="nombreCompleto">Atentamente:</label>
-                                   <div class="signature-line"></div>
-                                    <input type="text" class="form-control" id="nombreCompleto" placeholder="Nombre Completo" />
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="edificio">Edificio:</label>
-                                    <select class="form-select" id="edificio" required>
-                                        <option value="" disabled selected>Seleccione un edificio</option>
-                                        <option *ngFor="let edificio of edificios" value="{{edificio.nombEdificio}}">{{edificio.nombEdificio}}</option>
-                                    </select>
-                                </div>
-                                <p>Universidad Tecnológica del Norte de Guanajuato</p>
+                                <form [formGroup]="reservaForm">
+                                    <div class="text-center mb-4">
+                                        <img class="img-fluid" src="../../../assets/encabezado.png" alt="" />
+                                        <h3>Universidad Tecnológica del Norte de Guanajuato</h3>
+                                        <p>Dirección de Espacios y Recursos</p>
+
+                                        <p>Ciudad de Dolores Hidalgo, <input type="date" formControlName="fecha" /></p>
+                                    </div>
+                                    <p>Lic. Magda Mirthala Hernández González</p>
+                                    <p>Encargada de la Subdirección de Formación Integral</p>
+                                    <p>
+                                        Gimnasio Auditorio, Universidad Tecnológica del Norte de
+                                        Guanajuato
+                                    </p>
+                                    <h4 class="mt-4 text-center">
+                                        Solicitud de Reservación de Área en Gimnasio Auditorio
+                                    </h4>
+                                    <p>
+                                        Por este medio, me permito solicitar la reservación de un área
+                                        en el Gimnasio Auditorio de su institución, conforme a los
+                                        siguientes datos:
+                                    </p>
+
+
+                                    <div class="form-group">
+                                        <label for="nombreCompleto">Nombre Completo:</label>
+                                        <input type="text" class="form-control" formControlName="nombCompleto" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono:</label>
+                                        <input type="text" class="form-control" formControlName="telefono" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="correoElectronico">Correo Electrónico:</label>
+                                        <input type="email" class="form-control" formControlName="correoElec"
+                                            placeholder="Correo Electrónico" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="grupo">Grupo:</label>
+                                        <input type="text" class="form-control" formControlName="grupo"
+                                            placeholder="Grupo" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numeroControl">Número de Control (si aplica):</label>
+                                        <input type="text" class="form-control" formControlName="numControl"
+                                            placeholder="Número de Control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horaInicio">Hora de Inicio:</label>
+                                        <input type="time" class="form-control" formControlName="horaInicio" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horaFin">Hora de Fin:</label>
+                                        <input type="time" class="form-control" formControlName="horaFin" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cargo">Cargo</label>
+                                        <input type="text" class="form-control" id="cargo" formControlName="cargo" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="areaUso">Área a Utilizar:</label>
+                                        <select class="form-select" formControlName="areaUso">
+                                            <option selected>Seleccione el Área</option>
+                                            <option value="danzaFolclorica">Danza Folclórica</option>
+                                            <option value="taekwando">Taekwando</option>
+                                            <option value="baloncestoVoleibol">Baloncesto o Voleibol</option>
+                                            <option value="ajedrez">Ajedrez</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="razonesReservacion">Razones de la Reservación:</label>
+                                        <textarea class="form-control" formControlName="razon" rows="5"
+                                            placeholder="Razones de la Reservación"></textarea>
+                                            <label class="end">{{length}} / 4000</label>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <label for="nombreCompleto">Atentamente:</label>
+                                        <div class="signature-line"></div>
+                                        <input type="text" class="form-control" formControlName="nombCompleto"
+                                            placeholder="Nombre Completo" />
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <label for="edificio">Edificio:</label>
+                                        <select class="form-select" formControlName="edificio" required>
+                                            <option value="" disabled selected>Seleccione un edificio</option>
+                                            <option *ngFor="let edificio of edificios"
+                                                value="{{edificio.nombEdificio}}">
+                                                {{edificio.nombEdificio}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <p>Universidad Tecnológica del Norte de Guanajuato</p>
+                                </form>
                             </div>
                             <div class="mt-3">
                                 <button type="button" class="btn btn-primary float-end"><i
@@ -119,101 +114,88 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 center">
             <div class="card shadow mb-4">
                 <div class="card-body mt-4">
                     <h1 class="card-title text-center mb-4">
-                        Oficio para personal externas
+                        Oficio para personal externo
                     </h1>
                     <div class="content fs-4">
                         <div class="container mt-5">
                             <div class="border p-4">
-                                <div class="text-center mb-4">
-                                    <img class="img-fluid" src="../../../assets/encabezado.png" alt="" />
-                                    <h3>Universidad Tecnológica del Norte de Guanajuato</h3>
-                                    <p>Dirección de Espacios y Recursos</p>
-                                    <p>Ciudad de Dolores Hidalgo, <input type="date" /></p>
-                                </div>
-                                <p>Lic. Magda Mirthala Hernández González</p>
-                                <p>Encargada de la Subdirección de Formación Integral</p>
-                                <p>
-                                    Gimnasio Auditorio, Universidad Tecnológica del Norte de
-                                    Guanajuato
-                                </p>
-                                <h4 class="mt-4 text-center">
-                                    Solicitud de Reservación de Área en Gimnasio Auditorio
-                                </h4>
-                                <p>
-                                    Por medio de la presente, me dirijo a usted para realizar la
-                                    solicitud de reservación de un área en el Gimnasio Auditorio
-                                    de su institución, detallando la siguiente información:
-                                </p>
-                                <div class="form-group">
-                                    <label for="nombreCompleto">Nombre Completo:</label>
-                                    <input type="text" class="form-control" id="nombreCompleto"
-                                        placeholder="Nombre Completo" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="telefono">Teléfono:</label>
-                                    <input type="text" class="form-control" id="telefono" placeholder="Teléfono" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="correoElectronico">Correo Electrónico:</label>
-                                    <input type="email" class="form-control" id="correoElectronico"
-                                        placeholder="Correo Electrónico" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="horaInicio">Hora de Inicio:</label>
-                                    <input type="time" class="form-control" id="horaInicio" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="horaFin">Hora de Fin:</label>
-                                    <input type="time" class="form-control" id="horaFin" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="areaUtilizar">Área a Utilizar:</label>
-                                    <select class="form-select" id="areaUso" required>
-                                        <option selected disabled>Seleccione el área</option>
-                                        <option value="danzaFolclorica">Danza Folclorica</option>
-                                        <option value="taekwando">Taekwando</option>
-                                        <option value="baloncesto-voleibol">Baloncesto o Voleibol</option>
-                                        <option value="ajedrez">Ajedrez</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="razonesReservacion">Razones de la Reservación:</label>
-                                    <textarea class="form-control" id="razonesReservacion" rows="5"
-                                        placeholder="Razones de la Reservación"></textarea>
-                                </div>
-                                <p>
-                                    Este espacio será utilizado con fines académicos y prácticos,
-                                    dentro del marco de un proyecto colaborativo entre nuestra
-                                    institución y el Gimnasio Auditorio. Agradecemos de antemano
-                                    la atención brindada y quedamos a la espera de su confirmación
-                                    para proceder con los preparativos pertinentes.
-                                </p>
-                                <p>
-                                    Quedo a disposición para cualquier aclaración que pueda ser
-                                    requerida.
-                                </p>
-                                <div class="form-group text-center">
-                                    <label for="nombreCompleto">Atentamente:</label>
-                                   <div class="signature-line"></div>
-                                    <input type="text" class="form-control" id="nombreCompleto" placeholder="Nombre Completo" />
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="edificio">Edificio:</label>
-                                    <select class="form-select" id="edificio" required>
-                                        <option value="" disabled selected>Seleccione un edificio</option>
-                                        <option *ngFor="let edificio of edificios" value="{{edificio.nombEdificio}}">{{edificio.nombEdificio}}</option>
-                                    </select> 
-                                </div>
-                                <p class="font-weight-bold">
-                                    Universidad Tecnológica del Norte de Guanajuato
-                                </p>
+                                <form [formGroup]="reservaForm">
+                                    <div class="text-center mb-4">
+                                        <img class="img-fluid" src="../../../assets/encabezado.png" alt="" />
+                                        <h3>Universidad Tecnológica del Norte de Guanajuato</h3>
+                                        <p>Dirección de Espacios y Recursos</p>
+
+                                        <p>Ciudad de Dolores Hidalgo, <input type="date" formControlName="fecha" /></p>
+                                    </div>
+                                    <p>Lic. Magda Mirthala Hernández González</p>
+                                    <p>Encargada de la Subdirección de Formación Integral</p>
+                                    <p>
+                                        Gimnasio Auditorio, Universidad Tecnológica del Norte de
+                                        Guanajuato
+                                    </p>
+                                    <h4 class="mt-4 text-center">
+                                        Solicitud de Reservación de Área en Gimnasio Auditorio
+                                    </h4>
+                                    <p>
+                                        Por este medio, me permito solicitar la reservación de un área
+                                        en el Gimnasio Auditorio de su institución, conforme a los
+                                        siguientes datos:
+                                    </p>
+
+
+                                    <div class="form-group">
+                                        <label for="nombreCompleto">Nombre Completo:</label>
+                                        <input type="text" class="form-control" formControlName="nombCompleto" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono:</label>
+                                        <input type="text" class="form-control" formControlName="telefono" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="correoElectronico">Correo Electrónico:</label>
+                                        <input type="email" class="form-control" formControlName="correoElec"
+                                            placeholder="Correo Electrónico" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horaInicio">Hora de Inicio:</label>
+                                        <input type="time" class="form-control" formControlName="horaInicio" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horaFin">Hora de Fin:</label>
+                                        <input type="time" class="form-control" formControlName="horaFin" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="areaUso">Área a Utilizar:</label>
+                                        <select class="form-select" formControlName="areaUso">
+                                            <option selected disabled>Seleccione el Área</option>
+                                            <option value="danzaFolclorica">Danza Folclorica</option>
+                                            <option value="taekwando">Taekwando</option>
+                                            <option value="baloncesto-voleibol">Baloncesto o Voleibol</option>
+                                            <option value="ajedrez">Ajedrez</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="razonesReservacion">Razones de la Reservación:</label>
+                                        <textarea class="form-control" formControlName="razon2" rows="5"
+                                            placeholder="Razones de la Reservación"></textarea>
+                                            <label class="end">{{length2}} / 4000</label>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <label for="nombreCompleto">Atentamente:</label>
+                                        <div class="signature-line"></div>
+                                        <input type="text" class="form-control" formControlName="nombCompleto"
+                                            placeholder="Nombre Completo" />
+                                    </div>
+
+                                    <p>Universidad Tecnológica del Norte de Guanajuato</p>
+                                </form>
                             </div>
-                            <div class="text-center mt-3">
-                                <button type="button" class="btn btn-primary float-end "><i
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-primary float-end"><i
                                         class="fa-solid fa-print fa-3x">
                                     </i>
                                 </button>

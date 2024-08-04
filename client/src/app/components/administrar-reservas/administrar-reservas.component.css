@@ -1,0 +1,35 @@
+.fecha{
+    width: 100%;
+}
+
+.estado{
+    width: 50px;
+}
+.area{
+    width: 200px;
+}
+
+.static-textarea{
+    width: 200px;
+}
+
+
+
+.form-check-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.form-check-inline .form-check-label {
+    flex: 1 1 30%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.form-check-input {
+    position: relative;
+    margin-right: 0.5rem;
+}
+.form-check-input:checked + .form-check-label .fa-circle-check {
+    color: #007bff; /* Cambia el color según sea necesario */
+}

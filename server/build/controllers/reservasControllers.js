@@ -70,5 +70,23 @@ class ReservasControllers {
             }
         });
     }
+    //oficios de reservas
+    getReservaImprimir(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idReserva } = req.params;
+            try {
+                const result = yield database_1.default.query(`SELECT res.horaInicio, res.horaFin, res.areaUsar, res.fecha, res.razon, CONCAT(resp.appPaterno, ' ', resp.appMaterno,' ',resp.nombres) AS nombCompleto, resp.telefono, resp.correoElec, resp.numControl, resp.grupo FROM reservas AS res INNER JOIN responsable AS resp ON res.idResp = resp.idResp WHERE idReserva = ?`, [idReserva]);
+                if (result.length > 0) {
+                    res.json(result[0]);
+                }
+                else {
+                    res.status(404).json({ message: 'Reserva a imprimir no encontrada' });
+                }
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Error al obtener la reserva para imprimir', error });
+            }
+        });
+    }
 }
 exports.reservasControllers = new ReservasControllers();

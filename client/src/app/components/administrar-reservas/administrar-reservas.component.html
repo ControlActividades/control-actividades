@@ -2,8 +2,7 @@
     <div id="myTabContent" class="tab-content bg-light mt-5">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" data-bs-toggle="tab" href="#adminTab" aria-selected="true"
-                    role="tab">Administrador</a>
+                <a class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">Administrador</a>
             </li>
         </ul>
 
@@ -13,58 +12,130 @@
                     <h1>Administrador de reservaciones</h1>
                 </div>
 
-                <div class="table-responsive mt-3">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id de reserva</th>
-                                <th scope="col">Fecha Asignada</th>
-                                <th scope="col">Hora de Inicio</th>
-                                <th scope="col">Hora de Término</th>
-                                <th scope="col">Razón del Uso</th>
-                                <th scope="col">Área a Usar</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Ejemplo de fila editable -->
-                            <tr> 
-                                <td>1</td>
-                                <td><input type="date" class="form-control"></td>
-                                <td><input type="time" class="form-control"></td>
-                                <td><input type="time" class="form-control"></td>
-                                <td contenteditable="true">Evento cultural</td>
-                                <td>
-                                    <select class="form-select">
-                                        <option selected>Seleccionar área</option>
-                                        <option value="1">Danza Folclórica</option>
-                                        <option value="2">Taekwondo</option>
-                                        <option value="3">Baloncesto y voleibol</option>
-                                        <option value="4">Ajedrez</option>
+                <div class="table-responsive mt-3 d-none d-md-block">
+                    <!-- Tabla para pantallas medianas y grandes -->
+                    <form [formGroup]="reservaForm">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha Asignada</th>
+                                    <th scope="col">Hora de Inicio</th>
+                                    <th scope="col">Hora de Término</th>
+                                    <th scope="col">Razón del Uso</th>
+                                    <th scope="col">Área a Usar</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="date" class="form-control fecha" formControlName="fecha"></td>
+                                    <td><input type="time" class="form-control" formControlName="horaInicio"></td>
+                                    <td><input type="time" class="form-control" formControlName="horaFin"></td>
+                                    <td><textarea class="form-control static-textarea" formControlName="razon" rows="3"
+                                            placeholder="Razones de la reservación"></textarea>
+                                        <mat-hint align="end">{{length}} / 4000</mat-hint>
+                                    </td>
+                                    <td>
+                                        <select class="form-select area" formControlName="areaUsar">
+                                            <option selected>Seleccione el Área</option>
+                                            <option value="danzaFolclorica">Danza Folclórica</option>
+                                            <option value="taekwando">Taekwando</option>
+                                            <option value="baloncestoVoleibol">Baloncesto o Voleibol</option>
+                                            <option value="ajedrez">Ajedrez</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="form-check form-check-inline estado">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" formControlName="estado"
+                                                    value="Aceptado">
+                                                <i class="fa-regular fa-circle-check fa-2x text-success"></i> 
+                                            </label>
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" formControlName="estado"
+                                                    value="Rechazado">
+                                                <i class="fa-regular fa-circle-check fa-2x text-danger"></i> 
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm mb-1"
+                                            (click)="updateReservas()">Guardar</button>
+                                        <button class="btn btn-danger btn-sm mb-1"
+                                            (click)="deleteReserva()">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="d-md-none">
+                    <!-- Lista para pantallas pequeñas -->
+                    <form [formGroup]="reservaForm">
+                        <ul class="list-group mt-3">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <span>Fecha Asignada:</span>
+                                    <input type="date" class="form-control" formControlName="fecha">
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <span>Hora de Inicio:</span>
+                                    <input type="time" class="form-control" formControlName="horaInicio">
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <span>Hora de Término:</span>
+                                    <input type="time" class="form-control" formControlName="horaFin">
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex flex-column">
+                                    <span>Razón del Uso:</span>
+                                    <textarea class="form-control" formControlName="razon" rows="3"
+                                        placeholder="Razones de la eservación"></textarea>
+                                    <mat-hint align="end">{{length}} / 4000</mat-hint>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <span>Área a Usar:</span>
+                                    <select class="form-select" formControlName="areaUsar">
+                                        <option selected>Seleccione el Área</option>
+                                        <option value="danzaFolclorica">Danza Folclórica</option>
+                                        <option value="taekwando">Taekwando</option>
+                                        <option value="baloncestoVoleibol">Baloncesto o Voleibol</option>
+                                        <option value="ajedrez">Ajedrez</option>
                                     </select>
-                                </td>
-                                <td>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    <span>Estado:</span>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="estado1" id="aceptado1">
-                                        <label class="form-check-label" for="aceptado1">
-                                            <i class="fa-regular fa-circle-check fa-2x text-success"></i> Aceptado
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" formControlName="estado"
+                                                value="Aceptado">
+                                            <i class="fa-regular fa-circle-check fa-2x text-success"></i> 
+                                        </label>
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" formControlName="estado"
+                                                value="Rechazado">
+                                            <i class="fa-regular fa-circle-check fa-2x text-danger"></i> 
                                         </label>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="estado1" id="rechazado1">
-                                        <label class="form-check-label" for="rechazado1">
-                                            <i class="fa-regular fa-circle-check fa-2x text-danger"></i> Rechazado
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="btn btn-success btn-sm mb-1 " type="submit">Guardar</button>
-                                    <button class="btn btn-danger btn-sm mb-1" type="submit">Eliminar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </div>
+                            </li>
+                            <li class="list-group-item text-center">
+                                <button class="btn btn-success btn-sm mb-1" (click)="updateReservas()">Guardar</button>
+                                <button class="btn btn-danger btn-sm mb-1" (click)="deleteReserva()">Eliminar</button>
+                            </li>
+                        </ul>
+                    </form>
                 </div>
             </div>
         </div>

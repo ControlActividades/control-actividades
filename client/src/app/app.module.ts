@@ -10,7 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -57,6 +57,8 @@ import { RolService } from './services/rol.service';
 
 // Common Module
 import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
 
 @NgModule({
   declarations: [
@@ -103,14 +105,17 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    MatSelectModule
   ],
   providers: [
     ReservasService,
     ResponsableService,
     EdificioService,
     OficioService,
-    RolService
+    RolService,
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }
+
   ],
   bootstrap: [AppComponent]
 })

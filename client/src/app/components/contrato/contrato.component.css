@@ -1,0 +1,15 @@
+.nombre{
+    font-size: 20px;
+}
+
+.contrato{
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.contrato:hover{
+    color: brown;
+    font-size: 22px;
+    text-decoration: dotted;
+}

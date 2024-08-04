@@ -20,8 +20,8 @@ import { RolUnoGuard } from './guards/rol-uno.guard';
 import { RolWeGuard } from './guards/we.guard';
 import { RolBossGuard } from './guards/boss.guard';
 import { RolDosGuard } from './guards/rol-dos.guard';
-import { RolTresGuard } from './guards/rol-tres.guard';
 import { NoAuthGuard } from './guards/logout.guard';
+import { ContratoComponent } from './components/contrato/contrato.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio/inicio', pathMatch: 'full' },
@@ -31,7 +31,9 @@ const routes: Routes = [
     children: [
       { path: 'inicio', component: InicioComponent },
       { path: 'administrar-reservaciones', component: AdministrarReservasComponent, canActivate: [RolUnoGuard] },
+      { path: 'administrar-reservaciones/:idReserva', component: AdministrarReservasComponent },
       { path: 'oficios-reservas', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
+      { path: 'oficios-reservas/edit/:idReserva', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
       { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
       { path: 'reservaciones', component: ReservacionesComponent, canActivate : [NoAuthGuard] },
       { path: 'reservas', component: ReservasComponent, canActivate: [RolDosGuard] },
@@ -40,6 +42,7 @@ const routes: Routes = [
       { path: 'edificios', component: EdificiosComponent, canActivate: [RolUnoGuard] },
       { path: 'edificio/edit/:idEdificio', component: AdminEdificiosComponent, canActivate: [RolUnoGuard] },
       { path: 'roles', component: RolesComponent, canActivate: [RolBossGuard] },
+      { path: 'contrato', component: ContratoComponent },
       { path: 'roles/edit/:idRoles', component: AdminRolesComponent, canActivate: [RolBossGuard] }
     ]
   },

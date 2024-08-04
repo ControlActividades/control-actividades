@@ -1,9 +1,12 @@
-import { Component, ElementRef, HostBinding, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ResponsableService } from '../../services/responsable.service';
 import { RolService } from '../../services/rol.service';
 import { Responsable } from '../../models/Responsable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-registros',
@@ -11,12 +14,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./registros.component.css']
 })
 export class RegistrosComponent implements OnInit {
+
+  displayedColumns: string[] = ['nombUsuario', 'appPaterno', 'appMaterno', 'nombres', 'telefono', 'correoElec','numbControl', 'grupo', 'rol', 'acciones'];
+  dataSource!: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort; 
+
   responsableFormEdit: FormGroup;
   @HostBinding('class') classes = 'row';
   responsables: any = [];
   roles: any = [];
-  currentId: string | number | null = null; // Almacena el ID del responsable actualmente editado
+  currentId: string | number | null = null;
   @ViewChildren('card') cards!: QueryList<ElementRef>;
+
+
 
   constructor(
     private responsableService: ResponsableService,
@@ -26,7 +37,6 @@ export class RegistrosComponent implements OnInit {
   ) {
     this.responsableFormEdit = this.fb.group({
       nombUsuario: ['', Validators.required],
-      contrasenia: ['', Validators.required],
       nombres: ['', Validators.required],
       appPaterno: ['', Validators.required],
       appMaterno: [''],
@@ -47,6 +57,9 @@ export class RegistrosComponent implements OnInit {
     this.responsableService.getResponsables().subscribe(
       resp => {
         this.responsables = resp;
+        this.dataSource = new MatTableDataSource(resp);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       err => console.error(err)
     );
@@ -76,8 +89,7 @@ export class RegistrosComponent implements OnInit {
     this.responsableService.getResponsable(idResp).subscribe(
       resp => {
         this.responsableFormEdit.patchValue({
-          nombUsuario: resp.nombUsuario,
-          contrasenia: resp.contrasenia, 
+          nombUsuario: resp.nombUsuario, 
           nombres: resp.nombres,
           appPaterno: resp.appPaterno,
           appMaterno: resp.appMaterno,
@@ -122,5 +134,18 @@ export class RegistrosComponent implements OnInit {
     if (formElement) {
         formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+}
+
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  if (this.dataSource.paginator) {
+    this.dataSource.paginator.firstPage();
+  }
+}
+
+reset(){
+  this.responsableFormEdit.reset();
 }
 }
