@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ReservasService } from '../../services/reservas.service';
+import { ResponsableService } from '../../services/responsable.service';
 
 @Component({
   selector: 'app-reservaciones',
@@ -18,12 +19,14 @@ export class ReservacionesComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort; // ViewChild para MatSort
+  userRole: number = 0;
 
-  constructor(private reservaService : ReservasService) { }
+  constructor(private reservaService : ReservasService,private responsableService: ResponsableService) { }
 
   ngOnInit() {
     this.getReservas();
     this.reservaService.refresh$.subscribe(() => this.getReservas());
+    this.userRole = this.responsableService.getUserRole(); //Rol de responsable
   }
 
   ngAfterViewInit() {
@@ -62,5 +65,11 @@ export class ReservacionesComponent {
       err => console.log(err)
     );
   }
+
+//seguridad de edicion de reservas
+canEdit(): boolean {
+  const allowedRoles = [1, 4]; // Definir los roles que pueden editar
+  return allowedRoles.includes(this.userRole);
+}
 
 }
