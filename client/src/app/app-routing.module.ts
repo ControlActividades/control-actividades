@@ -31,7 +31,7 @@ const routes: Routes = [
     children: [
       { path: 'inicio', component: InicioComponent },
       { path: 'administrar-reservaciones', component: AdministrarReservasComponent, canActivate: [RolUnoGuard] },
-      { path: 'administrar-reservaciones/:idReserva', component: AdministrarReservasComponent },
+      { path: 'administrar-reservaciones/:idReserva', component: AdministrarReservasComponent,canActivate: [RolUnoGuard] },
       { path: 'oficios-reservas', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
       { path: 'oficios-reservas/edit/:idReserva', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
       { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
