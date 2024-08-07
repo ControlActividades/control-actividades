@@ -41,8 +41,19 @@ class ResponsablesControllers {
     create(req, resp) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            yield database_1.default.query('INSERT INTO responsable set ?', [req.body]);
-            resp.json({ message: 'Responsable guardado' });
+            try {
+                yield database_1.default.query('INSERT INTO responsable SET ?', [req.body]);
+                resp.json({ message: 'Responsable guardado' });
+            }
+            catch (error) { // Utiliza 'any' para manejar el error genérico
+                if (error.code === 'ER_SIGNAL_EXCEPTION' && typeof error.sqlMessage === 'string') {
+                    const messages = error.sqlMessage.split('. ');
+                    resp.status(400).json({ message: messages.filter((msg) => msg !== '').join('. ') });
+                }
+                else {
+                    resp.status(500).json({ message: 'Error al guardar el responsable', error });
+                }
+            }
         });
     }
     delete(req, resp) {
@@ -116,7 +127,7 @@ class ResponsablesControllers {
                     res.json(result[0]);
                 }
                 else {
-                    res.status(404).json({ message: 'Responsable no encontrado' });
+                    res.status(404).json({ message: 'Responsable no encontrado para actualizar ' });
                 }
             }
             catch (error) {

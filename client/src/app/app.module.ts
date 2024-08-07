@@ -19,6 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Angular Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -106,7 +107,8 @@ import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [
     ReservasService,
