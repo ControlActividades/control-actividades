@@ -18,6 +18,7 @@ class ResponsablesRoutes {
         this.router.delete('/:idResp',responsablesControllers.delete);
         this.router.put('/:idResp', responsablesControllers.updateResponsable);
         this.router.put('/contrasenia/:idResp', responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña
+        
     }
 }
 const responsableRoutes = new ResponsablesRoutes();

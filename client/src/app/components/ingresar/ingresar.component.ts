@@ -8,14 +8,15 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-ingresar',
   templateUrl: './ingresar.component.html',
-  styleUrls: ['./ingresar.component.css'] 
+  styleUrls: ['./ingresar.component.css']
 })
 export class IngresarComponent implements AfterViewInit {
   responsableForm: FormGroup;
   ingresarForm: FormGroup;
   errMessage: string | null = null;
   roles: any = [];
-
+  existingUsernameError: string | null = null;
+  errorMessage: string | null = null;
   responsable: Responsable = {
     idResp: 0,
     nombUsuario: '',
@@ -37,18 +38,19 @@ export class IngresarComponent implements AfterViewInit {
     private fb: FormBuilder
   ) {
     this.responsableForm = this.fb.group({
-      nombUsuario: ['', Validators.required],
-      contrasenia: ['', Validators.required],
-      confContrasenia: ['', Validators.required],
-      nombres: ['', Validators.required],
-      appPaterno: ['', Validators.required],
-      appMaterno: [''],
-      telefono: [''],
-      correoElec: [''],
-      numControl: ['', Validators.required],
-      grupo: ['', Validators.required],
-      idRoles: ['']
+      nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
+      contrasenia: ['', [Validators.required, Validators.maxLength(10)]],
+      confContrasenia: ['', [Validators.required, Validators.maxLength(10)]],
+      nombres: ['', [Validators.required, Validators.maxLength(50)]],
+      appPaterno: ['', [Validators.required, Validators.maxLength(20)]],
+      appMaterno: ['', [Validators.maxLength(20)]],
+      telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10)]],
+      correoElec: ['', [Validators.email, Validators.maxLength(320)]],
+      numControl: ['', Validators.maxLength(20)],
+      grupo: ['', Validators.maxLength(20)],
+      idRoles: ['', Validators.required]
     });
+    
     this.ingresarForm = this.fb.group({
       nombUsuario: [''],
       contrasenia: ['']
@@ -84,10 +86,33 @@ export class IngresarComponent implements AfterViewInit {
           console.log(resp);
           this.router.navigate(['/ingresar']);
         },
-        err => console.log(err)
+        err => {
+          if (err.error.message === 'El nombre de usuario ya existe.') {
+            this.existingUsernameError = err.error.message; 
+            this.errorMessage = 'Usuario repetido';
+            console.error('Usaurio');
+          } else if (err.error.message === 'El teléfono ya existe.') {
+            this.existingUsernameError = err.error.message; 
+            this.errorMessage = 'Telefono repetido';
+            console.error('Telefono');
+          }else if (err.error.message === 'El correo electrónico ya existe.') {
+            this.existingUsernameError = err.error.message; 
+            this.errorMessage = 'Correo repetido';
+            console.error('Correo');
+          }else if (err.error.message === 'El número de control ya existe.') {
+            this.existingUsernameError = 'La matrícula ya existe.'; 
+            this.errorMessage = 'Matrícula repetido';
+            console.error('MAtrícula');
+          } else {
+            this.errorMessage = 'Error inesperado en la insersión.';
+            this.existingUsernameError = null;
+          }
+        }
       );
     }
   }
+  
+
 
   searchResponsable() {
     const nombUsuario = this.ingresarForm.get('nombUsuario')?.value;
@@ -134,11 +159,7 @@ export class IngresarComponent implements AfterViewInit {
     const registerBtn = document.getElementById('register');
     const registerBtn2 = document.getElementById('register2');
     const loginBtn = document.getElementById('login');
-    const video = document.getElementById('background-video') as HTMLVideoElement;
 
-    if (video) {
-      video.playbackRate = .37 // Slow down the video
-    }
 
     if (container && registerBtn && loginBtn && registerBtn2) {
       registerBtn.addEventListener('click', () => {
@@ -149,9 +170,9 @@ export class IngresarComponent implements AfterViewInit {
         container.classList.remove("active");
       });
 
-      registerBtn2.addEventListener('click', () => {
+      /* registerBtn2.addEventListener('click', () => {
         container.classList.remove("active");
-      });
+      }); */
     }
   }
 
@@ -160,11 +181,11 @@ export class IngresarComponent implements AfterViewInit {
 
     if (container) {
       if (window.innerWidth <= 789) {
-        container.classList.remove('active'); // Disable the animation for smaller screens
+        container.classList.remove('active'); 
       }
     }
   }
 
-  
+
 
 }

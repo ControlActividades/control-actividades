@@ -9,32 +9,42 @@
                 <div class="row">
                     <div class="col">
                         <input type="text" formControlName="nombUsuario" placeholder="Usuario">
+                        <div *ngIf="responsableForm.get('nombUsuario')?.invalid && responsableForm.get('nombUsuario')?.touched" class="error-message">
+                            <span *ngIf="responsableForm.get('nombUsuario')?.errors?.['required']">El nombre de usuario es obligatorio.</span>
+                            <span *ngIf="responsableForm.get('nombUsuario')?.errors?.['maxlength']"> El nombre de usuario no debe superar los 50 caracteres.</span>
+                          </div>
                     </div>
                     <div class="col">
-                        <input type="tel"  formControlName="telefono" placeholder="Telefono">
+                        <input type="tel" formControlName="telefono" placeholder="Telefono" inputmode="numeric" pattern="[0-9]*">
+                        <div *ngIf="responsableForm.get('telefono')?.invalid && responsableForm.get('telefono')?.touched" class="error-message">
+                            <span *ngIf="responsableForm.get('telefono')?.errors?.['pattern']">El teléfono solo debe contener números.</span>
+                            <span *ngIf="responsableForm.get('telefono')?.errors?.['maxlength']"> El teléfono no debe superar los 10 dígitos.</span>
+                        </div>
                     </div>
                 </div>
                 <input type="email" formControlName="correoElec" placeholder="Correo electrónico">
                 <div class="row">
-                    <div class="col"><input type="password" formControlName="contrasenia" placeholder="Nueva contraseña"></div>
-                    <div class="col"><input type="password" formControlName="confContrasenia" placeholder="Confirma la contraseña"></div>
+                    <div class="col"><input type="password" formControlName="contrasenia"
+                            placeholder="Nueva contraseña"></div>
+                    <div class="col"><input type="password" formControlName="confContrasenia"
+                            placeholder="Confirma la contraseña"></div>
                 </div>
-
-
                 <input type="text" formControlName="nombres" placeholder="Nombres">
-
                 <div class="row">
-                    <div class="col"><input type="text" formControlName="appPaterno" placeholder="Apellido Paterno"></div>
-                    <div class="col"><input type="text" formControlName="appMaterno" placeholder="Apellido Materno"></div>
+                    <div class="col"><input type="text" formControlName="appPaterno" placeholder="Apellido Paterno">
+                    </div>
+                    <div class="col"><input type="text" formControlName="appMaterno" placeholder="Apellido Materno">
+                    </div>
                 </div>
-
-
                 <input type="text" formControlName="numControl" placeholder="Número de control">
                 <input type="text" formControlName="grupo" placeholder="Grupo">
                 <select class="form-select" formControlName="idRoles" required>
                     <option class="o" value="" selected>Seleccione un rol</option>
                     <option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol.rol}}</option>
-                  </select>
+                </select>
+                <div *ngIf="existingUsernameError" class="error-message">{{ existingUsernameError }}</div>
+                <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
                 <button id="register2">Registrarse</button>
             </form>
         </div>
@@ -49,7 +59,6 @@
         </div>
         <div class="toggle-container">
             <div class="toggle">
-
                 <div class="toggle-panel toggle-left">
                     <div class="logo">
                         <img src="assets/logotipo.svg" alt="Logotipo">

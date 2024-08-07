@@ -25,9 +25,20 @@ class ResponsablesControllers {
 
     public async create(req: Request, resp: Response): Promise<void> {
         console.log(req.body);
-        await pool.query('INSERT INTO responsable set ?', [req.body]);
-        resp.json({ message: 'Responsable guardado' })
+        try {
+            await pool.query('INSERT INTO responsable SET ?', [req.body]);
+            resp.json({ message: 'Responsable guardado' });
+        } catch (error: any) { // Utiliza 'any' para manejar el error genérico
+            if (error.code === 'ER_SIGNAL_EXCEPTION' && typeof error.sqlMessage === 'string') {
+                const messages = error.sqlMessage.split('. ');
+                resp.status(400).json({ message: messages.filter((msg: string) => msg !== '').join('. ') });
+            } else {
+                resp.status(500).json({ message: 'Error al guardar el responsable', error });
+            }
+        }
     }
+    
+    
 
     public async delete(req: Request, resp: Response) {
         const { idResp } = req.params;
@@ -89,7 +100,7 @@ class ResponsablesControllers {
             if (result.length > 0) {
                 res.json(result[0]);
             } else {
-                res.status(404).json({ message: 'Responsable no encontrado' });
+                res.status(404).json({ message: 'Responsable no encontrado para actualizar ' });
             }
         } catch (error) {
             res.status(500).json({ message: 'Error al buscar el responsable', error });
@@ -110,6 +121,9 @@ class ResponsablesControllers {
             res.status(500).json({ message: 'Error al actualizar la contraseña', error });
         }
     }
+    
+    //existencia de registro
+
     
     
 }
