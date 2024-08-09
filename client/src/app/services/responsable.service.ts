@@ -39,6 +39,7 @@ export class ResponsableService {
   login(nombUsuario: string, contrasenia: string): Observable<any> {
     return this.http.post(`${this.API_URI}/validate`, { nombUsuario, contrasenia }).pipe(
       tap(user => {
+        console.log('Usuario autenticado:', user); 
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.loggedIn.next(true);
@@ -67,5 +68,9 @@ export class ResponsableService {
 
   updateContrasenia(idResp: string | number, updateData: any): Observable<any> {
     return this.http.put(`${this.API_URI}/contrasenia/${idResp}`, updateData);
+  }
+
+  getResponsableById(idResp: string | number): Observable<any> {
+    return this.http.get(`${this.API_URI}/${idResp}`);
   }
 }

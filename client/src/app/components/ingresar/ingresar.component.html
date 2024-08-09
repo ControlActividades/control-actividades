@@ -8,44 +8,110 @@
                 <h1>Registrarse</h1>
                 <div class="row">
                     <div class="col">
-                        <input type="text" formControlName="nombUsuario" placeholder="Usuario">
-                        <div *ngIf="responsableForm.get('nombUsuario')?.invalid && responsableForm.get('nombUsuario')?.touched" class="error-message">
-                            <span *ngIf="responsableForm.get('nombUsuario')?.errors?.['required']">El nombre de usuario es obligatorio.</span>
-                            <span *ngIf="responsableForm.get('nombUsuario')?.errors?.['maxlength']"> El nombre de usuario no debe superar los 50 caracteres.</span>
-                          </div>
+                        <input type="text" formControlName="nombUsuario" placeholder="Usuario*">
+                        <div *ngIf="responsableForm.get('nombUsuario')?.invalid && responsableForm.get('nombUsuario')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('nombUsuario')?.errors?.['required']">El nombre de usuario
+                                es obligatorio.</span>
+                            <span *ngIf="responsableForm.get('nombUsuario')?.errors?.['maxlength']"> El nombre de
+                                usuario no debe superar los 50 caracteres.</span>
+                        </div>
                     </div>
                     <div class="col">
-                        <input type="tel" formControlName="telefono" placeholder="Telefono" inputmode="numeric" pattern="[0-9]*">
-                        <div *ngIf="responsableForm.get('telefono')?.invalid && responsableForm.get('telefono')?.touched" class="error-message">
-                            <span *ngIf="responsableForm.get('telefono')?.errors?.['pattern']">El teléfono solo debe contener números.</span>
-                            <span *ngIf="responsableForm.get('telefono')?.errors?.['maxlength']"> El teléfono no debe superar los 10 dígitos.</span>
+                        <input type="tel" formControlName="telefono" placeholder="Telefono" inputmode="numeric"
+                            pattern="[0-9]*">
+                        <div *ngIf="responsableForm.get('telefono')?.invalid && responsableForm.get('telefono')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('telefono')?.errors?.['pattern']">El teléfono solo debe
+                                contener números.</span>
+                            <span *ngIf="responsableForm.get('telefono')?.errors?.['minlength']"> El teléfono debe
+                                tener 10 dígitos.</span>
+                            <span *ngIf="responsableForm.get('telefono')?.errors?.['maxlength']"> El teléfono no debe
+                                superar los 10 dígitos.</span>
                         </div>
                     </div>
                 </div>
                 <input type="email" formControlName="correoElec" placeholder="Correo electrónico">
-                <div class="row">
-                    <div class="col"><input type="password" formControlName="contrasenia"
-                            placeholder="Nueva contraseña"></div>
-                    <div class="col"><input type="password" formControlName="confContrasenia"
-                            placeholder="Confirma la contraseña"></div>
+                <div *ngIf="responsableForm.get('correoElec')?.invalid && responsableForm.get('correoElec')?.touched"
+                    class="error-message">
+                    <span *ngIf="responsableForm.get('correoElec')?.errors?.['email']">Debe de ser un correo válido
+                        ejemplo&#64;ejemplo.com </span>
+                    <span *ngIf="responsableForm.get('correoElec')?.errors?.['maxlength']"> El correo no debe superar
+                        los 320 dígitos.</span>
                 </div>
-                <input type="text" formControlName="nombres" placeholder="Nombres">
+                <div class="row password-container">
+                    <div class="col"><input [type]="passwordVisible ? 'text' : 'password'" formControlName="contrasenia"
+                            placeholder="Nueva contraseña*">
+                        <div *ngIf="responsableForm.get('contrasenia')?.invalid && responsableForm.get('contrasenia')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('contrasenia')?.errors?.['minlength']"> La contraseña
+                                debe superar los 8 dígitos.</span>
+                            <span *ngIf="responsableForm.get('contrasenia')?.errors?.['maxlength']"> La contraseña no
+                                debe superar los 10 dígitos.</span>
+                            <span *ngIf="responsableForm.get('contrasenia')?.errors?.['required']"> La contraseñia es
+                                obligatoria.</span>
+                        </div>
+                    </div>
+                    <div class="col"><input [type]="passwordVisible ? 'text' : 'password'"
+                            formControlName="confContrasenia" placeholder="Confirma la contraseña*">
+                        <div *ngIf="responsableForm.get('confContrasenia')?.invalid && responsableForm.get('confContrasenia')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('confContrasenia')?.errors?.['minlength']"> La contraseña
+                                debe superar los 8 dígitos.</span>
+                            <span *ngIf="responsableForm.get('confContrasenia')?.errors?.['maxlength']"> La contraseña
+                                no debe superar los 10 dígitos.</span>
+                            <span *ngIf="responsableForm.get('confContrasenia')?.errors?.['required']"> La contraseñia
+                                es obligatoria.</span>
+                        </div>
+                    </div>
+                    <i (click)="togglePasswordVisibility()" class="password-icon bi bi-eye"
+                        [ngClass]="{'bi-eye': !passwordVisible, 'bi-eye-slash': passwordVisible}">
+                        {{ passwordVisible ? ' Ocultar' : ' Mostrar' }} contraseñas
+                    </i>
+                    <span *ngIf="responsableForm.errors?.['passwordMismatch']">Las contraseñas no coinciden.</span>
+                </div>
+                <input type="text" formControlName="nombres" placeholder="Nombres*">
+                <div *ngIf="responsableForm.get('nombres')?.invalid && responsableForm.get('nombres')?.touched"
+                    class="error-message">
+                    <span *ngIf="responsableForm.get('nombres')?.errors?.['maxlength']"> El nombre no debe superar los
+                        50 caracteres.</span>
+                    <span *ngIf="responsableForm.get('nombres')?.errors?.['required']"> El nombre es obligatoria.</span>
+                </div>
+
                 <div class="row">
-                    <div class="col"><input type="text" formControlName="appPaterno" placeholder="Apellido Paterno">
+                    <div class="col"><input type="text" formControlName="appPaterno" placeholder="Apellido Paterno*">
+                        <div *ngIf="responsableForm.get('appPaterno')?.invalid && responsableForm.get('appPaterno')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('appPaterno')?.errors?.['maxlength']"> El apellido paterno
+                                no debe superar los 20 caracteres.</span>
+                            <span *ngIf="responsableForm.get('appPaterno')?.errors?.['required']"> El apellido paterno
+                                es obligatoria.</span>
+                        </div>
                     </div>
                     <div class="col"><input type="text" formControlName="appMaterno" placeholder="Apellido Materno">
+
+                        <div *ngIf="responsableForm.get('appMaterno')?.invalid && responsableForm.get('appMaterno')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('appMaterno')?.errors?.['maxlength']"> El apellido materno
+                                no debe superar los 20 caracteres.</span>
+                        </div>
                     </div>
                 </div>
-                <input type="text" formControlName="numControl" placeholder="Número de control">
+                <input type="text" formControlName="numControl" placeholder="Matrícula">
+                <div *ngIf="responsableForm.get('numControl')?.invalid && responsableForm.get('numControl')?.touched"
+                    class="error-message">
+                    <span *ngIf="responsableForm.get('numControl')?.errors?.['maxlength']"> La matrícula no debe superar
+                        los 20 caracteres.</span>
+                </div>
                 <input type="text" formControlName="grupo" placeholder="Grupo">
                 <select class="form-select" formControlName="idRoles" required>
-                    <option class="o" value="" selected>Seleccione un rol</option>
+                    <option class="o" value="" selected>Seleccione un rol*</option>
                     <option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol.rol}}</option>
                 </select>
                 <div *ngIf="existingUsernameError" class="error-message">{{ existingUsernameError }}</div>
                 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-                <button id="register2">Registrarse</button>
+                <button id="register2" [disabled]="!responsableForm.valid">Registrarse</button>
             </form>
         </div>
         <div class="form-container sign-in">

@@ -13,13 +13,13 @@ table {
 
   .action-buttons {
     display: flex;
-    gap: 10px; /* Espacio entre los botones */
-    justify-content: flex-start; /* Alineación de los botones al inicio (izquierda) */
+    gap: 10px; 
+    justify-content: flex-start; 
   }
   
   .action-buttons .btn {
     display: flex;
-    align-items: center; /* Alinear iconos verticalmente en el centro */
+    align-items: center; 
   }
   .acciones-header{
     text-align: center;
@@ -36,3 +36,13 @@ table {
     align-items: center;
   }
   
+  .fa-circle-xmark{
+color: red
+  }
+
+  .fa-circle-check{
+color: #198754;}
+
+  .fa-circle-question{
+    color: rgb(33, 144, 235);
+  }

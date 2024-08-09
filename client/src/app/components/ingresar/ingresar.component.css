@@ -312,3 +312,24 @@
 span{
 color: red;
 }
+
+button#register2:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+
+.password-container {
+  position: relative;
+  font-size: 15px;
+  text-align: center;
+}
+
+
+.password-icon:hover {
+  color: #0D2C6B;
+  text-decoration: underline;
+}
+.password-icon {
+  cursor: pointer;
+}
