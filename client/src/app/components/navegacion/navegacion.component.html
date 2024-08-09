@@ -8,11 +8,15 @@
       <a mat-list-item routerLink="/inicio/oficios-reservas" *ngIf="canAccess([1, 2 ,4])">Oficios Reservas</a>
       <a mat-list-item routerLink="/inicio/sugerencias-quejas" >Sugerencias y Quejas</a>
       <a *ngIf="!(isLoggedIn$ | async)" mat-list-item routerLink="/inicio/reservaciones">Reservaciones</a>
-      <a mat-list-item routerLink="/inicio/administrar-reservaciones" *ngIf="canAccess([1, 4])">Administrar Reservaciones</a>
       <a mat-list-item routerLink="/inicio/registros" *ngIf="canAccess([1, 4])">Registros</a>
       <a mat-list-item routerLink="/inicio/edificios" *ngIf="canAccess([1, 4])">Edificios</a>
       <a mat-list-item routerLink="/inicio/roles" *ngIf="canAccess([4])">Roles</a>
-      <a class="" mat-list-item (click)="logout()">Salir <i class="fa-solid fa-plug-circle-xmark fs-4"></i></a>
+      <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+        <a mat-list-item (click)="logout()">Cerrar sesión <i class="bi bi-door-closed fs-4"></i></a>
+      </ng-container>
+      <ng-template #notLoggedIn>
+        <a mat-list-item  routerLink="/ingresar">Ingresar <i class="bi bi-door-open fs-4"></i></a>
+      </ng-template>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -23,7 +27,17 @@
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Control de Actividades UTNG</span>
+      <span>Control de Actividades UTNG </span>
+      <span style="flex: 1;"></span>
+      
+      <ng-container *ngIf="isLoggedIn$ | async; else visitorTemplate">
+        <span> Bienvenido, "{{ nombUsuario }}" (Rol: {{ rol }})</span>
+      </ng-container>
+    
+      <!-- Template para mostrar cuando no está autenticado -->
+      <ng-template #visitorTemplate>
+        <span>Bienvenido, Visitante</span>
+      </ng-template>
     </mat-toolbar>
 
     <!-- Content area with router outlet -->

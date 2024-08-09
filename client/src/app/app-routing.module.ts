@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReservacionesComponent } from './components/reservaciones/reservaciones.component';
-import { ReservanosComponent } from './components/reservanos/reservanos.component';
 import { IngresarComponent } from './components/ingresar/ingresar.component';
 import { AdministrarReservasComponent } from './components/administrar-reservas/administrar-reservas.component';
 import { OficiosReservasComponent } from './components/oficios-reservas/oficios-reservas.component';
@@ -30,7 +29,6 @@ const routes: Routes = [
     component: NavegacionComponent,
     children: [
       { path: 'inicio', component: InicioComponent },
-      { path: 'administrar-reservaciones', component: AdministrarReservasComponent, canActivate: [RolUnoGuard] },
       { path: 'administrar-reservaciones/:idReserva', component: AdministrarReservasComponent,canActivate: [RolUnoGuard] },
       { path: 'oficios-reservas', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
       { path: 'oficios-reservas/edit/:idReserva', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },

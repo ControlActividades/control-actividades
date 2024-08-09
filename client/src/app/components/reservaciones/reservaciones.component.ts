@@ -72,4 +72,9 @@ canEdit(): boolean {
   return allowedRoles.includes(this.userRole);
 }
 
+canDelete(): boolean {
+  const allowedRoles = [1, 4, 2]; // Definir los roles que pueden editar
+  return allowedRoles.includes(this.userRole);
+}
+
 }

@@ -18,15 +18,37 @@ export class NavegacionComponent implements OnInit {
       shareReplay()
     );
   userRole: number = 0;
+  nombUsuario: string = '';
+  rol: string = '';
   isLoggedIn$: Observable<boolean>;
 
   constructor(private responsableService: ResponsableService, private router: Router) {
     this.isLoggedIn$ = this.responsableService.loggedIn.asObservable();
     this.userRole = this.responsableService.getUserRole();
+    this.isLoggedIn$.subscribe(loggedIn => {
+      if (loggedIn) {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        const idResp = user.idResp;
+
+        if (idResp) {
+          this.responsableService.getResponsableById(idResp).subscribe(responsable => {
+            this.nombUsuario = responsable.nombUsuario;
+          });
+        }
+
+        // Asignar el rol basado en userRole
+        this.userRole = this.responsableService.getUserRole();
+        this.rol = this.getRoleName(this.userRole);
+      } else {
+        // Cuando no está autenticado
+        this.rol = 'Visitante';
+      }
+    });
   }
 
   ngOnInit() {
     this.userRole = this.responsableService.getUserRole();
+    this.isLoggedIn$ = this.responsableService.loggedIn.asObservable();
   }
 
   logout() {
@@ -37,4 +59,13 @@ export class NavegacionComponent implements OnInit {
   canAccess(role: number[]): boolean {
     return role.includes(this.userRole);
   }
+  getRoleName(role: number): string {
+    switch (role) {
+      case 1: return 'Administrador';
+      case 2: return 'Usuario';
+      case 4: return 'Programador';
+      default: return 'Visitante';
+    }
+  }
+
 }

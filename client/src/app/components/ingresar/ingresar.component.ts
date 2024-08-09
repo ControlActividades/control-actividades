@@ -1,9 +1,11 @@
 import { Component, AfterViewInit, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Responsable } from '../../models/Responsable';
 import { RolService } from '../../services/rol.service';
 import { ResponsableService } from '../../services/responsable.service';
 import { Router } from '@angular/router';
+import { Rol } from '../../models/Rol';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ingresar',
@@ -17,6 +19,9 @@ export class IngresarComponent implements AfterViewInit {
   roles: any = [];
   existingUsernameError: string | null = null;
   errorMessage: string | null = null;
+  passwordVisible: boolean = false;
+
+
   responsable: Responsable = {
     idResp: 0,
     nombUsuario: '',
@@ -31,25 +36,28 @@ export class IngresarComponent implements AfterViewInit {
     idRoles: 0
   };
 
+
+
   constructor(
     private rolService: RolService,
     private responsableService: ResponsableService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.responsableForm = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
-      contrasenia: ['', [Validators.required, Validators.maxLength(10)]],
-      confContrasenia: ['', [Validators.required, Validators.maxLength(10)]],
+      contrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
+      confContrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
       nombres: ['', [Validators.required, Validators.maxLength(50)]],
       appPaterno: ['', [Validators.required, Validators.maxLength(20)]],
       appMaterno: ['', [Validators.maxLength(20)]],
-      telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10)]],
+      telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]],
       correoElec: ['', [Validators.email, Validators.maxLength(320)]],
       numControl: ['', Validators.maxLength(20)],
       grupo: ['', Validators.maxLength(20)],
-      idRoles: ['', Validators.required]
-    });
+      idRoles: [2, Validators.required]
+    },  { validator: this.matchPasswords('contrasenia', 'confContrasenia') });
     
     this.ingresarForm = this.fb.group({
       nombUsuario: [''],
@@ -61,6 +69,12 @@ export class IngresarComponent implements AfterViewInit {
     this.rolService.getRoles().subscribe(
       resp => {
         this.roles = resp;
+      },
+      err => console.error(err)
+    );
+    this.rolService.getRoles().subscribe(
+      resp => {
+        this.roles = resp.filter((rol: Rol) => rol.idRoles === 2); // Filtrar para mostrar solo el rol con id 2
       },
       err => console.error(err)
     );
@@ -85,6 +99,8 @@ export class IngresarComponent implements AfterViewInit {
         resp => {
           console.log(resp);
           this.router.navigate(['/ingresar']);
+          this.registroExitoso();
+          this.responsableForm.reset();
         },
         err => {
           if (err.error.message === 'El nombre de usuario ya existe.') {
@@ -120,7 +136,7 @@ export class IngresarComponent implements AfterViewInit {
 
     if (nombUsuario && contrasenia) {
       this.responsableService.login(nombUsuario, contrasenia).subscribe(
-        user => {
+        () => {
           this.errMessage = null;
           const userRole = this.responsableService.getUserRole();
           if (userRole === 4) { // Ruta para boss
@@ -135,7 +151,7 @@ export class IngresarComponent implements AfterViewInit {
             this.router.navigate(['/inicio/inicio']); // Ruta por defecto
           }
         },
-        error => {
+        () => {
           this.errMessage = 'Usuario o contraseña incorrectos';
         }
       );
@@ -169,10 +185,6 @@ export class IngresarComponent implements AfterViewInit {
       loginBtn.addEventListener('click', () => {
         container.classList.remove("active");
       });
-
-      /* registerBtn2.addEventListener('click', () => {
-        container.classList.remove("active");
-      }); */
     }
   }
 
@@ -186,6 +198,28 @@ export class IngresarComponent implements AfterViewInit {
     }
   }
 
+  private matchPasswords(passwordKey: string, confirmPasswordKey: string): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: any } | null => {
+      const password = formGroup.get(passwordKey);
+      const confirmPassword = formGroup.get(confirmPasswordKey);
+  
+      if (password && confirmPassword && password.value !== confirmPassword.value) {
+        return { 'passwordMismatch': true };
+      }
+      return null;
+    };
+  }
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+
+  }
+
+  registroExitoso() {
+    this.snackBar.open('Registro completado con éxito', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'] 
+    });
+  }
 
 }
