@@ -26,3 +26,59 @@
   color: white !important;
 }
 
+
+/* Estilos para el contenedor de la barra lateral */
+.sidenav-container {
+  height: 100%;
+  background-color: #31688C;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+/* Estilos para la barra de herramientas */
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-toolbar {
+  background-color: #0D2C6B !important;
+  color: white !important;
+}
+
+.mat-toolbar .mat-icon {
+  color: white !important;
+}
+
+/* Estilos para el menú desplegable del usuario */
+.mat-menu-item {
+  font-size: 14px;
+}
+
+.mat-menu {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.mat-menu-item {
+  font-size: 14px;
+}
+
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 750px) {
+  .mat-toolbar span {
+    display: none; 
+  }
+  
+  .mat-menu-trigger {
+    display: inline-block;
+  }
+}
+

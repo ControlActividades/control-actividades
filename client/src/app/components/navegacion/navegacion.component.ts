@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ResponsableService } from '../../services/responsable.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AscensoComponent } from '../ascenso/ascenso.component';
 
 @Component({
   selector: 'app-navegacion',
@@ -22,7 +24,9 @@ export class NavegacionComponent implements OnInit {
   rol: string = '';
   isLoggedIn$: Observable<boolean>;
 
-  constructor(private responsableService: ResponsableService, private router: Router) {
+  constructor(private responsableService: ResponsableService,
+     private router: Router,
+     private dialog: MatDialog) {
     this.isLoggedIn$ = this.responsableService.loggedIn.asObservable();
     this.userRole = this.responsableService.getUserRole();
     this.isLoggedIn$.subscribe(loggedIn => {
@@ -32,7 +36,7 @@ export class NavegacionComponent implements OnInit {
 
         if (idResp) {
           this.responsableService.getResponsableById(idResp).subscribe(responsable => {
-            this.nombUsuario = responsable.nombUsuario;
+            this.nombUsuario = responsable.nombUsuario ?? 'Visitante';
           });
         }
 
@@ -66,6 +70,12 @@ export class NavegacionComponent implements OnInit {
       case 4: return 'Programador';
       default: return 'Visitante';
     }
+  }
+
+  openForm() {
+    this.dialog.open(AscensoComponent, {
+      width: '400px'
+    });
   }
 
 }

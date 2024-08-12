@@ -1,0 +1,13 @@
+<div class="formulario-flotante">
+    <h2>Razón del Ascenso</h2>
+    <form #ascensoForm="ngForm">
+      <mat-form-field>
+        <mat-label>Razón</mat-label>
+        <textarea matInput [(ngModel)]="razon" name="razon" required></textarea>
+      </mat-form-field>
+      <div class="actions">
+        <button mat-button type="button" class="cancel-button" (click)="onCancel()">Cancelar</button>
+        <button mat-raised-button color="primary" class="submit-button" (click)="onSubmit()">Enviar</button>
+      </div> 
+    </form>
+  </div>

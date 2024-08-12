@@ -19,7 +19,7 @@ export class ReservasService {
   }
 
   getReserva(idReserva: string | number) {
-    return this.http.get<Reservas>(`${this.API_URI}/${idReserva}`);
+    return this.http.get<Reservas>(`${this.API_URI}/${idReserva}`); 
   }
 
 

@@ -49,6 +49,7 @@
     border: none;
     padding: 0.5rem 2rem;
     border-radius: 0.25rem;
+    margin: 1px;
 }
 
 .btn-secondary {
@@ -66,3 +67,8 @@ h2 {
 p {
     margin: 3rem 0;
 }
+
+button#register2:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+  }

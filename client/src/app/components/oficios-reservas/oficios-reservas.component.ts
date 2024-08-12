@@ -250,6 +250,19 @@ export class OficiosReservasComponent implements OnInit {
     const areaUso = this.reservaForm.get('areaUso')?.value || '________________________';
     const razon = this.reservaForm.get('razon2')?.value || '________________________';
 
+    switch (areaUso) {
+      case 'danzaFolclorica' : 'Danza Folclórica'
+        break;
+        case 'taekwando' : 'Taekwando'
+        break;
+        case 'baloncestoVoleibol' : 'Baloncesto y Voleibol'
+        break;
+        case 'ajedrez' : 'Ajedrez'
+        break;
+      default: 'Vacio'
+        break;
+    }
+    
     const datos = [
       { label: '• Nombre completo:', value: nombreCompleto },
       { label: '• Teléfono:', value: telefono },

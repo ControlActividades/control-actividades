@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Responsable } from '../models/Responsable';  // Asegúrate de ajustar la ruta correctamente
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,21 +38,33 @@ export class ResponsableService {
     return this.http.put(`${this.API_URI}/${idResp}`, updateResp);
   }
 
-  login(nombUsuario: string, contrasenia: string): Observable<any> {
-    return this.http.post(`${this.API_URI}/validate`, { nombUsuario, contrasenia }).pipe(
+  getUserId(): number {
+    const user: Responsable = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(user.idResp);
+    return user.idResp || 0; // Asegúrate de que `idResp` sea la propiedad correcta
+  }
+
+  login(nombUsuario: string, contrasenia: string): Observable<Responsable> {
+    return this.http.post<Responsable>(`${this.API_URI}/validate`, { nombUsuario, contrasenia }).pipe(
       tap(user => {
         console.log('Usuario autenticado:', user); 
-        if (user) {
+        if (user && user.idResp) {
           localStorage.setItem('user', JSON.stringify(user));
           this.loggedIn.next(true);
+        } else {
+          console.error('Error al autenticar: Usuario inválido.');
         }
+      }),
+      catchError(error => {
+        console.error('Error de autenticación:', error);
+        return throwError(error);
       })
     );
   }
 
   getUserRole(): number {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user.idRoles;
+    return user.idRoles || 0;
   }
 
   isLoggedIn(): boolean {
@@ -73,4 +87,7 @@ export class ResponsableService {
   getResponsableById(idResp: string | number): Observable<any> {
     return this.http.get(`${this.API_URI}/${idResp}`);
   }
+
+ 
+  
 }

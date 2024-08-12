@@ -20,27 +20,30 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!-- Main toolbar -->
     <mat-toolbar>
-      <!-- Toggle button for sidenav (if handset) -->
       <button *ngIf="isHandset$ | async" type="button" aria-label="Toggle sidenav" mat-icon-button
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Control de Actividades UTNG </span>
       <span style="flex: 1;"></span>
-      
-      <ng-container *ngIf="isLoggedIn$ | async; else visitorTemplate">
-        <span> Bienvenido, "{{ nombUsuario }}" (Rol: {{ rol }})</span>
-      </ng-container>
-    
-      <!-- Template para mostrar cuando no está autenticado -->
-      <ng-template #visitorTemplate>
-        <span>Bienvenido, Visitante</span>
-      </ng-template>
+
+      <!-- User and Ascenso button with dropdown menu -->
+      <button mat-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>person</mat-icon>
+        <span style="padding: 3px; color: red;" *ngIf="isLoggedIn$ | async"> {{ nombUsuario }} ({{ rol }}) </span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <span style="padding: 3px; background-color: #31688cae;">Control de Actividades UTNG </span> 
+        <!-- Conditionally show "Solicitar Ascenso" based on role -->
+        <span style="@media (max-width: 550px) {display: block;padding: 3px;} padding: 3px;" *ngIf="isLoggedIn$ | async"> {{ nombUsuario }} ({{ rol }}) </span>
+        <button *ngIf="rol === 'Usuario'" mat-menu-item (click)="openForm()">Solicitar Ascenso</button>
+        <button mat-menu-item *ngIf="isLoggedIn$ | async" (click)="logout()">Cerrar sesión</button>
+        <button mat-menu-item *ngIf="!(isLoggedIn$ | async)" routerLink="/ingresar">Ingresar</button>
+      </mat-menu>
     </mat-toolbar>
 
-    <!-- Content area with router outlet -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

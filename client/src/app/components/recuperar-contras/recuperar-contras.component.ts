@@ -1,36 +1,55 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { ResponsableService } from '../../services/responsable.service';
 import { Router } from '@angular/router';
-import { Responsable } from '../../models/Responsable';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recuperar-contras',
   templateUrl: './recuperar-contras.component.html',
   styleUrls: ['./recuperar-contras.component.css']
 })
-export class RecuperarContrasComponent {
+export class RecuperarContrasComponent implements OnInit {
   buscarForm: FormGroup;
   recuperarForm: FormGroup;
   usuarioEncontrado: boolean = false;
   idResp: string | number | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private responsableService: ResponsableService) {
+  constructor(private fb: FormBuilder, private router: Router, 
+    private responsableService: ResponsableService,
+    private snackBar: MatSnackBar) {
     this.buscarForm = this.fb.group({
-      correoElec: ['', Validators.required],
-      telefono: ['', Validators.required]
-    });
+      correoElec: ['', [Validators.email, Validators.maxLength(260)]],
+      telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]]
+    }, { validator: this.conditionalValidator });
+
     this.recuperarForm = this.fb.group({
-      contrasenia: ['', Validators.required],
-      confContrasenia: ['', Validators.required]
+      contrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      confContrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
     });
   }
 
   ngOnInit() {}
 
+  conditionalValidator(formGroup: FormGroup): ValidationErrors | null {
+    const correoElec = formGroup.get('correoElec')?.value;
+    const telefono = formGroup.get('telefono')?.value;
+
+    if (!correoElec && !telefono) {
+      return { bothRequired: true };
+    }
+
+    return null;
+  }
+
   onBuscar(): void {
     const correoElec = this.buscarForm.get('correoElec')?.value;
     const telefono = this.buscarForm.get('telefono')?.value;
+
+    if (this.buscarForm.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
 
     this.responsableService.buscarResponsable(correoElec, telefono).subscribe(
       resp => {
@@ -38,11 +57,18 @@ export class RecuperarContrasComponent {
           this.usuarioEncontrado = true;
           this.idResp = resp.idResp;
           this.buscarForm.disable();
+          this.searchExitoso();
         } else {
           console.log('Usuario no encontrado');
+          
         }
       },
-      err => console.log(err)
+      err =>{
+
+        console.log(err);
+        this.searchFallido();
+      } 
+        
     );
   }
 
@@ -60,4 +86,27 @@ export class RecuperarContrasComponent {
       );
     }
   }
+
+  searchExitoso() {
+    this.snackBar.open('Usuario encontrado', 'Cerrar', {
+      duration: 2000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center', 
+      verticalPosition: 'bottom', 
+    });
+  }
+
+  searchFallido() {
+    this.snackBar.open('Usuario no encontrado', 'OK', {
+      duration: 2000,
+      panelClass: ['info-snackbar']
+    });
+  }
+
+  cancelar(): void {
+    this.buscarForm.reset();
+    this.buscarForm.enable();
+    this.usuarioEncontrado = false;
+  }
+
 }

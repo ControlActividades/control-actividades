@@ -34,7 +34,7 @@ class ReservasControllers {
         resp.json({message : 'Reserva eliminada'});
     }
 
-    public async updateReserva(req: Request, res: Response): Promise<void> {
+    public async updateReserva(req: Request, res: Response): Promise<void> { 
         const { idReserva } = req.params;
         const updateData = req.body;
         try {
@@ -56,7 +56,7 @@ class ReservasControllers {
     public async getReservaImprimir(req: Request, res: Response): Promise<void> {
         const { idReserva } = req.params;
         try {
-            const result = await pool.query(`SELECT res.horaInicio, res.horaFin, res.areaUsar, res.fecha, res.razon, CONCAT(resp.appPaterno, ' ', resp.appMaterno,' ',resp.nombres) AS nombCompleto, resp.telefono, resp.correoElec, resp.numControl, resp.grupo FROM reservas AS res INNER JOIN responsable AS resp ON res.idResp = resp.idResp WHERE idReserva = ?`, [idReserva]);
+            const result = await pool.query(`SELECT res.horaInicio, res.horaFin, res.areaUsar, res.fecha, res.razon, resp.idResp,CONCAT(resp.appPaterno, ' ', resp.appMaterno,' ',resp.nombres) AS nombCompleto, resp.telefono, resp.correoElec, resp.numControl, resp.grupo FROM reservas AS res INNER JOIN responsable AS resp ON res.idResp = resp.idResp WHERE idReserva = ?`, [idReserva]);
             if (result.length > 0) {
                 res.json(result[0]);
             } else {

@@ -33,10 +33,9 @@ export class ReservanosComponent {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, 
     private reservasService: ReservasService,
     private activatedRoute: ActivatedRoute,
-    private router: Router, 
     private responsableService : ResponsableService
   ) {
     this.reservaForm = this.fb.group({
@@ -74,13 +73,14 @@ export class ReservanosComponent {
 
   onChanges(): void {
     this.reservaForm.get('razon')?.valueChanges.subscribe(val => {
-      this.length = val.length;
+      // Asegúrate de que val sea una cadena antes de acceder a length
+      this.length = (typeof val === 'string') ? val.length : 0;
     });
   }
 
   saveReserva(): void {
     if (this.reservaForm.valid) {
-      const responsableId = this.responsableService.getUserRole()
+      const responsableId = this.responsableService.getUserId()
       const reserva: Reservas = {
         idReserva: this.reserva.idReserva,
         horaInicio: this.reservaForm.get('horaInicio')?.value,

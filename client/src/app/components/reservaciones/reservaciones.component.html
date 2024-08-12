@@ -63,7 +63,7 @@
                   <a type="button" class="btn btn-light" [routerLink]="['../oficios-reservas/edit/',reserva.idReserva]">
                     <i class="fas fa-print fa-lg"></i>
                   </a>
-                  <button type="button" class="btn btn-danger" *ngIf="canDelete()" (click)="deleteReserva(reserva.idReserva)">
+                  <button type="button" class="btn btn-danger" [disabled]="!canDelete(reserva.idResp)" (click)="deleteReserva(reserva.idReserva)">
                     <i class="bi bi-calendar2-x-fill"></i>
                   </button>
                   <button type="button" class="btn btn-success" *ngIf="canEdit()"
@@ -71,7 +71,7 @@
                     <i class="fas fa-edit"></i>
                   </button>
                 </div>
-              </td>
+              </td> 
             </ng-container>
 
 
@@ -81,7 +81,7 @@
             <!-- Row shown when there is no matching data. -->
             <tr class="mat-row" *matNoDataRow>
               <td class="mat-cell" colspan="6">Datos no encontrados en el filtro "{{input.value}}"</td>
-            </tr>
+            </tr> 
           </table>
 
           <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>

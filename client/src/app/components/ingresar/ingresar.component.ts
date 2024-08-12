@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, HostListener } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Responsable } from '../../models/Responsable';
 import { RolService } from '../../services/rol.service';
 import { ResponsableService } from '../../services/responsable.service';
@@ -20,6 +20,7 @@ export class IngresarComponent implements AfterViewInit {
   existingUsernameError: string | null = null;
   errorMessage: string | null = null;
   passwordVisible: boolean = false;
+  passwordVisibleIngresar: boolean = false;
 
 
   responsable: Responsable = {
@@ -53,15 +54,15 @@ export class IngresarComponent implements AfterViewInit {
       appPaterno: ['', [Validators.required, Validators.maxLength(20)]],
       appMaterno: ['', [Validators.maxLength(20)]],
       telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]],
-      correoElec: ['', [Validators.email, Validators.maxLength(320)]],
+      correoElec: ['', [Validators.email, Validators.maxLength(260)]],
       numControl: ['', Validators.maxLength(20)],
-      grupo: ['', Validators.maxLength(20)],
+      grupo: ['', [Validators.maxLength(20), Validators.pattern('^[A-Z]{3}[0-9]{4}$')]],
       idRoles: [2, Validators.required]
-    },  { validator: this.matchPasswords('contrasenia', 'confContrasenia') });
+    },  { validator: [this.matchPasswords('contrasenia', 'confContrasenia'), this.conditionalValidator] });
     
     this.ingresarForm = this.fb.group({
-      nombUsuario: [''],
-      contrasenia: ['']
+      nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
+      contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10)]]
     });
   }
 
@@ -78,6 +79,17 @@ export class IngresarComponent implements AfterViewInit {
       },
       err => console.error(err)
     );
+  }
+
+  conditionalValidator(formGroup: FormGroup): ValidationErrors | null {
+    const correoElec = formGroup.get('correoElec')?.value;
+    const telefono = formGroup.get('telefono')?.value;
+  
+    if (!correoElec && !telefono) {
+      return { bothRequired: true };
+    }
+  
+    return null;
   }
 
   saveResponsable(): void {
@@ -137,6 +149,7 @@ export class IngresarComponent implements AfterViewInit {
     if (nombUsuario && contrasenia) {
       this.responsableService.login(nombUsuario, contrasenia).subscribe(
         () => {
+          this.ingresoExitoso();
           this.errMessage = null;
           const userRole = this.responsableService.getUserRole();
           if (userRole === 4) { // Ruta para boss
@@ -153,6 +166,7 @@ export class IngresarComponent implements AfterViewInit {
         },
         () => {
           this.errMessage = 'Usuario o contraseña incorrectos';
+          this.ingresoFallido();
         }
       );
     } else {
@@ -215,11 +229,33 @@ export class IngresarComponent implements AfterViewInit {
 
   }
 
+  togglePasswordVisibilityIngresar() {
+    this.passwordVisibleIngresar = !this.passwordVisibleIngresar;
+
+  }
+
   registroExitoso() {
     this.snackBar.open('Registro completado con éxito', 'Cerrar', {
       duration: 3000,
       panelClass: ['success-snackbar'] 
     });
   }
+
+  ingresoExitoso() {
+    this.snackBar.open('Ingreso completado con éxito', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center', 
+      verticalPosition: 'top', 
+    });
+  }
+
+  ingresoFallido() {
+    this.snackBar.open('Ingreso completado sin éxito', 'OK', {
+      duration: 3000,
+      panelClass: ['info-snackbar']
+    });
+  }
+
 
 }
