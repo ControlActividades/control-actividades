@@ -27,12 +27,12 @@ CREATE TABLE edificio (
 CREATE TABLE responsable (
     idResp INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombUsuario VARCHAR(50) NOT NULL UNIQUE,
-    contrasenia VARBINARY(32) NOT NULL,  -- Para contraseñas hasheadas con SHA2_256
+    contrasenia VARBINARY(32) NOT NULL,
     nombres VARCHAR(50) NOT NULL,
-    appPaterno VARCHAR(20) NOT NULL,
-    appMaterno VARCHAR(20) NULL,
+    appPaterno VARCHAR(50) NOT NULL,
+    appMaterno VARCHAR(50) NULL,
     telefono VARCHAR(10) NULL UNIQUE,
-    correoElec VARCHAR(320) NULL UNIQUE,
+    correoElec VARCHAR(260) NULL UNIQUE,
     numControl VARCHAR(20) NOT NULL,
     grupo VARCHAR(20) NOT NULL,
     idRoles INT NULL,
@@ -79,5 +79,18 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El número de control ya existe.';
     END IF;
 END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_responsable
+BEFORE INSERT ON responsable
+FOR EACH ROW
+BEGIN
+    IF NOT NEW.grupo REGEXP '^[A-Z]{3}[0-9]{4}$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El campo grupo debe seguir el patrón: 3 letras seguidas de 4 números.';
+    END IF;
+END //
 
 DELIMITER ;

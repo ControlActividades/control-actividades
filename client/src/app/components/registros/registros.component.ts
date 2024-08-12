@@ -17,7 +17,7 @@ export class RegistrosComponent implements OnInit {
   existingUsernameError: string | null = null;
   errorMessage: string | null = null;
 
-  displayedColumns: string[] = ['nombUsuario', 'appPaterno', 'appMaterno', 'nombres', 'telefono', 'correoElec', 'numbControl', 'grupo', 'rol', 'acciones'];
+  displayedColumns: string[] = ['nombUsuario', 'appPaterno', 'appMaterno', 'nombres', 'telefono', 'correoElec', 'numbControl', 'grupo', 'idRoles', 'acciones'];
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -53,8 +53,6 @@ export class RegistrosComponent implements OnInit {
   ngOnInit() {
     this.getResponsables();
     this.getRoles();
-
-
   }
 
   getResponsables() {

@@ -20,13 +20,14 @@ export class ReservacionesComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort; // ViewChild para MatSort
   userRole: number = 0;
-
+  userId: number = 0; // Agregado para almacenar el idResp del usuario
   constructor(private reservaService : ReservasService,private responsableService: ResponsableService) { }
 
   ngOnInit() {
     this.getReservas();
     this.reservaService.refresh$.subscribe(() => this.getReservas());
     this.userRole = this.responsableService.getUserRole(); //Rol de responsable
+    this.userId = this.responsableService.getUserId(); // idResp del usuario
   }
 
   ngAfterViewInit() {
@@ -72,9 +73,9 @@ canEdit(): boolean {
   return allowedRoles.includes(this.userRole);
 }
 
-canDelete(): boolean {
-  const allowedRoles = [1, 4, 2]; // Definir los roles que pueden editar
-  return allowedRoles.includes(this.userRole);
+canDelete(reservaIdResp: number): boolean {
+  const adminRole = 1; // Rol de administrador
+  return this.userRole === adminRole || reservaIdResp === this.userId;
 }
 
 }

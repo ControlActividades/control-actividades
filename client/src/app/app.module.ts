@@ -20,6 +20,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Angular Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -60,6 +62,7 @@ import { RolService } from './services/rol.service';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
+import { AscensoComponent } from './components/ascenso/ascenso.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +86,8 @@ import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
     VerEdificiosComponent,
     RolesComponent,
     AdminRolesComponent,
-    VerRolesComponent
+    VerRolesComponent,
+    AscensoComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +112,9 @@ import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
     HttpClientModule,
     CommonModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatMenuModule
   ],
   providers: [
     ReservasService,

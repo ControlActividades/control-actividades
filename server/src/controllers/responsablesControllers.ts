@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import pool from '../database';
-
+import nodemailer from 'nodemailer';
 
 class ResponsablesControllers {
     public async index(req: Request, resp: Response) {
@@ -37,8 +37,7 @@ class ResponsablesControllers {
             }
         }
     }
-    
-    
+
 
     public async delete(req: Request, resp: Response) {
         const { idResp } = req.params;
@@ -81,19 +80,19 @@ class ResponsablesControllers {
     public async validateUser(req: Request, res: Response): Promise<void> {
         const { nombUsuario, contrasenia } = req.body;
         try {
-          const result = await pool.query('SELECT idResp, idRoles FROM responsable WHERE nombUsuario = ? AND contrasenia = ?', [nombUsuario, contrasenia]);
-          if (Array.isArray(result) && result.length > 0) {
-            res.json(result[0]);
-          } else {
-            res.status(404).send('Usuario o contraseña incorrectos');
-          }
+            const result = await pool.query('SELECT idResp, idRoles FROM responsable WHERE nombUsuario = ? AND contrasenia = ?', [nombUsuario, contrasenia]);
+            if (Array.isArray(result) && result.length > 0) {
+                res.json(result[0]);
+            } else {
+                res.status(404).send('Usuario o contraseña incorrectos');
+            }
         } catch (err) {
-          console.error(err);
-          res.status(500).send('Error en la consulta validateUser');
+            console.error(err);
+            res.status(500).send('Error en la consulta validateUser');
         }
-      }
+    }
 
-      public async buscarResponsable(req: Request, res: Response): Promise<void> {
+    public async buscarResponsable(req: Request, res: Response): Promise<void> {
         const { correoElec, telefono } = req.body;
         try {
             const result = await pool.query('SELECT idResp FROM responsable WHERE correoElec = ? OR telefono = ?', [correoElec, telefono]);
@@ -121,10 +120,8 @@ class ResponsablesControllers {
             res.status(500).json({ message: 'Error al actualizar la contraseña', error });
         }
     }
-    
-    //existencia de registro
 
-    
-    
+    //Correo electrónico ascenso
+
 }
 export const responsablesControllers = new ResponsablesControllers();

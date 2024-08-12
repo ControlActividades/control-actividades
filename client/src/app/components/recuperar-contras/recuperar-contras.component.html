@@ -3,32 +3,81 @@
         <h2>Recuperar contraseña</h2>
         <form [formGroup]="buscarForm" (ngSubmit)="onBuscar()">
             <div class="form-group">
-                <label for="">Correo electrónico</label>
-                <input type="text" formControlName="correoElec" class="form-control" placeholder="Correo electrónico" >
-                <label for="">Teléfono</label>
-                <input type="tel" formControlName="telefono" class="form-control" placeholder="Teléfono" >
+                <label for="correoElec">Correo electrónico</label>
+                <input 
+                    id="correoElec" 
+                    type="text" 
+                    formControlName="correoElec" 
+                    class="form-control" 
+                    placeholder="Correo electrónico">
+                <div *ngIf="buscarForm.get('correoElec')?.touched && buscarForm.get('correoElec')?.invalid">
+                    <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['required']">Correo electrónico es obligatorio.</small>
+                    <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['email']"> El correo electrónico no es válido.</small>
+                    <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['maxlength']"> El correo electrónico no debe exceder los 260 caracteres.</small>
+                </div>
+
+                <label for="telefono">Teléfono</label>
+                <input 
+                    id="telefono" 
+                    type="tel" 
+                    formControlName="telefono" 
+                    class="form-control" 
+                    placeholder="Teléfono">
+                <div *ngIf="buscarForm.get('telefono')?.touched && buscarForm.get('telefono')?.invalid">
+                    <small class="text-danger" *ngIf="buscarForm.get('telefono')?.errors?.['pattern']">El teléfono debe contener solo números.</small>
+                    <small class="text-danger" *ngIf="buscarForm.get('telefono')?.errors?.['minlength']"> El teléfono debe tener al menos 10 dígitos.</small>
+                    <small class="text-danger" *ngIf="buscarForm.get('telefono')?.errors?.['maxlength']"> El teléfono no debe exceder los 10 dígitos.</small>
+                </div>
+                <div *ngIf="buscarForm.errors?.['bothRequired']">
+                    <small class="text-danger">Debe ingresar al menos un campo (correo electrónico o teléfono).</small>
+                </div>
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-primary" type="submit" [disabled]="buscarForm.disabled">Buscar</button>
+                <button class="btn btn-primary" id="register2"  type="submit" [disabled]="!buscarForm.valid">Buscar</button>
             </div>
         </form>
+
         <div class="foundCorreo" *ngIf="usuarioEncontrado">
             <h5 class="text-center">Nueva contraseña</h5>
             <form [formGroup]="recuperarForm" (ngSubmit)="updateContrasenia()">
                 <div class="form-group">
-                    <label for="">Nueva contraseña</label>
-                    <input type="password" formControlName="contrasenia" class="form-control" placeholder="Nueva contraseña" required>
-                    <label for="">Confirma la contraseña</label>
-                    <input type="password" formControlName="confContrasenia" class="form-control" placeholder="Confirma la contraseña" required>
+                    <label for="contrasenia">Nueva contraseña</label>
+                    <input 
+                        id="contrasenia" 
+                        type="password" 
+                        formControlName="contrasenia" 
+                        class="form-control" 
+                        placeholder="Nueva contraseña">
+                    <div *ngIf="recuperarForm.get('contrasenia')?.touched && recuperarForm.get('contrasenia')?.invalid">
+                        <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['required']">Nueva contraseña es obligatoria.</small>
+                        <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['maxlength']">La contraseña no debe exceder los 10 caracteres.</small>
+                        <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['minlength']">La contraseña debe tener al menos 10 caracteres.</small>
+                    </div>
+
+                    <label for="confContrasenia">Confirma la contraseña</label>
+                    <input 
+                        id="confContrasenia" 
+                        type="password" 
+                        formControlName="confContrasenia" 
+                        class="form-control" 
+                        placeholder="Confirma la contraseña">
+                    <div *ngIf="recuperarForm.get('confContrasenia')?.touched && recuperarForm.get('confContrasenia')?.invalid">
+                        <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['required']">Confirmar contraseña es obligatoria.</small>
+                        <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['maxlength']">La confirmación de contraseña no debe exceder los 10 caracteres.</small>
+                        <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['minlength']">La confirmación de contraseña debe tener al menos 10 caracteres.</small>
+                    </div>
                 </div>
                 <div class="form-group text-center">
                     <button class="btn btn-primary" type="submit">Actualizar</button>
+                    <button class="btn btn-primary" (click)="cancelar()">Cancelar</button>
                 </div>
             </form>
         </div>
     </div>
     <div class="right-side">
-        <img class="logo-loger" src="https://www.utng.edu.mx/assets/principal/carreras/mapasC/logo-utng.png"
+        <img 
+            class="logo-loger" 
+            src="https://www.utng.edu.mx/assets/principal/carreras/mapasC/logo-utng.png" 
             alt="UTNG Logo">
         <h2>Bienvenido!</h2>
         <p>Regístrate para usar todos nuestros servicios</p>

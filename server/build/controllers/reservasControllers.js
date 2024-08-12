@@ -75,7 +75,7 @@ class ReservasControllers {
         return __awaiter(this, void 0, void 0, function* () {
             const { idReserva } = req.params;
             try {
-                const result = yield database_1.default.query(`SELECT res.horaInicio, res.horaFin, res.areaUsar, res.fecha, res.razon, CONCAT(resp.appPaterno, ' ', resp.appMaterno,' ',resp.nombres) AS nombCompleto, resp.telefono, resp.correoElec, resp.numControl, resp.grupo FROM reservas AS res INNER JOIN responsable AS resp ON res.idResp = resp.idResp WHERE idReserva = ?`, [idReserva]);
+                const result = yield database_1.default.query(`SELECT res.horaInicio, res.horaFin, res.areaUsar, res.fecha, res.razon, resp.idResp,CONCAT(resp.appPaterno, ' ', resp.appMaterno,' ',resp.nombres) AS nombCompleto, resp.telefono, resp.correoElec, resp.numControl, resp.grupo FROM reservas AS res INNER JOIN responsable AS resp ON res.idResp = resp.idResp WHERE idReserva = ?`, [idReserva]);
                 if (result.length > 0) {
                     res.json(result[0]);
                 }

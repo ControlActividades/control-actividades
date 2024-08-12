@@ -37,7 +37,10 @@
                     <span *ngIf="responsableForm.get('correoElec')?.errors?.['email']">Debe de ser un correo válido
                         ejemplo&#64;ejemplo.com </span>
                     <span *ngIf="responsableForm.get('correoElec')?.errors?.['maxlength']"> El correo no debe superar
-                        los 320 dígitos.</span>
+                        los 260 dígitos.</span>
+                </div>
+                <div *ngIf="responsableForm.errors?.['bothRequired']">
+                    <small class="text-danger">Debe ingresar al menos un campo (correo electrónico o teléfono).</small>
                 </div>
                 <div class="row password-container">
                     <div class="col"><input [type]="passwordVisible ? 'text' : 'password'" formControlName="contrasenia"
@@ -103,7 +106,15 @@
                     <span *ngIf="responsableForm.get('numControl')?.errors?.['maxlength']"> La matrícula no debe superar
                         los 20 caracteres.</span>
                 </div>
-                <input type="text" formControlName="grupo" placeholder="Grupo">
+                <input type="text" formControlName="grupo" placeholder="Grupo (AAA0000)">
+                <div *ngIf="responsableForm.get('grupo')?.invalid && responsableForm.get('grupo')?.touched"
+                    class="error-message">
+                    <span *ngIf="responsableForm.get('grupo')?.errors?.['pattern']"> El grupo debe de seguir el patrón
+                        (AAA0000) **Considera mayúsculas</span>
+                    <span *ngIf="responsableForm.get('grupo')?.errors?.['maxlength']">El grupo no debe superar
+                        los 20 caracteres.</span>
+                </div>
+
                 <select class="form-select" formControlName="idRoles" required>
                     <option class="o" value="" selected>Seleccione un rol*</option>
                     <option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol.rol}}</option>
@@ -118,9 +129,24 @@
             <form [formGroup]="ingresarForm" (ngSubmit)="searchResponsable()">
                 <h1>Ingresar</h1>
                 <input type="text" formControlName="nombUsuario" placeholder="Usuario">
-                <input type="password" formControlName="contrasenia" placeholder="Contraseña">
+                <div *ngIf="ingresarForm.get('nombUsuario')?.invalid && ingresarForm.get('nombUsuario')?.touched"
+                    class="error-message">
+                    <span *ngIf="ingresarForm.get('nombUsuario')?.errors?.['required']">El usuario es requerido</span>
+                    <span *ngIf="ingresarForm.get('nombUsuario')?.errors?.['maxlength']"> El usuario supera los 50 caracteres.</span>
+                </div>
+                <input [type]="passwordVisibleIngresar ? 'text' : 'password'" formControlName="contrasenia" placeholder="Contraseña">
+                <div *ngIf="ingresarForm.get('contrasenia')?.invalid && ingresarForm.get('contrasenia')?.touched"
+                    class="error-message">
+                    <span *ngIf="ingresarForm.get('contrasenia')?.errors?.['required']">La contraseña es requerido</span>
+                    <span *ngIf="ingresarForm.get('contrasenia')?.errors?.['maxlength']"> La contraseña supera los 10 caracteres.</span>
+                    <span *ngIf="ingresarForm.get('contrasenia')?.errors?.['minlength']"> La contraseña no supera los 8 caracteres.</span>
+                </div>
+                <i (click)="togglePasswordVisibilityIngresar()" class="password-icon bi bi-eye"
+                        [ngClass]="{'bi-eye': !passwordVisibleIngresar, 'bi-eye-slash': passwordVisibleIngresar}">
+                        {{ passwordVisibleIngresar ? ' Ocultar' : ' Mostrar' }} contraseñas
+                    </i>
                 <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
-                <button>Ingresar</button>
+                <button id="register2" [disabled]="!ingresarForm.valid">Ingresar</button>
             </form>
         </div>
         <div class="toggle-container">
