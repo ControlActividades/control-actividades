@@ -1,11 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { EdificioService } from '../../services/edificio.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ReservasService } from '../../services/reservas.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReservasImprimir } from '../../models/ReservaImprimir';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+
+
+// Validador personalizado para números
+function phoneNumberValidator(control: AbstractControl): ValidationErrors | null {
+  const phonePattern = /^[0-9]*$/;
+  return phonePattern.test(control.value) ? null : { invalidPhone: true };
+}
+
+// Validador personalizado para área de uso
+function areaUsageValidator(control: AbstractControl): ValidationErrors | null {
+  const validAreas = ['danzaFolclorica', 'taekwando', 'baloncestoVoleibol', 'ajedrez'];
+  return validAreas.includes(control.value) ? null : { invalidArea: true };
+}
 
 @Component({
   selector: 'app-oficios-reservas',
@@ -19,22 +31,22 @@ export class OficiosReservasComponent implements OnInit {
   length2: number = 0;
   constructor(
     private reservaService: ReservasService,
-    private edificioService: EdificioService,
+    private edificioService: EdificioService, 
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) {
     this.reservaForm = this.fb.group({
       nombCompleto: [''],
-      telefono: [''],
-      correoElec: [''],
+      telefono: ['', [ phoneNumberValidator]],
+      correoElec: ['',  Validators.email],
       grupo: [''],
       numControl: [''],
       horaInicio: [''],
       horaFin: [''],
       cargo: [''],
-      areaUso: [''],
+      areaUso: ['', [areaUsageValidator]],
       razon: [''],
-      razon2: [''],
+      razon2: ['' ],
       edificio: [''],
       fecha: ['']
     });
@@ -56,6 +68,22 @@ export class OficiosReservasComponent implements OnInit {
     this.reservaForm.get('razon2')?.valueChanges.subscribe(val => {
       this.length2 = val.length;
     });
+    
+    this.reservaForm.get('nombCompleto')?.valueChanges.subscribe(val => {
+      this.reservaForm.patchValue({ nombCompleto: this.formatName(val) }, { emitEvent: false });
+    });
+
+    this.reservaForm.get('cargo')?.valueChanges.subscribe(val => {
+      this.reservaForm.patchValue({ cargo: this.capitalizeFirstLetter(val) }, { emitEvent: false });
+    });
+  }
+
+  formatName(name: string): string {
+    return name.replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  capitalizeFirstLetter(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
 
   loadReservaData(): void {
@@ -290,10 +318,10 @@ export class OficiosReservasComponent implements OnInit {
 
     // Firma
     const nombre = this.reservaForm.get('nombCompleto')?.value || '_________________________';
-    const edificio = this.reservaForm.get('edificio')?.value || '_____________';
+
     doc.text('Atentamente:', 105, 225, { align: 'center' });
     doc.text('_________________________', 105, 233, { align: 'center' });
-    doc.text(`${nombre} y firma, edificio: ${edificio}`, 105, 239, { align: 'center' });
+    doc.text(`${nombre} y firma`, 105, 239, { align: 'center' });
     doc.text('_________________________', 105, 246, { align: 'center' });
     doc.setFont('Helvetica', 'bold');
     doc.text('Lic. Magda Mirthala Hernández González', 105, 251, {align: 'center'});

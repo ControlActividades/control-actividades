@@ -22,7 +22,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 // Angular Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -63,6 +63,10 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
 import { AscensoComponent } from './components/ascenso/ascenso.component';
+import { DateFormatPipe } from './date-format.pipe';
+import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
+
+
 
 @NgModule({
   declarations: [
@@ -87,7 +91,9 @@ import { AscensoComponent } from './components/ascenso/ascenso.component';
     RolesComponent,
     AdminRolesComponent,
     VerRolesComponent,
-    AscensoComponent
+    AscensoComponent,
+    DateFormatPipe,
+    ConfirmDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +120,8 @@ import { AscensoComponent } from './components/ascenso/ascenso.component';
     MatSelectModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule
   ],
   providers: [
     ReservasService,

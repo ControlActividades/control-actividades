@@ -4,7 +4,9 @@
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
 }
-
+.error-message{
+  margin: 1px;
+}
 .body {
   position: relative;
   width: 100%;
@@ -31,11 +33,12 @@
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.3px;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .container span {
-  font-size: 12px;
+  font-size: 11px;
+  color: red;
 }
 
 .container a {
@@ -112,6 +115,8 @@
   width: 50%;
   opacity: 0;
   z-index: 1;
+  overflow: auto;
+  padding-top: 50px;  
 }
 
 .container.active .sign-up {
@@ -308,16 +313,10 @@
   }
 }
 
-
-span{
-color: red;
-}
-
 button#register2:disabled {
   background-color: #d3d3d3;
   cursor: not-allowed;
 }
-
 
 .password-container {
   position: relative;
@@ -333,3 +332,5 @@ button#register2:disabled {
 .password-icon {
   cursor: pointer;
 }
+
+

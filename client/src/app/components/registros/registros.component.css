@@ -197,3 +197,9 @@
  font-size: 11;
  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+
+.action-buttons {
+    display: flex; 
+    gap: 10px; 
+}

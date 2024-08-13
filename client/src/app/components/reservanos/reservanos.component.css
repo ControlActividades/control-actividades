@@ -3,7 +3,60 @@
     max-width: 500px;
     width: 100%;
   }
-   
-  .width {
-    width: 100%;
+    
+  .mat-form-field {
+    margin-bottom: 16px;
   }
+  
+  .mat-select {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 8px;
+  }
+  
+  .mat-select-value {
+    font-weight: bold;
+    color: #424242;
+  }
+  
+  .mat-option {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+  
+  .mat-option:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-outline {
+    color: #1976d2; /* Color del borde */
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-outline-start, 
+  .mat-form-field-appearance-fill .mat-form-field-outline-end {
+    border-radius: 4px; /* Redondeo de esquinas */
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #e3f2fd; /* Fondo del input */
+  }
+  
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #1976d2; /* Color de la línea inferior */
+  }
+  
+  .mat-form-field-label {
+    color: #1976d2 !important; /* Color del texto del label */
+  }
+  
+  .error-message{
+    color: red;
+    font-size: 15px;
+  }
+
+
+  .snackbar-info {
+    background-color: #2196f3; /* Color azul informativo */
+    color: white; /* Texto blanco */
+  }
+  

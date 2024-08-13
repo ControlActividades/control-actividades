@@ -49,7 +49,7 @@ CREATE TABLE reservas (
     fecha DATE NOT NULL,
     razon VARCHAR(5000) NOT NULL,
     idResp INT NULL,
-    FOREIGN KEY (idResp) REFERENCES responsable(idResp)
+    FOREIGN KEY (idResp) REFERENCES responsable(idResp) ON DELETE CASCADE
 );
 
 

@@ -2,37 +2,51 @@
   <div id="myTabContent" class="tab-content bg-light mt-5">
     <div class="tab-content mt-3 p-3">
       <div class="tab-pane fade active show" id="profile" role="tabpanel">
+       
         <div class="mt-5">
           <h1>Reservanos</h1>
         </div>
+        
         <form [formGroup]="reservaForm" (ngSubmit)="saveReserva()" class="h5">
           <div class="row mt-3">
             <div class="col-lg-4">
               <div class="row">
                 <div class="col">
                   <mat-form-field [appearance]="formAppearance" class="width">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="fecha" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="reservaForm.get('fecha')?.hasError('required')">
+                      La fecha es obligatoria.
+                    </mat-error>
+                    <mat-error *ngIf="reservaForm.get('fecha')?.hasError('matDatepickerMin')">
+                      La fecha no puede ser anterior a hoy.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field [appearance]="formAppearance" class="width">
                     <mat-label>Hora de inicio</mat-label>
-                    <input matInput type="time" placeholder="Hora de inicio" formControlName="horaInicio">
+                    <mat-select formControlName="horaInicio">
+                      <mat-option *ngFor="let time of availableStartTimes" [value]="time">{{ time }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="reservaForm.get('horaInicio')?.hasError('required')">
+                      La hora de inicio es obligatoria.
+                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col">
                   <mat-form-field [appearance]="formAppearance" class="width">
                     <mat-label>Hora de fin</mat-label>
-                    <input matInput type="time" placeholder="Hora de fin" formControlName="horaFin">
+                    <mat-select formControlName="horaFin">
+                      <mat-option *ngFor="let time of availableEndTimes" [value]="time">{{ time }}</mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
 
-              </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field [appearance]="formAppearance" class="width">
-                    <mat-label>Fecha de reservación</mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="fecha">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                  </mat-form-field>
-                </div>
               </div>
             </div>
             <div class="col-lg-4">
@@ -40,6 +54,9 @@
                 <mat-label>Razones de la reservación</mat-label>
                 <textarea matInput rows="7" placeholder="Razones de la Reservación" formControlName="razon"></textarea>
                 <mat-hint align="end">{{length}} / 4000</mat-hint>
+                <mat-error *ngIf="reservaForm.get('razon')?.hasError('required')">
+                  La razón de la reservación es obligatoria.
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-lg-4">
@@ -49,6 +66,9 @@
                 <mat-radio-button class="h6in" value="taekwando">Taekwando</mat-radio-button>
                 <mat-radio-button class="h6in" value="baloncestoVoleibol">Baloncesto y voleibol</mat-radio-button>
                 <mat-radio-button class="h6in" value="ajedrez">Ajedrez</mat-radio-button>
+                <mat-error *ngIf="reservaForm.get('areaUsar')?.hasError('required')" class="error-message">
+                  El área a usar es obligatoria.
+                </mat-error>
               </mat-radio-group>
               <div class="row mt-5">
                 <div class="col">

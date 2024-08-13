@@ -29,41 +29,80 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="date" class="form-control fecha" formControlName="fecha"></td>
-                                    <td><input type="time" class="form-control" formControlName="horaInicio"></td>
-                                    <td><input type="time" class="form-control" formControlName="horaFin"></td>
-                                    <td><textarea class="form-control static-textarea" formControlName="razon" rows="3"
+                                    <td>
+                                        <input type="date" class="form-control" formControlName="fecha">
+                                        <div *ngIf="reservaForm.get('fecha')?.invalid && reservaForm.get('fecha')?.touched"
+                                             class="error-message">
+                                            <span *ngIf="reservaForm.get('fecha')?.errors?.['required']">
+                                                Este campo es requerido.
+                                            </span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <input type="time" class="form-control" formControlName="horaInicio">
+                                        <div *ngIf="reservaForm.get('horaInicio')?.invalid && reservaForm.get('horaInicio')?.touched"
+                                             class="error-message">
+                                            <span *ngIf="reservaForm.get('horaInicio')?.errors?.['required']">
+                                                Este campo es requerido.
+                                            </span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <input type="time" class="form-control" formControlName="horaFin">
+                                        <div *ngIf="reservaForm.get('horaFin')?.invalid && reservaForm.get('horaFin')?.touched"
+                                             class="error-message">
+                                            <span *ngIf="reservaForm.get('horaFin')?.errors?.['required']">
+                                                Este campo es requerido.
+                                            </span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <textarea class="form-control static-textarea" formControlName="razon" rows="3"
                                             placeholder="Razones de la reservación"></textarea>
+                                        <div *ngIf="reservaForm.get('razon')?.invalid && reservaForm.get('razon')?.touched"
+                                             class="error-message">
+                                            <span *ngIf="reservaForm.get('razon')?.errors?.['required']">
+                                                Este campo es requerido.
+                                            </span>
+                                        </div>
                                         <mat-hint align="end">{{length}} / 4000</mat-hint>
                                     </td>
+                                    
                                     <td>
-                                        <select class="form-select area" formControlName="areaUsar">
-                                            <option selected>Seleccione el Área</option>
+                                        <select class="form-select" formControlName="areaUsar">
+                                            <option value="">Seleccione el Área</option>
                                             <option value="danzaFolclorica">Danza Folclórica</option>
                                             <option value="taekwando">Taekwando</option>
                                             <option value="baloncestoVoleibol">Baloncesto o Voleibol</option>
                                             <option value="ajedrez">Ajedrez</option>
                                         </select>
+                                        <div *ngIf="reservaForm.get('areaUsar')?.invalid && reservaForm.get('areaUsar')?.touched"
+                                             class="error-message">
+                                            <span *ngIf="reservaForm.get('areaUsar')?.errors?.['required']">
+                                                Este campo es requerido.
+                                            </span>
+                                        </div>
                                     </td>
+                                    
                                     <td>
                                         <div class="form-check form-check-inline estado">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" formControlName="estado"
-                                                    value="Aceptado">
-                                                <i class="fa-regular fa-circle-check fa-2x text-success"></i> 
+                                                <input class="form-check-input" type="radio" formControlName="estado" value="Aceptado">
+                                                <i class="fa-regular fa-circle-check fa-2x text-success"></i>
                                             </label>
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" formControlName="estado"
-                                                    value="Rechazado">
-                                                <i class="fa-regular fa-circle-check fa-2x text-danger"></i> 
+                                                <input class="form-check-input" type="radio" formControlName="estado" value="Rechazado">
+                                                <i class="fa-regular fa-circle-check fa-2x text-danger"></i>
                                             </label>
                                         </div>
                                     </td>
+                                    
                                     <td>
-                                        <button class="btn btn-success btn-sm mb-1"
-                                            (click)="updateReservas()">Guardar</button>
-                                        <button class="btn btn-danger btn-sm mb-1"
-                                            (click)="deleteReserva()">Eliminar</button>
+                                        <button class="btn btn-success btn-sm mb-1" (click)="updateReservas()">Guardar</button>
+                                        <button class="btn btn-danger btn-sm mb-1" (click)="deleteReserva()">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -79,25 +118,49 @@
                                 <div class="d-flex justify-content-between">
                                     <span>Fecha Asignada:</span>
                                     <input type="date" class="form-control" formControlName="fecha">
+                                    <div *ngIf="reservaForm.get('fecha')?.invalid && reservaForm.get('fecha')?.touched"
+                                         class="error-message">
+                                        <span *ngIf="reservaForm.get('fecha')?.errors?.['required']">
+                                            Este campo es requerido.
+                                        </span>
+                                    </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between">
                                     <span>Hora de Inicio:</span>
                                     <input type="time" class="form-control" formControlName="horaInicio">
+                                    <div *ngIf="reservaForm.get('horaInicio')?.invalid && reservaForm.get('horaInicio')?.touched"
+                                         class="error-message">
+                                        <span *ngIf="reservaForm.get('horaInicio')?.errors?.['required']">
+                                            Este campo es requerido.
+                                        </span>
+                                    </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between">
                                     <span>Hora de Término:</span>
                                     <input type="time" class="form-control" formControlName="horaFin">
+                                    <div *ngIf="reservaForm.get('horaFin')?.invalid && reservaForm.get('horaFin')?.touched"
+                                         class="error-message">
+                                        <span *ngIf="reservaForm.get('horaFin')?.errors?.['required']">
+                                            Este campo es requerido.
+                                        </span>
+                                    </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="d-flex flex-column">
                                     <span>Razón del Uso:</span>
                                     <textarea class="form-control" formControlName="razon" rows="3"
-                                        placeholder="Razones de la eservación"></textarea>
+                                        placeholder="Razones de la reservación"></textarea>
+                                    <div *ngIf="reservaForm.get('razon')?.invalid && reservaForm.get('razon')?.touched"
+                                         class="error-message">
+                                        <span *ngIf="reservaForm.get('razon')?.errors?.['required']">
+                                            Este campo es requerido.
+                                        </span>
+                                    </div>
                                     <mat-hint align="end">{{length}} / 4000</mat-hint>
                                 </div>
                             </li>
@@ -105,12 +168,18 @@
                                 <div class="d-flex justify-content-between">
                                     <span>Área a Usar:</span>
                                     <select class="form-select" formControlName="areaUsar">
-                                        <option selected>Seleccione el Área</option>
+                                        <option value="">Seleccione el Área</option>
                                         <option value="danzaFolclorica">Danza Folclórica</option>
                                         <option value="taekwando">Taekwando</option>
                                         <option value="baloncestoVoleibol">Baloncesto o Voleibol</option>
                                         <option value="ajedrez">Ajedrez</option>
                                     </select>
+                                    <div *ngIf="reservaForm.get('areaUsar')?.invalid && reservaForm.get('areaUsar')?.touched"
+                                         class="error-message">
+                                        <span *ngIf="reservaForm.get('areaUsar')?.errors?.['required']">
+                                            Este campo es requerido.
+                                        </span>
+                                    </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
@@ -118,14 +187,12 @@
                                     <span>Estado:</span>
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" formControlName="estado"
-                                                value="Aceptado">
-                                            <i class="fa-regular fa-circle-check fa-2x text-success"></i> 
+                                            <input class="form-check-input" type="radio" formControlName="estado" value="Aceptado">
+                                            <i class="fa-regular fa-circle-check fa-2x text-success"></i>
                                         </label>
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" formControlName="estado"
-                                                value="Rechazado">
-                                            <i class="fa-regular fa-circle-check fa-2x text-danger"></i> 
+                                            <input class="form-check-input" type="radio" formControlName="estado" value="Rechazado">
+                                            <i class="fa-regular fa-circle-check fa-2x text-danger"></i>
                                         </label>
                                     </div>
                                 </div>

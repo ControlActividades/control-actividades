@@ -6,7 +6,21 @@ import { ResponsableService } from '../../services/responsable.service';
 import { Router } from '@angular/router';
 import { Rol } from '../../models/Rol';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import anime from 'animejs';
 
+
+declare var particlesJS: any;
+const PASSWORD_PATTERN = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+interface ControlLabels {
+  [key: string]: string;
+}
+// Validador personalizado para evitar números en el campo
+export function noNumbersValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const hasNumbers = /\d/.test(control.value);
+    return hasNumbers ? { 'noNumbers': true } : null;
+  };
+}
 @Component({
   selector: 'app-ingresar',
   templateUrl: './ingresar.component.html',
@@ -48,21 +62,26 @@ export class IngresarComponent implements AfterViewInit {
   ) {
     this.responsableForm = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
-      contrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
-      confContrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
-      nombres: ['', [Validators.required, Validators.maxLength(50)]],
-      appPaterno: ['', [Validators.required, Validators.maxLength(20)]],
-      appMaterno: ['', [Validators.maxLength(20)]],
+      contrasenia: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.maxLength(10), Validators.minLength(8)]],
+      confContrasenia: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.maxLength(10), Validators.minLength(8)]],
+      nombres: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator()]],
+      appPaterno: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator()]],
+      appMaterno: ['', [Validators.maxLength(50), noNumbersValidator()]],
       telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]],
       correoElec: ['', [Validators.email, Validators.maxLength(260)]],
       numControl: ['', Validators.maxLength(20)],
       grupo: ['', [Validators.maxLength(20), Validators.pattern('^[A-Z]{3}[0-9]{4}$')]],
       idRoles: [2, Validators.required]
-    },  { validator: [this.matchPasswords('contrasenia', 'confContrasenia'), this.conditionalValidator] });
-    
+    }, { validator: [this.matchPasswords('contrasenia', 'confContrasenia'), this.conditionalValidator] });
+    this.responsableForm.get('nombres')?.valueChanges.subscribe(value => this.capitalize(value, 'nombres'));
+    this.responsableForm.get('appPaterno')?.valueChanges.subscribe(value => this.capitalize(value, 'appPaterno'));
+    this.responsableForm.get('appMaterno')?.valueChanges.subscribe(value => this.capitalize(value, 'appMaterno'));
+    this.responsableForm.get('grupo')?.valueChanges.subscribe(value => this.capitalizeGrup(value, 'grupo'));
+
+
     this.ingresarForm = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
-      contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10)]]
+      contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10), Validators.pattern(PASSWORD_PATTERN)]]
     });
   }
 
@@ -84,11 +103,11 @@ export class IngresarComponent implements AfterViewInit {
   conditionalValidator(formGroup: FormGroup): ValidationErrors | null {
     const correoElec = formGroup.get('correoElec')?.value;
     const telefono = formGroup.get('telefono')?.value;
-  
+
     if (!correoElec && !telefono) {
       return { bothRequired: true };
     }
-  
+
     return null;
   }
 
@@ -116,19 +135,19 @@ export class IngresarComponent implements AfterViewInit {
         },
         err => {
           if (err.error.message === 'El nombre de usuario ya existe.') {
-            this.existingUsernameError = err.error.message; 
+            this.existingUsernameError = err.error.message;
             this.errorMessage = 'Usuario repetido';
             console.error('Usaurio');
           } else if (err.error.message === 'El teléfono ya existe.') {
-            this.existingUsernameError = err.error.message; 
+            this.existingUsernameError = err.error.message;
             this.errorMessage = 'Telefono repetido';
             console.error('Telefono');
-          }else if (err.error.message === 'El correo electrónico ya existe.') {
-            this.existingUsernameError = err.error.message; 
+          } else if (err.error.message === 'El correo electrónico ya existe.') {
+            this.existingUsernameError = err.error.message;
             this.errorMessage = 'Correo repetido';
             console.error('Correo');
-          }else if (err.error.message === 'El número de control ya existe.') {
-            this.existingUsernameError = 'La matrícula ya existe.'; 
+          } else if (err.error.message === 'El número de control ya existe.') {
+            this.existingUsernameError = 'La matrícula ya existe.';
             this.errorMessage = 'Matrícula repetido';
             console.error('MAtrícula');
           } else {
@@ -139,7 +158,7 @@ export class IngresarComponent implements AfterViewInit {
       );
     }
   }
-  
+
 
 
   searchResponsable() {
@@ -182,6 +201,10 @@ export class IngresarComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initializeAnimation();
     this.adjustForScreenSize(); // Adjust on initial load
+    this.initializeParticles()
+  }
+  private initializeParticles() {
+    particlesJS('particles-js', 'assets/particles-config.json');
   }
 
   private initializeAnimation() {
@@ -200,6 +223,15 @@ export class IngresarComponent implements AfterViewInit {
         container.classList.remove("active");
       });
     }
+
+    if (container) {
+      anime({
+        targets: container,
+        opacity: [0, 1],
+        duration: 1500,
+        easing: 'easeInOutQuad'
+      });
+    }
   }
 
   private adjustForScreenSize() {
@@ -207,16 +239,17 @@ export class IngresarComponent implements AfterViewInit {
 
     if (container) {
       if (window.innerWidth <= 789) {
-        container.classList.remove('active'); 
+        container.classList.remove('active');
       }
     }
   }
+
 
   private matchPasswords(passwordKey: string, confirmPasswordKey: string): ValidatorFn {
     return (formGroup: AbstractControl): { [key: string]: any } | null => {
       const password = formGroup.get(passwordKey);
       const confirmPassword = formGroup.get(confirmPasswordKey);
-  
+
       if (password && confirmPassword && password.value !== confirmPassword.value) {
         return { 'passwordMismatch': true };
       }
@@ -237,7 +270,7 @@ export class IngresarComponent implements AfterViewInit {
   registroExitoso() {
     this.snackBar.open('Registro completado con éxito', 'Cerrar', {
       duration: 3000,
-      panelClass: ['success-snackbar'] 
+      panelClass: ['success-snackbar']
     });
   }
 
@@ -245,8 +278,8 @@ export class IngresarComponent implements AfterViewInit {
     this.snackBar.open('Ingreso completado con éxito', 'Cerrar', {
       duration: 3000,
       panelClass: ['success-snackbar'],
-      horizontalPosition: 'center', 
-      verticalPosition: 'top', 
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
     });
   }
 
@@ -256,6 +289,56 @@ export class IngresarComponent implements AfterViewInit {
       panelClass: ['info-snackbar']
     });
   }
+
+  capitalize(value: string, controlName: string): void {
+    const capitalizedValue = value
+      .toLowerCase() // Convierte todo el texto a minúsculas primero
+      .split(' ')    // Divide el texto en palabras
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
+      .join(' ');    // Une las palabras de nuevo en una cadena
+
+    this.responsableForm.get(controlName)?.setValue(capitalizedValue, { emitEvent: false });
+  }
+
+  capitalizeGrup(value: string, controlName: string): void {
+    const capitalizedValue = value.toUpperCase();
+    this.responsableForm.get(controlName)?.setValue(capitalizedValue, { emitEvent: false });
+  }
+
+  getTooltipMessage(controlName: string): string {
+    const control = this.responsableForm.get(controlName);
+    if (control && control.invalid && control.touched) {
+      const labels: ControlLabels = {
+        contrasenia: 'Contraseña',
+        confContrasenia: 'Confirmación de contraseña',
+        nombUsuario: 'Usuario',
+        nombres: 'Nombre',
+        appPaterno: 'Apellido paterno',
+        appMaterno: 'Apellido materno',
+        telefono: 'Telefono',
+        correoElec: 'Correo electrónico',
+        numControl: 'Número de control',
+        grupo: 'Grupo'
+        // Agrega otros controles aquí si es necesario
+      };
+
+      if (control.errors?.['required']) {
+        return `${labels[controlName] || controlName} es obligatorio.`;
+      } else if (control.errors?.['minlength']) {
+        return `La longitud de ${labels[controlName] || controlName} debe ser al menos ${control.errors['minlength'].requiredLength} caracteres.`;
+      } else if (control.errors?.['maxlength']) {
+        return `La longitud de ${labels[controlName] || controlName} no debe superar los ${control.errors['maxlength'].maxLength} caracteres.`;
+      } else if (control.errors?.['pattern']) {
+        return `El formato de ${labels[controlName] || controlName} es incorrecto.`;
+      }
+    }
+    return '';
+  }
+
+//Prueba de slider
+
+
+
 
 
 }
