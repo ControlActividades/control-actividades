@@ -333,4 +333,23 @@ button#register2:disabled {
   cursor: pointer;
 }
 
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 
+}
+
+.body {
+  position: relative;
+  z-index: 1;
+}
+
+.btn{
+  display: flex;
+  
+}
+.btn button{
+  margin: 2px;
+}

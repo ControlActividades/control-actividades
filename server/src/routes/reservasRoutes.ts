@@ -10,11 +10,11 @@ class ReservasRoutes {
     config() : void{
         this.router.get('/',reservasControllers.index);
         this.router.get('/:idReserva', reservasControllers.getReserva);
+        this.router.get('/imprimir/:idReserva', reservasControllers.getReservaImprimir) //imprimir la reserva
         this.router.post('/',reservasControllers.create);
+        this.router.post('/check', reservasControllers.checkReserva); //reserva disponible
         this.router.delete('/:idReserva',reservasControllers.delete);
-        this.router.put('/:idReserva', reservasControllers.updateReserva);
-        this.router.get('/imprimir/:idReserva', reservasControllers.getReservaImprimir)
-
+        this.router.put('/:idReserva', reservasControllers.updateReserva); 
     }
 }
 const reservasRoutes = new ReservasRoutes(); 

@@ -1,5 +1,8 @@
+
 <div class="body">
+    <div id="particles-js"></div>
     <div class="logo-font">
+        
         <img src="assets/logotipo.svg" alt="Logotipo">
     </div>
     <div class="container" id="container">
@@ -19,6 +22,7 @@
                             <span *ngIf="responsableForm.get('telefono')?.errors?.['pattern']">El teléfono solo
                                 debe
                                 contener números.</span>
+                                <span *ngIf="responsableForm.get('telefono')?.errors?.['maxLength']">El teléfono no puede superar los 10 números.</span>
                         </div>
                     </div>
                 </div>
@@ -103,8 +107,10 @@
                 </select>
                 <div *ngIf="existingUsernameError" class="error-message">{{ existingUsernameError }}</div>
                 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-
+                <div class="btn">
                 <button id="register2" [disabled]="!responsableForm.valid">Registrarse</button>
+                <button id="register2" (click)="limpiar()">Limpiar</button>
+            </div>
             </form>
         </div>
         <div class="form-container sign-in">
@@ -122,8 +128,8 @@
                     [ngClass]="{'bi-eye': !passwordVisibleIngresar, 'bi-eye-slash': passwordVisibleIngresar}">
                     {{ passwordVisibleIngresar ? ' Ocultar' : ' Mostrar' }} contraseñas
                 </i>
-                <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
-                <button id="register2" [disabled]="!ingresarForm.valid">Ingresar</button>
+<!--                 <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
+ -->                <button id="register2" [disabled]="!ingresarForm.valid">Ingresar</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -143,8 +149,12 @@
                     <h1>Bienvenido!</h1>
                     <p>Registrate para usar todos nuestros serivcios</p>
                     <button class="hidden" id="register">Registrarse</button>
+                    <button class="particulas" (click)="toggleParticulas()">
+                        {{ particulasActivadas ? 'Desactivar Partículas' : 'Activar Partículas' }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
 </div>

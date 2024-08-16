@@ -121,7 +121,71 @@ class ResponsablesControllers {
         }
     }
 
-    //Correo electrónico ascenso
 
+    // Método para obtener ID por nombre de usuario
+    public async enviarCorreoAscenso(req: Request, res: Response): Promise<void> {
+        const { razon } = req.body;
+    
+        if (!razon) {
+            res.status(400).json({ message: 'La razón del ascenso es requerida' });
+            return;
+        }
+    
+        try {
+            const userId = req.body.userId; // Asegúrate de que el userId se envíe desde el frontend
+            const responsable = await pool.query('SELECT nombres, appPaterno, appMaterno, correoElec, telefono, numControl FROM responsable WHERE idResp = ?', [userId]);
+    
+            if (responsable.length === 0) {
+                res.status(404).json({ message: 'Responsable no encontrado' });
+                return;
+            }
+    
+            const { nombres, appPaterno, appMaterno, correoElec, telefono, numControl } = responsable[0];
+    
+            // Configurar el transporte de correo
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'control.actividades.2024@gmail.com', // Tu correo electrónico
+                    pass: 'tfvz ombm slyd myhx' // Usa la contraseña de aplicación generada
+                }
+            });
+    
+            const mailOptions = {
+                from: 'control.actividades.2024@gmail.com',
+                to: 'rodriguez.mora.zahir.15@gmail.com',
+                subject: '⭐ Solicitud de Ascenso ⭐',
+                text: `
+            Estimada Lic. Magda Mirthala Hernández González
+            
+            Por medio del presente, quisiera presentar una solicitud para ascenderme en la aplicación "Control de Actividades del Gimnasio Auditorio de la UTNG" con razón de:
+            
+            "${razon}"
+            
+            Anexo mis datos de identificación.
+            
+            -Nombre Completo: ${nombres} ${appPaterno} ${appMaterno}
+            -Correo Electrónico: ${correoElec}
+            -Teléfono: ${telefono}
+            -Número de Control: ${numControl}
+            
+            Agradezco su atención y quedo a disposición para cualquier información adicional que se requiera.
+            
+            Atentamente,
+            
+            ${nombres} ${appPaterno} ${appMaterno}
+            `
+            };
+            await transporter.sendMail(mailOptions);
+            res.status(200).json({ message: 'Correo enviado exitosamente' });
+    
+        } catch (error) {
+            console.error('Error al enviar el correo:', error);
+            res.status(500).json({ message: 'Error al enviar el correo', error });
+        }
+    }
+    
 }
+
+
 export const responsablesControllers = new ResponsablesControllers();

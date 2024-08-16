@@ -11,7 +11,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class VerEdificiosComponent implements OnInit, AfterViewInit {
   edificios: any = [];
-  displayedColumns: string[] = ['idEdificio', 'nombEdificio', 'acciones'];
+  displayedColumns: string[] = ['nombEdificio', 'acciones'];
   dataSource!: MatTableDataSource<any>;
   @Input() tabGroup: any;
 

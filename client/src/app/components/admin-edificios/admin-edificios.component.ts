@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Edificios } from '../../models/Edificio';
 import { EdificioService } from '../../services/edificio.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
  @Component({
   selector: 'app-admin-edificios',
   templateUrl: './admin-edificios.component.html',
@@ -24,7 +25,8 @@ export class AdminEdificiosComponent implements OnInit, AfterViewInit {
     private edificioService: EdificioService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdr : ChangeDetectorRef
+    private cdr : ChangeDetectorRef,
+    private snackBar:MatSnackBar
   ) {
     this.edificioForm = this.fb.group({
       nombEdificio: ['', Validators.required]
@@ -44,6 +46,7 @@ export class AdminEdificiosComponent implements OnInit, AfterViewInit {
             });
             this.edit = true;
           });
+        
         },
         err => console.error(err)
       );
@@ -73,8 +76,11 @@ export class AdminEdificiosComponent implements OnInit, AfterViewInit {
             console.log(resp);
             this.tabChange.emit(1); // Cambia a la pestaña "Ver Edificios"
             this.edificioForm.reset();
+            this.ingresoExitoso();
           },
-          err => console.log(err)
+          err => {
+            this.ingresoFallido();
+          }
         );
       }
     }
@@ -89,9 +95,33 @@ export class AdminEdificiosComponent implements OnInit, AfterViewInit {
           console.log(resp);
           this.router.navigate(['/inicio/edificios']);
           this.edificioForm.reset();
+          this.edicionExitoso();
         },
-        err => console.error(err)
+        err => this.ingresoFallido()
       );
     }
+  }
+  ingresoExitoso() {
+    this.snackBar.open('Edificio agregado con éxito', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
+  edicionExitoso() {
+    this.snackBar.open('Edificio sin cambios', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+  ingresoFallido() {
+    this.snackBar.open('Edificio ya existente', 'OK', {
+      duration: 3000,
+      panelClass: ['info-snackbar']
+    });
   }
 }

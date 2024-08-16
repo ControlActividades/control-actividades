@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, tap } from 'rxjs';
 //models
-import { Reservas } from '../models/Reservas'; 
+import { Reservas } from '../models/Reservas';
 import { ReservasImprimir } from '../models/ReservaImprimir';
 
 @Injectable({
@@ -12,14 +12,14 @@ export class ReservasService {
   API_URI = 'http://localhost:3000/reservas'; //conexion
   private refreshSubject = new Subject<void>();
 
-  constructor(private http: HttpClient) { } 
+  constructor(private http: HttpClient) { }
 
   getReservas() {
     return this.http.get<Reservas[]>(`${this.API_URI}`);
   }
 
   getReserva(idReserva: string | number) {
-    return this.http.get<Reservas>(`${this.API_URI}/${idReserva}`); 
+    return this.http.get<Reservas>(`${this.API_URI}/${idReserva}`);
   }
 
 
@@ -59,5 +59,10 @@ export class ReservasService {
     return this.http.get<ReservasImprimir>(`${this.API_URI}/imprimir/${idReserva}`);
   }
 
+  //reserva disponible
+  checkReserva(horaInicio: Date, horaFin: Date, fecha: string) {
+    return this.http.post<{ message: string }>(`${this.API_URI}/check`, { horaInicio, horaFin, fecha });
+  }
+
+
 }
- 

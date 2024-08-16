@@ -52,6 +52,34 @@ CREATE TABLE reservas (
     FOREIGN KEY (idResp) REFERENCES responsable(idResp) ON DELETE CASCADE
 );
 
+DELIMITER //
+
+CREATE TRIGGER before_insert_in_rol
+BEFORE INSERT ON rol
+FOR EACH ROW
+BEGIN
+    -- Verifica si el nombre del rol ya existe
+    IF EXISTS (SELECT 1 FROM rol WHERE rol = NEW.rol) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El nombre del rol ya existe.';
+    END IF;
+
+END//
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_in_build
+BEFORE INSERT ON edificio
+FOR EACH ROW
+BEGIN
+    -- Verifica si el nombre del edificio ya existe
+    IF EXISTS (SELECT 1 FROM edificio WHERE nombEdificio = NEW.nombEdificio) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El nombre del edificio ya existe.';
+    END IF;
+
+END//
+
+DELIMITER ;
+
 
 DELIMITER //
 

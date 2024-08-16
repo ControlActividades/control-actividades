@@ -88,5 +88,26 @@ class ReservasControllers {
             }
         });
     }
+    //reserva disponible
+    checkReserva(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { horaInicio, horaFin, fecha } = req.body;
+            try {
+                const result = yield database_1.default.query(`SELECT * FROM reservas WHERE fecha = ? 
+                AND ((horaInicio < ? AND horaFin > ?) 
+                OR (horaInicio < ? AND horaFin > ?)
+                OR (horaInicio >= ? AND horaFin <= ?))`, [fecha, horaFin, horaInicio, horaInicio, horaFin, horaInicio, horaFin]);
+                if (result.length > 0) {
+                    res.status(409).json({ message: 'El horario ya está ocupado' });
+                }
+                else {
+                    res.status(200).json({ message: 'El horario está disponible' });
+                }
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Error al verificar la reserva', error });
+            }
+        });
+    }
 }
 exports.reservasControllers = new ReservasControllers();

@@ -75,13 +75,15 @@
                   <button type="button" class="btn btn-warning" (click)="reset()">Limpiar</button>
                 </div>
                 <div class="col">
-                  <button type="submit" class="btn btn-success">Enviar</button>
+                  <button type="submit" class="btn btn-success" [disabled]="isGuardarDisabled || reservaForm.invalid">Enviar</button>
                 </div>
               </div>
 
             </div>
           </div>
         </form>
+
+        
       </div>
     </div>
   </div>

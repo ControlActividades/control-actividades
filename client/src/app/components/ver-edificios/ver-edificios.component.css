@@ -1,34 +1,40 @@
 .body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: url('https://th.bing.com/th/id/R.e78663f4eea3c81802619ab01eee6962?rik=s7BkDbgEXp4tWw&pid=ImgRaw&r=0') no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    padding: 20px; 
-  }
-  
-  mat-form-field {
-    margin-top: 10px;
-    margin-left: 10px;
-  }
-  
-  table {
-    width: 100%; 
-    margin: 10px 0;  
-  }
-  
-  mat-paginator {
-    width: 100%; 
-    margin: 0 10px 10px 10px;
-    border-top: 1px solid black;
-  }
-  
-  ng-container, td {
-    width: 10px;
-  }
-  
-  .btn{
-    margin: 1px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url('https://th.bing.com/th/id/R.e78663f4eea3c81802619ab01eee6962?rik=s7BkDbgEXp4tWw&pid=ImgRaw&r=0') no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+mat-form-field {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+table {
+  width: 100%;
+  margin: 10px 0;
+}
+
+mat-paginator {
+  width: 100%;
+  margin: 0 10px 10px 10px;
+  border-top: 1px solid black;
+}
+
+ng-container,
+td {
+  width: 10px;
+}
+
+.btn {
+  margin: 1px;
+  margin-left: 10px;
+}
+
+.nombreEdificio {
+  text-align: center;
+}

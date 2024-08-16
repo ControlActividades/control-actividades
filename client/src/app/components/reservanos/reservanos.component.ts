@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ReservanosComponent implements OnInit {
   formAppearance: MatFormFieldAppearance = 'fill'; 
+  
   reservaForm: FormGroup;
   @Input() tabGroup: any;
   @Output() tabChange: EventEmitter<number> = new EventEmitter<number>();
@@ -20,6 +21,8 @@ export class ReservanosComponent implements OnInit {
   availableStartTimes: string[] = [];
   availableEndTimes: string[] = [];
   minDate: string = '';
+
+  isGuardarDisabled: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +38,7 @@ export class ReservanosComponent implements OnInit {
       areaUsar: ['', Validators.required],
       fecha: ['', Validators.required],
       razon: ['', Validators.required],
-      idResp: [''],
+      idResp: [''], 
     });
   }
 
@@ -53,6 +56,14 @@ export class ReservanosComponent implements OnInit {
     this.reservaForm.get('fecha')?.valueChanges.subscribe(val => {
       this.updateAvailableStartTimes();
     });
+
+    //actualiza el horario en caso de estar ocupado el horario seleccionado
+    this.reservaForm.get('fecha')
+    &&this.reservaForm.get('horaInicio')
+    &&this.reservaForm.get('horaFin')?.valueChanges.subscribe(val => {
+      this.reservaOcupada();
+    });
+
 
     if (idReserva) {
       this.reservasService.getReserva(idReserva).subscribe(
@@ -147,6 +158,11 @@ export class ReservanosComponent implements OnInit {
   }
 
   saveReserva(): void {
+
+    if (this.isGuardarDisabled || !this.reservaForm.valid) {
+      return;
+    }
+
     if (this.reservaForm.valid) {
       const responsableId = this.responsableService.getUserId();
       const reserva = {
@@ -164,7 +180,7 @@ export class ReservanosComponent implements OnInit {
           this.tabChange.emit(1);
           this.reservaForm.reset();
         },
-        err => console.log(err)
+        err => this.ingresoFallido()
       );
     }
   }
@@ -173,5 +189,34 @@ export class ReservanosComponent implements OnInit {
     this.reservaForm.reset();
     this.availableEndTimes = [];
     this.reservaForm.get('horaFin')?.disable();
+  }
+  ingresoFallido() {
+    this.snackBar.open('Día no disponible', 'OK', {
+      duration: 3000,
+      panelClass: ['info-snackbar']
+    });
+  }
+
+  //reserva disponible
+  reservaOcupada() {
+    const horaInicio = this.reservaForm.get('horaInicio')?.value;
+    const horaFin = this.reservaForm.get('horaFin')?.value;
+    const fecha = new Date(this.reservaForm.get('fecha')?.value).toISOString().split('T')[0];
+  
+
+    this.reservasService.checkReserva(horaInicio, horaFin, fecha).subscribe(
+      (response) => {
+        if (response.message === 'El horario está disponible') {
+          // Proceder con la creación de la reserva
+          this.saveReserva();
+        } else {
+          // Mostrar mensaje de que el horario está ocupado
+          this.ingresoFallido();
+        }
+      },
+      (error) => {
+        this.ingresoFallido();
+      }
+    );
   }
 }

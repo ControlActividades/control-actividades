@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Rol } from '../../models/Rol'; //models
 import { RolService } from '../../services/rol.service'; //servicios
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-roles',
@@ -25,7 +26,8 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
     private rolService: RolService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private snackBar:MatSnackBar
   ) {
     this.rolForm = this.fb.group({
       rol: ['', Validators.required]
@@ -73,10 +75,11 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
         this.rolService.saveRol(rol).subscribe(
           resp => {
             console.log(resp);
-            this.tabChange.emit(1); // Cambia a la pestaña "Ver rol"
             this.rolForm.reset();
+            this.tabChange.emit(1); // Cambia a la pestaña "Ver rol"
+            this.ingresoExitoso();
           },
-          err => console.log(err)
+          err => this.ingresoFallido()
         );
       }
     }
@@ -91,9 +94,35 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
           console.log(resp);
           this.router.navigate(['/inicio/roles']);
           this.rolForm.reset();
+          this.edicionExitoso()
         },
-        err => console.error(err)
+        err => this.ingresoFallido() 
       );
     }
+  }
+
+  ingresoExitoso() {
+    this.snackBar.open('Rol agregado con éxito', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
+  edicionExitoso() {
+    this.snackBar.open('Rol sin cambios', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
+  ingresoFallido() {
+    this.snackBar.open('Rol ya existente', 'OK', {
+      duration: 3000,
+      panelClass: ['info-snackbar']
+    });
   }
 }

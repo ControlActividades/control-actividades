@@ -11,12 +11,15 @@
       <a mat-list-item routerLink="/inicio/registros" *ngIf="canAccess([1, 4])"><i class="bi bi-person-lines-fill fs-5"></i> Registros</a>
       <a mat-list-item routerLink="/inicio/edificios" *ngIf="canAccess([1, 4])"><i class="bi bi-building fs-5"></i> Edificios</a>
       <a mat-list-item routerLink="/inicio/roles" *ngIf="canAccess([4])"><i class="bi bi-person-lock fs-5"></i> Roles</a>
-      <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
-        <a mat-list-item (click)="logout()">Cerrar sesión <i class="bi bi-door-closed fs-4"></i></a>
+      <ng-container  *ngIf="isLoggedIn$ | async; else notLoggedIn">
+        <a mat-list-item style="
+          background-color: #263f713f; border-radius: 10px; text-align: center; " (click)="logout()">Cerrar sesión <i class="bi bi-door-closed fs-4"></i></a>
       </ng-container>
       <ng-template #notLoggedIn>
-        <a mat-list-item  routerLink="/ingresar">Ingresar <i class="bi bi-door-open fs-4"></i></a>
+        <a mat-list-item style="
+           background-color: #0d2c6b3f; border-radius: 10px; text-align: center; " routerLink="/ingresar">Ingresar <i class="bi bi-door-open fs-4"></i></a>
       </ng-template>
+    
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -45,7 +48,6 @@
     </mat-toolbar>
 
     <router-outlet></router-outlet>
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2dHHgzDwk4BJdRwy9uXhTO?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </mat-sidenav-content>
 </mat-sidenav-container>
 <app-footer></app-footer>

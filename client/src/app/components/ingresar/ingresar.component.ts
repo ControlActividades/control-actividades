@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Rol } from '../../models/Rol';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import anime from 'animejs';
+declare var particlesJS: any;
 
 
 declare var particlesJS: any;
@@ -27,6 +28,7 @@ export function noNumbersValidator(): ValidatorFn {
   styleUrls: ['./ingresar.component.css']
 })
 export class IngresarComponent implements AfterViewInit {
+  particulasActivadas: boolean = true; //desactivar particulas
   responsableForm: FormGroup;
   ingresarForm: FormGroup;
   errMessage: string | null = null;
@@ -35,8 +37,8 @@ export class IngresarComponent implements AfterViewInit {
   errorMessage: string | null = null;
   passwordVisible: boolean = false;
   passwordVisibleIngresar: boolean = false;
-
-
+  
+  
   responsable: Responsable = {
     idResp: 0,
     nombUsuario: '',
@@ -50,9 +52,9 @@ export class IngresarComponent implements AfterViewInit {
     grupo: '',
     idRoles: 0
   };
-
-
-
+  
+  
+  
   constructor(
     private rolService: RolService,
     private responsableService: ResponsableService,
@@ -77,14 +79,14 @@ export class IngresarComponent implements AfterViewInit {
     this.responsableForm.get('appPaterno')?.valueChanges.subscribe(value => this.capitalize(value, 'appPaterno'));
     this.responsableForm.get('appMaterno')?.valueChanges.subscribe(value => this.capitalize(value, 'appMaterno'));
     this.responsableForm.get('grupo')?.valueChanges.subscribe(value => this.capitalizeGrup(value, 'grupo'));
-
-
+    
+    
     this.ingresarForm = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
       contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10), Validators.pattern(PASSWORD_PATTERN)]]
     });
   }
-
+  
   ngOnInit() {
     this.rolService.getRoles().subscribe(
       resp => {
@@ -98,8 +100,12 @@ export class IngresarComponent implements AfterViewInit {
       },
       err => console.error(err)
     );
+    this.loadParticles();
   }
-
+  
+  loadParticles() {
+    particlesJS.load('particles-js', 'assets/particles.json', null);
+  }
   conditionalValidator(formGroup: FormGroup): ValidationErrors | null {
     const correoElec = formGroup.get('correoElec')?.value;
     const telefono = formGroup.get('telefono')?.value;
@@ -135,7 +141,7 @@ export class IngresarComponent implements AfterViewInit {
         },
         err => {
           if (err.error.message === 'El nombre de usuario ya existe.') {
-            this.existingUsernameError = err.error.message;
+            this.existingUsernameError = err.error.message; 
             this.errorMessage = 'Usuario repetido';
             console.error('Usaurio');
           } else if (err.error.message === 'El teléfono ya existe.') {
@@ -203,8 +209,14 @@ export class IngresarComponent implements AfterViewInit {
     this.adjustForScreenSize(); // Adjust on initial load
     this.initializeParticles()
   }
-  private initializeParticles() {
-    particlesJS('particles-js', 'assets/particles-config.json');
+  initializeParticles(): void {
+    if ((window as any).particlesJS) {
+      (window as any).particlesJS.load('particles-js', 'assets/particles.json', function() {
+        console.log('callback - particles.js config loaded');
+      });
+    } else {
+      console.error('particlesJS is not defined');
+    }
   }
 
   private initializeAnimation() {
@@ -315,29 +327,54 @@ export class IngresarComponent implements AfterViewInit {
         nombres: 'Nombre',
         appPaterno: 'Apellido paterno',
         appMaterno: 'Apellido materno',
-        telefono: 'Telefono',
+        telefono: 'Teléfono',
         correoElec: 'Correo electrónico',
         numControl: 'Número de control',
         grupo: 'Grupo'
-        // Agrega otros controles aquí si es necesario
       };
-
+  
+      const label = labels[controlName] || controlName; // Aquí se asegura de que nunca sea undefined
+  
       if (control.errors?.['required']) {
-        return `${labels[controlName] || controlName} es obligatorio.`;
+        return `${label} es obligatorio.`;
       } else if (control.errors?.['minlength']) {
-        return `La longitud de ${labels[controlName] || controlName} debe ser al menos ${control.errors['minlength'].requiredLength} caracteres.`;
+        return `La longitud de ${label} debe ser al menos ${control.errors['minlength'].requiredLength} caracteres.`;
       } else if (control.errors?.['maxlength']) {
-        return `La longitud de ${labels[controlName] || controlName} no debe superar los ${control.errors['maxlength'].maxLength} caracteres.`;
+        return `La longitud de ${label} no debe superar los ${control.errors['maxlength'].requiredLength} caracteres.`;
       } else if (control.errors?.['pattern']) {
-        return `El formato de ${labels[controlName] || controlName} es incorrecto.`;
+        return `El formato de ${label} es incorrecto.`;
       }
     }
     return '';
   }
 
-//Prueba de slider
+//limpiar formulario
+limpiar(){
+  this.responsableForm.reset();
+  this.errMessage = null;
+  this.existingUsernameError = null;
+  this.errorMessage = null;
+  this.passwordVisible = false;
+  this.passwordVisibleIngresar = false;
+}
 
+toggleParticulas() {
+  const particlesContainer = document.getElementById('particles-js');
 
+  if (this.particulasActivadas) {
+    if (particlesContainer) {
+      particlesContainer.style.display = 'none'; // Oculta el contenedor de partículas
+    }
+  } else {
+    if (particlesContainer) {
+      particlesContainer.style.display = 'block'; // Muestra el contenedor de partículas
+    } else {
+      this.loadParticles(); // Vuelve a cargar las partículas si el contenedor no existe
+    }
+  }
+
+  this.particulasActivadas = !this.particulasActivadas; // Cambia el estado
+}
 
 
 
