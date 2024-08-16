@@ -22,6 +22,16 @@ export function noNumbersValidator(): ValidatorFn {
     return hasNumbers ? { 'noNumbers': true } : null;
   };
 }
+
+export function capitalizeValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    if (value && !/^[A-Z]/.test(value)) {
+      return { capitalize: true };
+    }
+    return null;
+  };
+}
 @Component({
   selector: 'app-ingresar',
   templateUrl: './ingresar.component.html',
@@ -66,12 +76,12 @@ export class IngresarComponent implements AfterViewInit {
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
       contrasenia: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.maxLength(10), Validators.minLength(8)]],
       confContrasenia: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.maxLength(10), Validators.minLength(8)]],
-      nombres: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator()]],
-      appPaterno: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator()]],
-      appMaterno: ['', [Validators.maxLength(50), noNumbersValidator()]],
+      nombres: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator(), capitalizeValidator()]],
+      appPaterno: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator(), capitalizeValidator()]],
+      appMaterno: ['', [Validators.maxLength(50), noNumbersValidator(), capitalizeValidator()]],
       telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]],
       correoElec: ['', [Validators.email, Validators.maxLength(260)]],
-      numControl: ['', Validators.maxLength(20)],
+      numControl: ['', [Validators.maxLength(20), capitalizeValidator()]],
       grupo: ['', [Validators.maxLength(20), Validators.pattern('^[A-Z]{3}[0-9]{4}$')]],
       idRoles: [2, Validators.required]
     }, { validator: [this.matchPasswords('contrasenia', 'confContrasenia'), this.conditionalValidator] });
@@ -88,12 +98,7 @@ export class IngresarComponent implements AfterViewInit {
   }
   
   ngOnInit() {
-    this.rolService.getRoles().subscribe(
-      resp => {
-        this.roles = resp;
-      },
-      err => console.error(err)
-    );
+    
     this.rolService.getRoles().subscribe(
       resp => {
         this.roles = resp.filter((rol: Rol) => rol.idRoles === 2); // Filtrar para mostrar solo el rol con id 2
@@ -281,14 +286,14 @@ export class IngresarComponent implements AfterViewInit {
 
   registroExitoso() {
     this.snackBar.open('Registro completado con éxito', 'Cerrar', {
-      duration: 3000,
+      duration: 2000,
       panelClass: ['success-snackbar']
     });
   }
 
   ingresoExitoso() {
     this.snackBar.open('Ingreso completado con éxito', 'Cerrar', {
-      duration: 3000,
+      duration: 2000,
       panelClass: ['success-snackbar'],
       horizontalPosition: 'center',
       verticalPosition: 'top',
@@ -311,6 +316,8 @@ export class IngresarComponent implements AfterViewInit {
 
     this.responsableForm.get(controlName)?.setValue(capitalizedValue, { emitEvent: false });
   }
+
+  
 
   capitalizeGrup(value: string, controlName: string): void {
     const capitalizedValue = value.toUpperCase();

@@ -74,15 +74,18 @@ export class ReservacionesComponent {
   }
 
   openConfirmDialog(idReserva: string): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteComponent);
-
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas eliminar esta reserva?'
+      }
+    });
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteReserva(idReserva);
       }
     });
   }
-
   deleteReserva(idReserva: string) {
     this.reservaService.deleteReserva(idReserva).subscribe(
       resp => {

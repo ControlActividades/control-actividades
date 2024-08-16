@@ -79,7 +79,7 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
             this.tabChange.emit(1); // Cambia a la pestaña "Ver rol"
             this.ingresoExitoso();
           },
-          err => this.ingresoFallido()
+          err => this.edicionFallido()
         );
       }
     }
@@ -96,7 +96,7 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
           this.rolForm.reset();
           this.edicionExitoso()
         },
-        err => this.ingresoFallido() 
+        err => this.edicionFallido() 
       );
     }
   }
@@ -111,7 +111,7 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
   }
 
   edicionExitoso() {
-    this.snackBar.open('Rol sin cambios', 'Cerrar', {
+    this.snackBar.open('Rol editado con éxito', 'Cerrar', {
       duration: 3000,
       panelClass: ['success-snackbar'],
       horizontalPosition: 'center',
@@ -119,7 +119,7 @@ export class AdminRolesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ingresoFallido() {
+  edicionFallido() {
     this.snackBar.open('Rol ya existente', 'OK', {
       duration: 3000,
       panelClass: ['info-snackbar']
