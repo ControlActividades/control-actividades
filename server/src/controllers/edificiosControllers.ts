@@ -24,8 +24,17 @@ class EdificiosControllers {
     
     public async create(req : Request, resp : Response):Promise<void>{
         console.log(req.body);
-        await pool.query('INSERT INTO edificio set ?',[req.body]);
-        resp.json({message: 'Edificio guardado'})
+        try {
+            await pool.query('INSERT INTO edificio set ?',[req.body]);
+            resp.json({ message: 'Edificio guardado' });
+        } catch (error:any) {
+            if (error.code === 'ER_SIGNAL_EXCEPTION' && typeof error.sqlMessage === 'string') {
+                const messages = error.sqlMessage.split('. ');
+                resp.status(400).json({ message: messages.filter((msg: string) => msg !== '').join('. ') });
+            } else {
+                resp.status(500).json({ message: 'Error al guardar el edificio', error });
+            }
+        }
     }
 
     public async delete(req : Request, resp : Response){

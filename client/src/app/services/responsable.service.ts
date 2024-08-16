@@ -88,6 +88,11 @@ export class ResponsableService {
     return this.http.get(`${this.API_URI}/${idResp}`);
   }
 
- 
+ //correo electrónico
+ enviarCorreoAscenso(razon: string): Observable<any> {
+  const userId = this.getUserId(); // Obtiene el ID del usuario autenticado
+  return this.http.post(`${this.API_URI}/ascenso/correo`, { razon, userId });
+}
+
   
 }

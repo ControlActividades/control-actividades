@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Reservas } from '../../models/Reservas';
 import { ReservasService } from '../../services/reservas.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -21,12 +21,12 @@ export class AdministrarReservasComponent implements OnInit {
     private router : Router
   ) {
     this.reservaForm = this.fb.group({
-      idReserva: [''],
-      horaInicio: [''],
-      horaFin: [''],
-      areaUsar: [''],
-      razon: [''],
-      fecha: [''],
+      idReserva: ['',Validators.required],
+      horaInicio: ['',[Validators.required]],
+      horaFin: ['',[Validators.required]],
+      areaUsar: ['',[Validators.required]],
+      razon: ['',[Validators.required]],
+      fecha: ['',Validators.required],
       estado : ['']
     });
   }

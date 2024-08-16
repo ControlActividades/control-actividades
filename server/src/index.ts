@@ -14,7 +14,7 @@ class Server {
     public app:Application;
     constructor(){
         this.app = express();
-        this.config();
+        this.config(); 
         this.routes();
     }
     config(): void{

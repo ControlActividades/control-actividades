@@ -41,8 +41,19 @@ class RolesControllers {
     create(req, resp) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            yield database_1.default.query('INSERT INTO rol set ?', [req.body]);
-            resp.json({ message: 'Rol guardado' });
+            try {
+                yield database_1.default.query('INSERT INTO rol set ?', [req.body]);
+                resp.json({ message: 'Rol guardado' });
+            }
+            catch (error) {
+                if (error.code === 'ER_SIGNAL_EXCEPTION' && typeof error.sqlMessage === 'string') {
+                    const messages = error.sqlMessage.split('. ');
+                    resp.status(400).json({ message: messages.filter((msg) => msg !== '').join('. ') });
+                }
+                else {
+                    resp.status(500).json({ message: 'Error al guardar el edificio', error });
+                }
+            }
         });
     }
     delete(req, resp) {

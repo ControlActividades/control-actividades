@@ -2,8 +2,11 @@ import { Component, ViewChild, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { ReservasService } from '../../services/reservas.service';
 import { ResponsableService } from '../../services/responsable.service';
+import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
+// Importa el componente de diálogo
 
 @Component({
   selector: 'app-reservaciones',
@@ -11,32 +14,37 @@ import { ResponsableService } from '../../services/responsable.service';
   styleUrls: ['./reservaciones.component.css']
 })
 export class ReservacionesComponent {
-  displayedColumns: string[] = ['horaInicio', 'horaFin', 'razon', 'areaUsar', 'estado', 'acciones'];
+  displayedColumns: string[] = ['horaInicio', 'horaFin', 'fecha', 'razon', 'areaUsar', 'estado', 'acciones'];
   dataSource!: MatTableDataSource<any>;
 
-  reservas : any[] | undefined;
+  reservas: any[] | undefined;
   @Input() tabGroup: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort; // ViewChild para MatSort
+  @ViewChild(MatSort) sort!: MatSort;
   userRole: number = 0;
-  userId: number = 0; // Agregado para almacenar el idResp del usuario
-  constructor(private reservaService : ReservasService,private responsableService: ResponsableService) { }
+  userId: number = 0;
+
+  constructor(
+    private reservaService: ReservasService,
+    private responsableService: ResponsableService,
+    public dialog: MatDialog // Inyecta MatDialog
+  ) { }
 
   ngOnInit() {
     this.getReservas();
     this.reservaService.refresh$.subscribe(() => this.getReservas());
-    this.userRole = this.responsableService.getUserRole(); //Rol de responsable
-    this.userId = this.responsableService.getUserId(); // idResp del usuario
+    this.userRole = this.responsableService.getUserRole();
+    this.userId = this.responsableService.getUserId();
   }
 
   ngAfterViewInit() {
-    // Verifica si dataSource está definido antes de asignar paginator y sort
     if (this.dataSource) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -49,12 +57,30 @@ export class ReservacionesComponent {
   getReservas() {
     this.reservaService.getReservas().subscribe(
       resp => {
-        this.dataSource = new MatTableDataSource(resp);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        const reservasPersonalizadas = resp.map(reserva => ({
+          ...reserva,
+          areaUsar: this.mapAreaUsar(reserva.areaUsar || '')
+        }));
+        this.dataSource = new MatTableDataSource(reservasPersonalizadas);
+        if (this.paginator) {
+          this.dataSource.paginator = this.paginator;
+        }
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
+        }
       },
       err => console.error(err)
     );
+  }
+
+  openConfirmDialog(idReserva: string): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteReserva(idReserva);
+      }
+    });
   }
 
   deleteReserva(idReserva: string) {
@@ -67,15 +93,28 @@ export class ReservacionesComponent {
     );
   }
 
-//seguridad de edicion de reservas
-canEdit(): boolean {
-  const allowedRoles = [1, 4]; // Definir los roles que pueden editar
-  return allowedRoles.includes(this.userRole);
-}
+  canEdit(): boolean {
+    const allowedRoles = [1, 4];
+    return allowedRoles.includes(this.userRole);
+  }
 
-canDelete(reservaIdResp: number): boolean {
-  const adminRole = 1; // Rol de administrador
-  return this.userRole === adminRole || reservaIdResp === this.userId;
-}
+  canDelete(reservaIdResp: number): boolean {
+    const adminRole = 1;
+    return this.userRole === adminRole || reservaIdResp === this.userId;
+  }
 
+  mapAreaUsar(area: string): string {
+    switch (area) {
+      case 'danzaFolclorica':
+        return 'Danza Folclórica';
+      case 'taekwando':
+        return 'Taekwando';
+      case 'baloncestoVoleibol':
+        return 'Baloncesto y Voleibol';
+      case 'ajedrez':
+        return 'Ajedrez';
+      default:
+        return 'Área desconocida';
+    }
+  }
 }

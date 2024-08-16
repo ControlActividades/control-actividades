@@ -20,6 +20,9 @@ class ResponsablesRoutes {
         this.router.put('/:idResp', responsablesControllers.updateResponsable);
         this.router.put('/contrasenia/:idResp', responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña}
         
+
+        // Nueva ruta para enviar correo de ascenso
+    this.router.post('/ascenso/correo', responsablesControllers.enviarCorreoAscenso);
     }
 }
 const responsableRoutes = new ResponsablesRoutes();

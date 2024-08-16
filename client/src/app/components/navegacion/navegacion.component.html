@@ -2,21 +2,24 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/inicio/inicio" >Inicio</a>
-      <a mat-list-item routerLink="/inicio/reservas" *ngIf="canAccess([1, 2 , 4])">Reservas</a>
-      <a mat-list-item routerLink="/inicio/oficios-reservas" *ngIf="canAccess([1, 2 ,4])">Oficios Reservas</a>
-      <a mat-list-item routerLink="/inicio/sugerencias-quejas" >Sugerencias y Quejas</a>
-      <a *ngIf="!(isLoggedIn$ | async)" mat-list-item routerLink="/inicio/reservaciones">Reservaciones</a>
-      <a mat-list-item routerLink="/inicio/registros" *ngIf="canAccess([1, 4])">Registros</a>
-      <a mat-list-item routerLink="/inicio/edificios" *ngIf="canAccess([1, 4])">Edificios</a>
-      <a mat-list-item routerLink="/inicio/roles" *ngIf="canAccess([4])">Roles</a>
-      <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
-        <a mat-list-item (click)="logout()">Cerrar sesión <i class="bi bi-door-closed fs-4"></i></a>
+    <mat-nav-list >
+      <a mat-list-item routerLink="/inicio/inicio" ><i class="bi bi-house-door fs-5"></i> Inicio</a>
+      <a mat-list-item routerLink="/inicio/reservas" *ngIf="canAccess([1, 2 , 4])"><i class="bi bi-calendar-week fs-5"></i> Reservas</a>
+      <a mat-list-item routerLink="/inicio/oficios-reservas" *ngIf="canAccess([1, 2 ,4])"><i class="bi bi-filetype-pdf fs-5"></i> Oficios Reservas</a>
+      <a mat-list-item routerLink="/inicio/sugerencias-quejas" > <i class="bi bi-person-exclamation fs-5"></i> Sugerencias y Quejas</a>
+      <a *ngIf="!(isLoggedIn$ | async)" mat-list-item routerLink="/inicio/reservaciones"><i class="bi bi-calendar-week fs-5"></i> Reservaciones</a>
+      <a mat-list-item routerLink="/inicio/registros" *ngIf="canAccess([1, 4])"><i class="bi bi-person-lines-fill fs-5"></i> Registros</a>
+      <a mat-list-item routerLink="/inicio/edificios" *ngIf="canAccess([1, 4])"><i class="bi bi-building fs-5"></i> Edificios</a>
+      <a mat-list-item routerLink="/inicio/roles" *ngIf="canAccess([4])"><i class="bi bi-person-lock fs-5"></i> Roles</a>
+      <ng-container  *ngIf="isLoggedIn$ | async; else notLoggedIn">
+        <a mat-list-item style="
+          background-color: #263f713f; border-radius: 10px; text-align: center; " (click)="logout()">Cerrar sesión <i class="bi bi-door-closed fs-4"></i></a>
       </ng-container>
       <ng-template #notLoggedIn>
-        <a mat-list-item  routerLink="/ingresar">Ingresar <i class="bi bi-door-open fs-4"></i></a>
+        <a mat-list-item style="
+           background-color: #0d2c6b3f; border-radius: 10px; text-align: center; " routerLink="/ingresar">Ingresar <i class="bi bi-door-open fs-4"></i></a>
       </ng-template>
+    
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -34,10 +37,10 @@
         <span style="padding: 3px; color: red;" *ngIf="isLoggedIn$ | async"> {{ nombUsuario }} ({{ rol }}) </span>
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
-      <mat-menu #userMenu="matMenu">
+      <mat-menu #userMenu="matMenu" class="center">
         <span style="padding: 3px; background-color: #31688cae;">Control de Actividades UTNG </span> 
         <!-- Conditionally show "Solicitar Ascenso" based on role -->
-        <span style="@media (max-width: 550px) {display: block;padding: 3px;} padding: 3px;" *ngIf="isLoggedIn$ | async"> {{ nombUsuario }} ({{ rol }}) </span>
+        <span style="@media (max-width: 550px) {display: block;padding: 3px;} padding: 3px; padding-left: 30px; display: flex;" *ngIf="isLoggedIn$ | async"> {{ nombUsuario }} ({{ rol }}) <i class="bi bi-person-walking"></i> </span>
         <button *ngIf="rol === 'Usuario'" mat-menu-item (click)="openForm()">Solicitar Ascenso</button>
         <button mat-menu-item *ngIf="isLoggedIn$ | async" (click)="logout()">Cerrar sesión</button>
         <button mat-menu-item *ngIf="!(isLoggedIn$ | async)" routerLink="/ingresar">Ingresar</button>
