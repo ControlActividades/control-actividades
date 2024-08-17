@@ -14,7 +14,7 @@ import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.compone
   styleUrls: ['./reservaciones.component.css']
 })
 export class ReservacionesComponent {
-  displayedColumns: string[] = ['horaInicio', 'horaFin', 'fecha', 'razon', 'areaUsar', 'estado', 'acciones'];
+  displayedColumns: string[] = ['horaInicio', 'horaFin', 'fecha', 'razon', 'areaUsar', 'estado','proximidad', 'acciones'];
   dataSource!: MatTableDataSource<any>;
 
   reservas: any[] | undefined;
@@ -73,6 +73,39 @@ export class ReservacionesComponent {
     );
   }
 
+  // Función para calcular la proximidad y devolver un texto
+  calculateProximityText(reservaFecha: string, estado: string): string {
+    if (estado) {
+      return ''; // Retorna una cadena vacía si el estado tiene un valor
+    }
+  
+    const fechaReserva = new Date(reservaFecha);
+    const fechaActual = new Date();
+  
+    const diferencia = fechaReserva.getTime() - fechaActual.getTime();
+    const diasDiferencia = Math.ceil(diferencia / (1000 * 3600 * 24));
+  
+    if (diasDiferencia <= 2) {
+      return 'Improbable';
+    } else if (diasDiferencia > 2 && diasDiferencia <= 7) {
+      return 'Poco probable';
+    } else {
+      return 'Probable';
+    }
+  }
+  // Función para determinar el color basado en la proximidad
+  getProximityColor(proximityText: string): string {
+    switch (proximityText) {
+      case 'Improbable':
+        return 'red';
+      case 'Poco probable':
+        return 'orange';
+      case 'Probable':
+        return 'green';
+      default:
+        return 'black'; // Color por defecto si no coincide ninguna condición
+    }
+  }
   openConfirmDialog(idReserva: string): void {
     const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
       data: {
@@ -86,6 +119,7 @@ export class ReservacionesComponent {
       }
     });
   }
+  
   deleteReserva(idReserva: string) {
     this.reservaService.deleteReserva(idReserva).subscribe(
       resp => {

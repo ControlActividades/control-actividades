@@ -60,3 +60,8 @@
     color: white; /* Texto blanco */
   }
   
+
+  .btn-disable:hover{
+color: rgb(30, 65, 148);
+border-color: red;
+  }
