@@ -21,7 +21,7 @@
         <button type="button" class="btn btn-info" [routerLink]="['/inicio/edificio/edit', edificio.idEdificio]">
           <i class="bi bi-building-gear"></i>
         </button>
-        <button (click)="deleteEdificio(edificio.idEdificio)" type="button" class="btn btn-danger">
+        <button (click)="openConfirmDialog(edificio.idEdificio)" type="button" class="btn btn-danger">
           <i class="bi bi-building-x"></i>
         </button>
       </td>

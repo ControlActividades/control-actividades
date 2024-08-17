@@ -72,6 +72,9 @@
                     <span *ngIf="responsableForm.get('nombres')?.errors?.['noNumbers']">
                         El nombre no debe contener números.
                     </span>
+                    <span *ngIf="responsableForm.get('nombres')?.hasError('capitalize')">
+                         El nombre no debe contener caracteres especiales.
+                    </span>
                 </div>
 
                 <div class="row">
@@ -82,6 +85,9 @@
                             <span *ngIf="responsableForm.get('appPaterno')?.errors?.['noNumbers']">
                                 El apellido paterno no debe contener números.
                             </span>
+                            <span *ngIf="responsableForm.get('appPaterno')?.hasError('capitalize')">
+                                El apellido paterno no debe contener caracteres especiales.
+                           </span>
                         </div>
                     </div>
                     <div class="col"><input type="text" formControlName="appMaterno" placeholder="Apellido Materno"
@@ -92,11 +98,20 @@
                             <span *ngIf="responsableForm.get('appMaterno')?.errors?.['noNumbers']">
                                 El el apellido materno no debe contener números.
                             </span>
+                            <span *ngIf="responsableForm.get('appMaterno')?.hasError('capitalize')">
+                                El apellido materno no debe contener caracteres especiales.
+                           </span>
                         </div>
                     </div>
                 </div>
                 <input type="text" formControlName="numControl" placeholder="Matrícula"
                     [matTooltip]="getTooltipMessage('numControl')">
+                    <div *ngIf="responsableForm.get('numControl')?.invalid && responsableForm.get('numControl')?.touched"
+                            class="error-message">
+                            <span *ngIf="responsableForm.get('numControl')?.hasError('capitalize')">
+                                La matrícula no debe contener caracteres especiales.
+                           </span>
+                        </div>
                 <input type="text" formControlName="grupo" placeholder="Grupo (AAA0000)"
                     [matTooltip]="getTooltipMessage('grupo')">
 

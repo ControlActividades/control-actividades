@@ -26,7 +26,7 @@
           <button type="button" class="btn btn-info" [routerLink]="['/inicio/roles/edit', rol.idRoles]">
             <i class="bi bi-person-gear"></i>
           </button>
-          <button (click)="deleteRol(rol.idRoles)" type="button" class="btn btn-danger">
+          <button (click)="openConfirmDialog(rol.idRoles)" type="button" class="btn btn-danger">
             <i class="bi bi-person-slash"></i>
           </button>
         </td>

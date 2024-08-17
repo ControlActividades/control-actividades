@@ -3,6 +3,8 @@ import { RolService } from '../../services/rol.service';//servicio
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({ 
   selector: 'app-ver-roles',
@@ -18,7 +20,9 @@ export class VerRolesComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private rolService: RolService) { }
+  constructor(private rolService: RolService,
+    private dialog : MatDialog
+  ) { }
 
   ngOnInit() {
     this.getRoles();
@@ -52,6 +56,21 @@ export class VerRolesComponent {
       },
       err => console.error(err)
     );
+  }
+
+
+  openConfirmDialog(idRoles: string): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas eliminar este rol?'
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteRol(idRoles);
+      }
+    });
   }
 
   deleteRol(idRoles: string) {

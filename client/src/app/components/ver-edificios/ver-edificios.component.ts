@@ -3,6 +3,8 @@ import { EdificioService } from '../../services/edificio.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({ 
   selector: 'app-ver-edificios',
@@ -18,7 +20,9 @@ export class VerEdificiosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private edificioService: EdificioService) { }
+  constructor(private edificioService: EdificioService,
+    private dialog :MatDialog
+  ) { }
 
   ngOnInit() {
     this.getEdificios();
@@ -53,6 +57,21 @@ export class VerEdificiosComponent implements OnInit, AfterViewInit {
       err => console.error(err)
     );
   }
+
+  openConfirmDialog(idEdificios: string): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas eliminar este edificio?'
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteEdificio(idEdificios);
+      }
+    });
+  }
+  
 
   deleteEdificio(idEdificios: string) {
     this.edificioService.deleteEdificio(idEdificios).subscribe(

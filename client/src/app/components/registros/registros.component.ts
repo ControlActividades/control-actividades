@@ -1,12 +1,23 @@
 import { Component, ElementRef, HostBinding, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ResponsableService } from '../../services/responsable.service';
 import { RolService } from '../../services/rol.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
+import { Rol } from '../../models/Rol';
 
+export function noEHyphenValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value && typeof control.value === 'string' && control.value.startsWith('e-')) {
+      return { 'noEHyphen': true };
+    }
+    return null;
+  };
+}
 @Component({
   selector: 'app-registros',
   templateUrl: './registros.component.html',
@@ -34,50 +45,72 @@ export class RegistrosComponent implements OnInit {
     private responsableService: ResponsableService,
     private rolService: RolService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog : MatDialog
   ) {
     this.responsableFormEdit = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
       nombres: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$')]],
       appPaterno: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$')]],
       appMaterno: ['', [Validators.maxLength(50), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ ]*$')]],
-      telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]],
+      telefono: ['', [Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.minLength(10)]],
       correoElec: ['', [Validators.email, Validators.maxLength(260)]],
-      numControl: ['', [Validators.maxLength(20)]],
+      numControl: ['', [Validators.maxLength(20), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ ]*$')]],
       grupo: ['', [Validators.maxLength(20), Validators.pattern('^[A-Z]{3}[0-9]{4}$')]],
       idRoles: ['', Validators.required]
-    });
+    }, { validator: this.atLeastOneFieldRequired(['telefono', 'correoElec']) });
   }
   formatText(value: string, controlName: string): void {
-    // Eliminar números y formatear el texto
+    
     const formattedValue = value
-      .replace(/\d/g, '') // Remove numbers
-      .toLowerCase() // Convert all to lowercase first
-      .replace(/\b\w/g, char => char.toUpperCase()); // Capitalize the first letter of each word
+      .replace(/\d/g, '') 
+      .toLowerCase() 
+      .replace(/\b\w/g, char => char.toUpperCase()); 
 
-    // Update the form control value without triggering validation errors
+   
     this.responsableFormEdit.get(controlName)?.setValue(formattedValue, { emitEvent: false });
   }
 
   getErrorMessage(controlName: string): string | null {
     const control = this.responsableFormEdit.get(controlName);
+
     if (control?.hasError('required')) {
-      return 'Este campo es obligatorio';
+        return 'Este campo es obligatorio';
     }
+
+    if (controlName === 'telefono' && control?.hasError('pattern')) {
+        return 'Solo se permiten números en este campo';
+    }
+
     if (control?.hasError('maxlength')) {
-      return `El valor no puede tener más de ${control.errors?.['maxlength'].requiredLength} caracteres`;
+        const maxLengthError = control.errors?.['maxlength'];
+        if (maxLengthError) {
+            return `El valor no puede tener más de ${maxLengthError.requiredLength} caracteres`;
+        }
     }
+
     if (control?.hasError('minlength')) {
-      return `El valor debe tener al menos ${control.errors?.['minLength'].requiredLength} caracteres`;
+        const minLengthError = control.errors?.['minlength'];
+        if (minLengthError) {
+            return `El valor debe tener al menos ${minLengthError.requiredLength} caracteres`;
+        }
     }
+
     if (control?.hasError('pattern')) {
-      return 'Formato inválido';
+        return 'Formato inválido';
     }
+
     if (control?.hasError('email')) {
-      return 'Correo electrónico inválido';
+        return 'Correo electrónico inválido';
     }
+
+    if (this.responsableFormEdit.hasError('atLeastOneRequired')) {
+        return 'Debe ingresar al menos un campo: teléfono o correo electrónico.';
+    }
+
     return null;
-  }
+}
+
 
   ngOnInit() {
     this.getResponsables();
@@ -99,12 +132,32 @@ export class RegistrosComponent implements OnInit {
   getRoles() {
     this.rolService.getRoles().subscribe(
       resp => {
-        this.roles = resp;
+        this.roles = resp.filter((rol: Rol) => !((rol.idRoles === 4)));
       },
       err => console.error(err)
     );
   }
 
+  openConfirmDialog(idResp: string): void {
+    this.responsableService.getResponsable(idResp).subscribe(responsable => {
+        console.log(responsable); 
+        const nomResp = responsable.nombres; 
+
+        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+            data: {
+                message: `¿Estás seguro de que deseas eliminar al responsable ${nomResp}?`
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.deleteResponsable(idResp);
+            }
+        });
+    });
+}
+  
+  
   deleteResponsable(idResp: string | number) {
     this.responsableService.deleteResponsable(idResp).subscribe(
       resp => {
@@ -193,6 +246,18 @@ export class RegistrosComponent implements OnInit {
     this.responsableFormEdit.reset();
     this.existingUsernameError = null;
     this.errorMessage = null;
+  }
+
+  private atLeastOneFieldRequired(controlNames: string[]): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const controls = controlNames.map(name => formGroup.get(name));
+      const hasValue = controls.some(control => control?.value);
+      
+      if (!hasValue) {
+        return { atLeastOneRequired: true };
+      }
+      return null;
+    };
   }
 
 }
