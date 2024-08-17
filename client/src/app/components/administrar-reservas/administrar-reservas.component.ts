@@ -3,6 +3,8 @@ import { Reservas } from '../../models/Reservas';
 import { ReservasService } from '../../services/reservas.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-administrar-reservas',
@@ -18,7 +20,8 @@ export class AdministrarReservasComponent implements OnInit {
     private reservaService: ReservasService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router : Router
+    private router : Router,
+    private dialog: MatDialog
   ) {
     this.reservaForm = this.fb.group({
       idReserva: ['',Validators.required],
@@ -66,6 +69,20 @@ export class AdministrarReservasComponent implements OnInit {
     return date.toISOString().split('T')[0];  
   }
 
+
+  openConfirmDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas eliminar esta reserva?'
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteReserva();
+      }
+    });
+  }
   deleteReserva(): void {
     if (this.idReserva) {
       this.reservaService.deleteReserva(this.idReserva).subscribe(
@@ -93,5 +110,10 @@ export class AdministrarReservasComponent implements OnInit {
       );
     }
   }
+
+  clearEstado(): void {
+    this.reservaForm.get('estado')?.reset();
+  }
+  
   
 }

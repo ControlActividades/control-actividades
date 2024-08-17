@@ -371,6 +371,7 @@ toggleParticulas() {
   if (this.particulasActivadas) {
     if (particlesContainer) {
       particlesContainer.style.display = 'none'; // Oculta el contenedor de partículas
+      this.router.navigate(['/ingresar']);
     }
   } else {
     if (particlesContainer) {

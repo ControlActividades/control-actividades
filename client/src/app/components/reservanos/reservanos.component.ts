@@ -94,6 +94,7 @@ export class ReservanosComponent implements OnInit {
     if (dayOfWeek === 0) {
       this.reservaForm.get('horaInicio')?.disable();
       this.reservaForm.get('horaFin')?.disable();
+      this.ingresoFallido();
       return;
     } else {
       this.reservaForm.get('horaInicio')?.enable();

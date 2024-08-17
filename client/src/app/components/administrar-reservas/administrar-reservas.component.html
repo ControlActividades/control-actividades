@@ -97,12 +97,13 @@
                                                 <input class="form-check-input" type="radio" formControlName="estado" value="Rechazado">
                                                 <i class="fa-regular fa-circle-check fa-2x text-danger"></i>
                                             </label>
+                                            <button type="button" class="btn btn-secondary btn-sm ms-2" (click)="clearEstado()">Borrar selección</button>
                                         </div>
                                     </td>
                                     
                                     <td>
                                         <button class="btn btn-success btn-sm mb-1" (click)="updateReservas()">Guardar</button>
-                                        <button class="btn btn-danger btn-sm mb-1" (click)="deleteReserva()">Eliminar</button>
+                                        <button class="btn btn-danger btn-sm mb-1" (click)="openConfirmDialog()">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -194,12 +195,13 @@
                                             <input class="form-check-input" type="radio" formControlName="estado" value="Rechazado">
                                             <i class="fa-regular fa-circle-check fa-2x text-danger"></i>
                                         </label>
+                                        <button type="button" class="btn btn-secondary btn-sm ms-2" (click)="clearEstado()">Borrar selección</button>
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item text-center">
                                 <button class="btn btn-success btn-sm mb-1" (click)="updateReservas()">Guardar</button>
-                                <button class="btn btn-danger btn-sm mb-1" (click)="deleteReserva()">Eliminar</button>
+                                <button class="btn btn-danger btn-sm mb-1" (click)="openConfirmDialog()">Eliminar</button>
                             </li>
                         </ul>
                     </form>
