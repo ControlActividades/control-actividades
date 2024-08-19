@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponsableService } from '../../services/responsable.service';
+import { NotificationService } from '../../services/notificacion.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-ascenso',
@@ -11,39 +13,63 @@ import { ResponsableService } from '../../services/responsable.service';
 })
 export class AscensoComponent {
   ascensoForm: FormGroup;
+  showProgressBar = false;
 
   constructor(
     private responsableService: ResponsableService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private snackBar:MatSnackBar
+    private snackBar:MatSnackBar,
+    public notificationService : NotificationService
   ) {
     this.ascensoForm = this.fb.group({
-      razon: ['', Validators.required] // Asegúrate de agregar el validador requerido
+      razon: ['', Validators.required] 
     });
   }
 
   onSubmit() {
     if (this.ascensoForm.valid) {
       const razon = this.ascensoForm.get('razon')?.value;
-      this.responsableService.enviarCorreoAscenso(razon).subscribe(
-        response => {
-          console.log('Correo enviado exitosamente:', response);
-          this.dialog.closeAll();
-          this.envioExitoso();
-        },
-        error => {
-          console.error('Error al enviar el correo:', error);
-          this.envioFallido();
+      this.showProgressBar = true;
+
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '300px',
+        data: {
+          message: '¿Estás seguro de que deseas enviar la solicitud de ascenso?',
+          confirmButtonText: 'Enviar',
+          cancelButtonText: 'Cancelar'
         }
-      );
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          // El usuario confirmó el envío
+          this.responsableService.enviarCorreoAscenso(razon).subscribe(
+            response => {
+              console.log('Correo enviado exitosamente:', response);
+              this.showProgressBar = true;
+              this.notificationService.showNotification('Solicitud de ascenso enviada correctamente');
+              setTimeout(() => {
+              this.showProgressBar = false;
+
+                this.dialog.closeAll();
+              }, 1000);
+            },
+            error => {
+              console.error('Error al enviar el correo:', error);
+              this.showProgressBar = false;
+              this.envioFallido();
+            }
+          );
+        } else {
+          this.showProgressBar = false;
+        }
+      });
     } else {
       console.error('La razón del ascenso es requerida.');
     }
   }
-
   onCancel() {
-    // Lógica para manejar la cancelación, como limpiar el formulario
     this.dialog.closeAll();
     this.ascensoForm.reset();
   }

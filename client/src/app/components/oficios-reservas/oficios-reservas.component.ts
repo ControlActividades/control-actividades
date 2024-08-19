@@ -14,10 +14,10 @@ function phoneNumberValidator(control: AbstractControl): ValidationErrors | null
 }
 
 // Validador personalizado para área de uso
-function areaUsageValidator(control: AbstractControl): ValidationErrors | null {
-  const validAreas = ['danzaFolclorica', 'taekwando', 'baloncestoVoleibol', 'ajedrez'];
+/* function areaUsageValidator(control: AbstractControl): ValidationErrors | null {
+  const validAreas = [' ','danzaFolclorica', 'taekwando', 'baloncestoVoleibol', 'ajedrez'];
   return validAreas.includes(control.value) ? null : { invalidArea: true };
-}
+} */
 
 @Component({
   selector: 'app-oficios-reservas',
@@ -36,15 +36,15 @@ export class OficiosReservasComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.reservaForm = this.fb.group({
-      nombCompleto: [''],
+      nombCompleto: ['', [ Validators.pattern(/^[A-Za-z\s]+$/)]],
       telefono: ['', [ phoneNumberValidator]],
       correoElec: ['',  Validators.email],
-      grupo: [''],
-      numControl: [''],
+      grupo: ['', [ Validators.pattern(/^[A-Z]{3}\d{4}$/)]],
+      numControl: ['', [ Validators.pattern(/^[A-Za-z0-9]+$/)]],
       horaInicio: [''],
       horaFin: [''],
-      cargo: [''],
-      areaUso: ['', [areaUsageValidator]],
+      cargo: ['', [ Validators.pattern(/^[A-Za-z\s]+$/)]],
+      areaUso: [''/* , [areaUsageValidator] */],
       razon: [''],
       razon2: ['' ],
       edificio: [''],
@@ -169,8 +169,26 @@ export class OficiosReservasComponent implements OnInit {
     const horaInicio = this.reservaForm.get('horaInicio')?.value || '________________________';
     const horaFin = this.reservaForm.get('horaFin')?.value || '________________________';
     const cargo = this.reservaForm.get('cargo')?.value || '________________________';
-    const areaUso = this.reservaForm.get('areaUso')?.value || '________________________';
+    var areaUso = this.reservaForm.get('areaUso')?.value || '________________________';
     const razon = this.reservaForm.get('razon')?.value || '________________________';
+
+    switch (areaUso) {
+      case 'danzaFolclorica':
+        areaUso = 'Danza Folclórica';
+        break;
+      case 'taekwando':
+        areaUso = 'Taekwando';
+        break;
+      case 'baloncestoVoleibol':
+        areaUso = 'Baloncesto y Voleibol';
+        break;
+      case 'ajedrez':
+        areaUso = 'Ajedrez';
+        break;
+      default:
+        areaUso = 'Vacio';
+        break;
+    }
 
     const datos = [
       { label: '• Nombre completo:', value: nombreCompleto },
@@ -275,22 +293,27 @@ export class OficiosReservasComponent implements OnInit {
     const correoElec = this.reservaForm.get('correoElec')?.value || '________________@______';
     const horaInicio = this.reservaForm.get('horaInicio')?.value || '________________________';
     const horaFin = this.reservaForm.get('horaFin')?.value || '________________________';
-    const areaUso = this.reservaForm.get('areaUso')?.value || '________________________';
+    var areaUso = this.reservaForm.get('areaUso')?.value || '________________________';
     const razon = this.reservaForm.get('razon2')?.value || '________________________';
 
-    switch (areaUso) {
-      case 'danzaFolclorica' : 'Danza Folclórica'
-        break;
-        case 'taekwando' : 'Taekwando'
-        break;
-        case 'baloncestoVoleibol' : 'Baloncesto y Voleibol'
-        break;
-        case 'ajedrez' : 'Ajedrez'
-        break;
-      default: 'Vacio'
-        break;
-    }
-    
+   // Transformar el valor de areaUso basado en su contenido
+switch (areaUso) {
+  case 'danzaFolclorica':
+    areaUso = 'Danza Folclórica';
+    break;
+  case 'taekwando':
+    areaUso = 'Taekwando';
+    break;
+  case 'baloncestoVoleibol':
+    areaUso = 'Baloncesto y Voleibol';
+    break;
+  case 'ajedrez':
+    areaUso = 'Ajedrez';
+    break;
+  default:
+    areaUso = 'Vacio';
+    break;
+}
     const datos = [
       { label: '• Nombre completo:', value: nombreCompleto },
       { label: '• Teléfono:', value: telefono },

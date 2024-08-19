@@ -13,7 +13,7 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field [appearance]="formAppearance" class="width">
-                    <mat-label>Fecha</mat-label>
+                    <mat-label>Fecha MM/DD/YYYY</mat-label>
                     <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="fecha" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -23,6 +23,7 @@
                     <mat-error *ngIf="reservaForm.get('fecha')?.hasError('matDatepickerMin')">
                       La fecha no puede ser anterior a hoy.
                     </mat-error>
+                    
                   </mat-form-field>
                 </div>
               </div>

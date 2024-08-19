@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Responsable } from '../models/Responsable';  // Asegúrate de ajustar la ruta correctamente
+import { Responsable } from '../models/responsable';  // Asegúrate de ajustar la ruta correctamente
 
 
 @Injectable({

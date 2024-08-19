@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, HostListener } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Responsable } from '../../models/Responsable';
+import { Responsable } from '../../models/responsable';
 import { RolService } from '../../services/rol.service';
 import { ResponsableService } from '../../services/responsable.service';
 import { Router } from '@angular/router';
@@ -10,8 +10,6 @@ import anime from 'animejs';
 declare var particlesJS: any;
 
 
-declare var particlesJS: any;
-const PASSWORD_PATTERN = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
 interface ControlLabels {
   [key: string]: string;
 }
@@ -32,6 +30,22 @@ export function capitalizeValidator(): ValidatorFn {
     return null;
   };
 }
+
+export function passwordStrengthValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value || '';
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+    const passwordValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
+
+    return !passwordValid ? { passwordStrength: true } : null;
+  };
+}
+
 @Component({
   selector: 'app-ingresar',
   templateUrl: './ingresar.component.html',
@@ -47,8 +61,8 @@ export class IngresarComponent implements AfterViewInit {
   errorMessage: string | null = null;
   passwordVisible: boolean = false;
   passwordVisibleIngresar: boolean = false;
-  
-  
+
+
   responsable: Responsable = {
     idResp: 0,
     nombUsuario: '',
@@ -62,9 +76,9 @@ export class IngresarComponent implements AfterViewInit {
     grupo: '',
     idRoles: 0
   };
-  
-  
-  
+
+
+
   constructor(
     private rolService: RolService,
     private responsableService: ResponsableService,
@@ -74,14 +88,22 @@ export class IngresarComponent implements AfterViewInit {
   ) {
     this.responsableForm = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
-      contrasenia: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.maxLength(10), Validators.minLength(8)]],
-      confContrasenia: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.maxLength(10), Validators.minLength(8)]],
+      contrasenia: ['', [Validators.required,
+      Validators.maxLength(10),
+      Validators.minLength(8),
+      passwordStrengthValidator()
+      ]],
+      confContrasenia: ['', [Validators.required,
+      Validators.maxLength(10),
+      Validators.minLength(8),
+      passwordStrengthValidator()
+      ]],
       nombres: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator(), capitalizeValidator()]],
       appPaterno: ['', [Validators.required, Validators.maxLength(50), noNumbersValidator(), capitalizeValidator()]],
       appMaterno: ['', [Validators.maxLength(50), noNumbersValidator(), capitalizeValidator()]],
       telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]],
       correoElec: ['', [Validators.email, Validators.maxLength(260)]],
-      numControl: ['', [Validators.maxLength(20), capitalizeValidator()]],
+      numControl: ['', [Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9]+$')]],
       grupo: ['', [Validators.maxLength(20), Validators.pattern('^[A-Z]{3}[0-9]{4}$')]],
       idRoles: [2, Validators.required]
     }, { validator: [this.matchPasswords('contrasenia', 'confContrasenia'), this.conditionalValidator] });
@@ -89,16 +111,16 @@ export class IngresarComponent implements AfterViewInit {
     this.responsableForm.get('appPaterno')?.valueChanges.subscribe(value => this.capitalize(value, 'appPaterno'));
     this.responsableForm.get('appMaterno')?.valueChanges.subscribe(value => this.capitalize(value, 'appMaterno'));
     this.responsableForm.get('grupo')?.valueChanges.subscribe(value => this.capitalizeGrup(value, 'grupo'));
-    
-    
+
+
     this.ingresarForm = this.fb.group({
       nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
-      contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10), Validators.pattern(PASSWORD_PATTERN)]]
+      contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10),passwordStrengthValidator()]]
     });
   }
-  
+
   ngOnInit() {
-    
+
     this.rolService.getRoles().subscribe(
       resp => {
         this.roles = resp.filter((rol: Rol) => rol.idRoles === 2); // Filtrar para mostrar solo el rol con id 2
@@ -107,7 +129,7 @@ export class IngresarComponent implements AfterViewInit {
     );
     this.loadParticles();
   }
-  
+
   loadParticles() {
     particlesJS.load('particles-js', 'assets/particles.json', null);
   }
@@ -146,7 +168,7 @@ export class IngresarComponent implements AfterViewInit {
         },
         err => {
           if (err.error.message === 'El nombre de usuario ya existe.') {
-            this.existingUsernameError = err.error.message; 
+            this.existingUsernameError = err.error.message;
             this.errorMessage = 'Usuario repetido';
             console.error('Usaurio');
           } else if (err.error.message === 'El teléfono ya existe.') {
@@ -179,7 +201,7 @@ export class IngresarComponent implements AfterViewInit {
     if (nombUsuario && contrasenia) {
       this.responsableService.login(nombUsuario, contrasenia).subscribe(
         () => {
-          this.ingresoExitoso();
+          this.ingresoExitoso();  
           this.errMessage = null;
           const userRole = this.responsableService.getUserRole();
           if (userRole === 4) { // Ruta para boss
@@ -216,7 +238,7 @@ export class IngresarComponent implements AfterViewInit {
   }
   initializeParticles(): void {
     if ((window as any).particlesJS) {
-      (window as any).particlesJS.load('particles-js', 'assets/particles.json', function() {
+      (window as any).particlesJS.load('particles-js', 'assets/particles.json', function () {
         console.log('callback - particles.js config loaded');
       });
     } else {
@@ -234,10 +256,12 @@ export class IngresarComponent implements AfterViewInit {
     if (container && registerBtn && loginBtn && registerBtn2) {
       registerBtn.addEventListener('click', () => {
         container.classList.add("active");
+        this.responsableForm.reset();
       });
 
       loginBtn.addEventListener('click', () => {
         container.classList.remove("active");
+        this.ingresarForm.reset();
       });
     }
 
@@ -317,7 +341,7 @@ export class IngresarComponent implements AfterViewInit {
     this.responsableForm.get(controlName)?.setValue(capitalizedValue, { emitEvent: false });
   }
 
-  
+
 
   capitalizeGrup(value: string, controlName: string): void {
     const capitalizedValue = value.toUpperCase();
@@ -326,6 +350,7 @@ export class IngresarComponent implements AfterViewInit {
 
   getTooltipMessage(controlName: string): string {
     const control = this.responsableForm.get(controlName);
+    const ingresar = this.ingresarForm.get(controlName);
     if (control && control.invalid && control.touched) {
       const labels: ControlLabels = {
         contrasenia: 'Contraseña',
@@ -336,12 +361,12 @@ export class IngresarComponent implements AfterViewInit {
         appMaterno: 'Apellido materno',
         telefono: 'Teléfono',
         correoElec: 'Correo electrónico',
-        numControl: 'Número de control',
+        numControl: 'Matrícula',
         grupo: 'Grupo'
       };
-  
+
       const label = labels[controlName] || controlName; // Aquí se asegura de que nunca sea undefined
-  
+
       if (control.errors?.['required']) {
         return `${label} es obligatorio.`;
       } else if (control.errors?.['minlength']) {
@@ -352,37 +377,59 @@ export class IngresarComponent implements AfterViewInit {
         return `El formato de ${label} es incorrecto.`;
       }
     }
+
+    if (ingresar && ingresar.invalid && ingresar.touched) {
+      const labels: ControlLabels = {
+        contrasenia: 'Contraseña',
+        nombUsuario: 'Usuario',
+        
+      };
+
+      const label = labels[controlName] || controlName; // Aquí se asegura de que nunca sea undefined
+
+      if (ingresar.errors?.['required']) {
+        return `${label} es obligatorio.`;
+      } else if (ingresar.errors?.['minlength']) {
+        return `La longitud de ${label} debe ser al menos ${ingresar.errors['minlength'].requiredLength} caracteres.`;
+      } else if (ingresar.errors?.['maxlength']) {
+        return `La longitud de ${label} no debe superar los ${ingresar.errors['maxlength'].requiredLength} caracteres.`;
+      } else if (ingresar.errors?.['pattern']) {
+        return `El formato de ${label} es incorrecto.`;
+      }
+    }
     return '';
   }
 
-//limpiar formulario
-limpiar(){
-  this.responsableForm.reset();
-  this.errMessage = null;
-  this.existingUsernameError = null;
-  this.errorMessage = null;
-  this.passwordVisible = false;
-  this.passwordVisibleIngresar = false;
-}
-
-toggleParticulas() {
-  const particlesContainer = document.getElementById('particles-js');
-
-  if (this.particulasActivadas) {
-    if (particlesContainer) {
-      particlesContainer.style.display = 'none'; // Oculta el contenedor de partículas
-      this.router.navigate(['/ingresar']);
-    }
-  } else {
-    if (particlesContainer) {
-      particlesContainer.style.display = 'block'; // Muestra el contenedor de partículas
-    } else {
-      this.loadParticles(); // Vuelve a cargar las partículas si el contenedor no existe
-    }
+  //limpiar formulario
+  limpiar() {
+    this.responsableForm.reset();
+    this.errMessage = null;
+    this.existingUsernameError = null;
+    this.errorMessage = null;
+    this.passwordVisible = false;
+    this.passwordVisibleIngresar = false;
   }
 
-  this.particulasActivadas = !this.particulasActivadas; // Cambia el estado
-}
+  toggleParticulas() {
+    const particlesContainer = document.getElementById('particles-js');
+
+    if (this.particulasActivadas) {
+      if (particlesContainer) {
+        particlesContainer.style.display = 'none'; // Oculta el contenedor de partículas
+        this.router.navigate(['/ingresar']);
+      }
+    } else {
+      if (particlesContainer) {
+        particlesContainer.style.display = 'block'; // Muestra el contenedor de partículas
+      } else {
+        this.loadParticles(); // Vuelve a cargar las partículas si el contenedor no existe
+      }
+    }
+
+    this.particulasActivadas = !this.particulasActivadas; // Cambia el estado
+  }
+
+
 
 
 

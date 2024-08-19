@@ -65,6 +65,8 @@ import { CustomMatPaginatorIntl } from './utilMaterial/CustomMatPaginatorIntl ';
 import { AscensoComponent } from './components/ascenso/ascenso.component';
 import { DateFormatPipe } from './date-format.pipe';
 import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { CuatroCeroCuatroComponent } from './components/cuatro-cero-cuatro/cuatro-cero-cuatro.component';
 
 
 
@@ -93,7 +95,9 @@ import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-dele
     VerRolesComponent,
     AscensoComponent,
     DateFormatPipe,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    ConfirmDialogComponent,
+    CuatroCeroCuatroComponent
   ],
   imports: [
     BrowserModule,
