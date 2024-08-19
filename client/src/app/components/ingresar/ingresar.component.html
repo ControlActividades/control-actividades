@@ -1,8 +1,7 @@
-
 <div class="body">
     <div id="particles-js"></div>
     <div class="logo-font">
-        
+
         <img src="assets/logotipo.svg" alt="Logotipo">
     </div>
     <div class="container" id="container">
@@ -22,7 +21,8 @@
                             <span *ngIf="responsableForm.get('telefono')?.errors?.['pattern']">El teléfono solo
                                 debe
                                 contener números.</span>
-                                <span *ngIf="responsableForm.get('telefono')?.errors?.['maxLength']">El teléfono no puede superar los 10 números.</span>
+                            <span *ngIf="responsableForm.get('telefono')?.errors?.['maxLength']">El teléfono no puede
+                                superar los 10 números.</span>
                         </div>
                     </div>
                 </div>
@@ -43,19 +43,22 @@
                             placeholder="Nueva contraseña*" [matTooltip]="getTooltipMessage('contrasenia')">
                         <div *ngIf="responsableForm.get('contrasenia')?.invalid && responsableForm.get('contrasenia')?.touched"
                             class="error-message">
-                            <span *ngIf="responsableForm.get('contrasenia')?.errors?.['pattern']"> La contraseña
-                                debe
-                                contener al menos una letra mayúscula, un número y un carácter especial</span>
+                            <span *ngIf="responsableForm.get('contrasenia')?.hasError('passwordStrength')">
+                                La contraseña debe tener al menos un número, una letra mayúscula, una letra minúscula y
+                                un carácter especial.
+                            </span>
                         </div>
+
                     </div>
                     <div class="col"><input [type]="passwordVisible ? 'text' : 'password'"
                             formControlName="confContrasenia" placeholder="Confirma la contraseña*"
                             [matTooltip]="getTooltipMessage('confContrasenia')">
                         <div *ngIf="responsableForm.get('confContrasenia')?.invalid && responsableForm.get('confContrasenia')?.touched"
                             class="error-message">
-                            <span *ngIf="responsableForm.get('confContrasenia')?.errors?.['pattern']">La
-                                contraseña debe
-                                contener al menos una letra mayúscula, un número y un carácter especial</span>
+                            <span *ngIf="responsableForm.get('confContrasenia')?.hasError('passwordStrength')">
+                                La contraseña debe tener al menos un número, una letra mayúscula, una letra minúscula y
+                                un carácter especial.
+                            </span>
                         </div>
                     </div>
                     <i (click)="togglePasswordVisibility()" class="password-icon bi bi-eye"
@@ -73,7 +76,7 @@
                         El nombre no debe contener números.
                     </span>
                     <span *ngIf="responsableForm.get('nombres')?.hasError('capitalize')">
-                         El nombre no debe contener caracteres especiales.
+                        El nombre no debe contener caracteres especiales.
                     </span>
                 </div>
 
@@ -87,7 +90,7 @@
                             </span>
                             <span *ngIf="responsableForm.get('appPaterno')?.hasError('capitalize')">
                                 El apellido paterno no debe contener caracteres especiales.
-                           </span>
+                            </span>
                         </div>
                     </div>
                     <div class="col"><input type="text" formControlName="appMaterno" placeholder="Apellido Materno"
@@ -100,18 +103,18 @@
                             </span>
                             <span *ngIf="responsableForm.get('appMaterno')?.hasError('capitalize')">
                                 El apellido materno no debe contener caracteres especiales.
-                           </span>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <input type="text" formControlName="numControl" placeholder="Matrícula"
                     [matTooltip]="getTooltipMessage('numControl')">
-                    <div *ngIf="responsableForm.get('numControl')?.invalid && responsableForm.get('numControl')?.touched"
-                            class="error-message">
-                            <span *ngIf="responsableForm.get('numControl')?.hasError('capitalize')">
-                                La matrícula no debe contener caracteres especiales.
-                           </span>
-                        </div>
+                <div *ngIf="responsableForm.get('numControl')?.invalid && responsableForm.get('numControl')?.touched"
+                    class="error-message">
+                    <span *ngIf="responsableForm.get('numControl')?.hasError('capitalize')">
+                        La matrícula no debe contener caracteres especiales.
+                    </span>
+                </div>
                 <input type="text" formControlName="grupo" placeholder="Grupo (AAA0000)"
                     [matTooltip]="getTooltipMessage('grupo')">
 
@@ -123,28 +126,39 @@
                 <div *ngIf="existingUsernameError" class="error-message">{{ existingUsernameError }}</div>
                 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
                 <div class="btn">
-                <button id="register2" [disabled]="!responsableForm.valid">Registrarse</button>
-                <button id="register2" (click)="limpiar()">Limpiar</button>
-            </div>
+                    <button id="register2" [disabled]="!responsableForm.valid">Registrarse</button>
+                    <button id="register2" (click)="limpiar()">Limpiar</button>
+                </div>
             </form>
         </div>
         <div class="form-container sign-in">
             <form [formGroup]="ingresarForm" (ngSubmit)="searchResponsable()">
                 <h1>Ingresar</h1>
-                <input type="text" formControlName="nombUsuario" placeholder="Usuario">
+                <input type="text" formControlName="nombUsuario" placeholder="Usuario*"
+                [matTooltip]="getTooltipMessage('nombUsuario')">
+                
                 <input [type]="passwordVisibleIngresar ? 'text' : 'password'" formControlName="contrasenia"
                     placeholder="Contraseña">
-                <div *ngIf="ingresarForm.get('contrasenia')?.invalid && ingresarForm.get('contrasenia')?.touched"
-                    class="error-message">
-                    <span *ngIf="ingresarForm.get('contrasenia')?.errors?.['pattern']"> La contraseña debe
-                        contener al menos una letra mayúscula, un número y un carácter especial</span>
-                </div>
+                    <div *ngIf="ingresarForm.get('contrasenia')?.invalid && ingresarForm.get('contrasenia')?.touched" class="error-message">
+                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('required')">
+                          La contraseña es obligatoria.
+                        </span>
+                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('minlength')">
+                          La contraseña debe tener al menos 8 caracteres.
+                        </span>
+                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('maxlength')">
+                          La contraseña no puede tener más de 10 caracteres.
+                        </span>
+                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('passwordStrength')">
+                          La contraseña debe tener al menos un número, una letra mayúscula, una letra minúscula y un carácter especial.
+                        </span>
+                      </div>
                 <i (click)="togglePasswordVisibilityIngresar()" class="password-icon bi bi-eye"
                     [ngClass]="{'bi-eye': !passwordVisibleIngresar, 'bi-eye-slash': passwordVisibleIngresar}">
                     {{ passwordVisibleIngresar ? ' Ocultar' : ' Mostrar' }} contraseñas
                 </i>
-<!--                 <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
- -->                <button id="register2" [disabled]="!ingresarForm.valid">Ingresar</button>
+                <!--                 <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
+ --> <button id="register2" >Ingresar</button>
             </form>
         </div>
         <div class="toggle-container">

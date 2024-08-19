@@ -1,5 +1,11 @@
 <div class="formulario-flotante">
+  <div *ngIf="notificationService.notification$ | async as notificationMessage" class="notification">
+    {{ notificationMessage }} <i class="fas fa-check"></i>
+  </div>
   <h2>Razón del Ascenso</h2>
+  <div *ngIf="showProgressBar" class="progress-bar-container">
+    <div class="progress-bar"></div>
+  </div>
   <form [formGroup]="ascensoForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Razón</mat-label>

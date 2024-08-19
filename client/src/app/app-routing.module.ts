@@ -21,6 +21,7 @@ import { RolBossGuard } from './guards/boss.guard';
 import { RolDosGuard } from './guards/rol-dos.guard';
 import { NoAuthGuard } from './guards/logout.guard';
 import { ContratoComponent } from './components/contrato/contrato.component';
+import { CuatroCeroCuatroComponent } from './components/cuatro-cero-cuatro/cuatro-cero-cuatro.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio/inicio', pathMatch: 'full' },
@@ -32,7 +33,7 @@ const routes: Routes = [
       { path: 'administrar-reservaciones/:idReserva', component: AdministrarReservasComponent,canActivate: [RolUnoGuard] },
       { path: 'oficios-reservas', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
       { path: 'oficios-reservas/edit/:idReserva', component: OficiosReservasComponent, canActivate: [RolWeGuard, RolDosGuard] },
-      { path: 'sugerencias-quejas', component: SuguerenciasQuejasComponent },
+      { path: 'sugerencias-quejas', component: CuatroCeroCuatroComponent },
       { path: 'reservaciones', component: ReservacionesComponent, canActivate : [NoAuthGuard] },
       { path: 'reservas', component: ReservasComponent, canActivate: [RolDosGuard] },
       { path: 'registros', component: RegistrosComponent, canActivate: [RolUnoGuard] },

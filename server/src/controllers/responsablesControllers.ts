@@ -154,7 +154,7 @@ class ResponsablesControllers {
             const mailOptions = {
                 from: 'control.actividades.2024@gmail.com',
                 to: 'rodriguez.mora.zahir.15@gmail.com',
-                subject: '⭐ Solicitud de Ascenso ⭐',
+                subject: ' 🦅 Solicitud de Ascenso  🦅',
                 text: `
             Estimada Lic. Magda Mirthala Hernández González
             
