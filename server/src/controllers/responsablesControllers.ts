@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import pool from '../database';
 import nodemailer from 'nodemailer';
-
+import crypto from 'crypto';  // Para generar un token único
 class ResponsablesControllers {
     public async index(req: Request, resp: Response) {
 
@@ -146,8 +146,8 @@ class ResponsablesControllers {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'control.actividades.2024@gmail.com', // Tu correo electrónico
-                    pass: 'tfvz ombm slyd myhx' // Usa la contraseña de aplicación generada
+                    user: 'control.actividades.2024@gmail.com', 
+                    pass: 'fmbc obte oenw qkzt' 
                 }
             });
     
@@ -185,6 +185,86 @@ class ResponsablesControllers {
         }
     }
     
+
+//verificar correos
+
+public async enviarCorreoVerificacion(req: Request, res: Response): Promise<void> {
+    const { correoElec } = req.body;
+
+    if (!correoElec) {
+        res.status(400).json({ message: 'Correo electrónico es requerido' });
+        return;
+    }
+
+    try {
+        const result = await pool.query('SELECT idResp, nombres FROM responsable WHERE correoElec = ?', [correoElec]);
+
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+            return;
+        }
+
+        const { idResp, nombres } = result[0];
+        const token = crypto.randomBytes(20).toString('hex');
+
+        // Guardar el token en la base de datos con una expiración (opcional)
+        await pool.query('UPDATE responsable SET tokenVerificacion = ?, tokenExpiracion = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE idResp = ?', [token, idResp]);
+
+        // Configurar el transporte de correo
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'control.actividades.2024@gmail.com',
+                pass: 'kimu ybdy gega ckgq'
+            }
+        });
+
+        const mailOptions = {
+            from: 'control.actividades.2024@gmail.com',
+            to: correoElec,
+            subject: 'Verificación de Correo Electrónico',
+            text: `
+            Hola ${nombres},
+
+            Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico:
+
+            http://localhost:4200/verificar-correo/${token} 
+
+            Si no solicitaste esta verificación, por favor ignora este correo.
+
+            Atentamente,
+            Control de Actividades
+            `
+        };//cambiar url en producción
+
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'Correo de verificación enviado exitosamente' });
+
+    } catch (error) {
+        console.error('Error al enviar el correo de verificación:', error);
+        res.status(500).json({ message: 'Error al enviar el correo de verificación', error });
+    }
+}
+
+public async verificarToken(req: Request, res: Response): Promise<void> {
+    const { token } = req.params;
+
+    try {
+        const result = await pool.query('SELECT idResp FROM responsable WHERE tokenVerificacion = ? AND tokenExpiracion > NOW()', [token]);
+        if (result.length === 0) {
+            res.status(400).json({ message: 'Token inválido o expirado' });
+            return;
+        }
+
+        const { idResp } = result[0];
+        res.status(200).json({ message: 'Token verificado, puedes proceder con la recuperación de contraseña', idResp });
+    } catch (error) {
+        console.error('Error al verificar el token:', error);
+        res.status(500).json({ message: 'Error al verificar el token', error });
+    }
+}
+
+
 }
 
 

@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
 import { Rol } from '../../models/Rol';
+import { Responsable } from '../../models/responsable';
 
 export function noEHyphenValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -55,7 +56,7 @@ export class RegistrosComponent implements OnInit {
       appMaterno: ['', [Validators.maxLength(50), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ ]*$')]],
       telefono: ['', [Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.minLength(10)]],
       correoElec: ['', [Validators.email, Validators.maxLength(260)]],
-      numControl: ['', [Validators.maxLength(20), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ ]*$')]],
+      numControl: ['', [Validators.maxLength(20), Validators.pattern('^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9 ]*$')]],
       grupo: ['', [Validators.maxLength(20), Validators.pattern('^[A-Z]{3}[0-9]{4}$')]],
       idRoles: ['', Validators.required]
     }, { validator: this.atLeastOneFieldRequired(['telefono', 'correoElec']) });
@@ -120,15 +121,17 @@ export class RegistrosComponent implements OnInit {
   getResponsables() {
     this.responsableService.getResponsables().subscribe(
       resp => {
-        this.responsables = resp;
-        this.dataSource = new MatTableDataSource(resp);
+        // Filtrar los responsables que NO tengan idRoles igual a 4
+        const filteredResponsables = resp.filter((responsable: Responsable) => responsable.idRoles !== 4);
+        
+        // Asignar el array filtrado a dataSource
+        this.dataSource = new MatTableDataSource(filteredResponsables);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
       err => console.error(err)
     );
   }
-
   getRoles() {
     this.rolService.getRoles().subscribe(
       resp => {

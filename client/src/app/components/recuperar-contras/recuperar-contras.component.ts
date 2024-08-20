@@ -15,7 +15,7 @@ export class RecuperarContrasComponent implements OnInit {
   usuarioEncontrado: boolean = false;
   idResp: string | number | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, 
+  constructor(private fb: FormBuilder, private router: Router,
     private responsableService: ResponsableService,
     private snackBar: MatSnackBar) {
     this.buscarForm = this.fb.group({
@@ -29,7 +29,15 @@ export class RecuperarContrasComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    this.responsableService.usuarioEncontrado$.subscribe(valor => {
+      this.usuarioEncontrado = valor;
+      if (!valor) {
+        this.usuarioEncontrado= false;
+      }
+    });
+   }
 
   conditionalValidator(formGroup: FormGroup): ValidationErrors | null {
     const correoElec = formGroup.get('correoElec')?.value;
@@ -46,30 +54,44 @@ export class RecuperarContrasComponent implements OnInit {
     const correoElec = this.buscarForm.get('correoElec')?.value;
     const telefono = this.buscarForm.get('telefono')?.value;
 
-    if (this.buscarForm.invalid) {
-      console.log('Formulario inválido');
-      return;
-    }
-
-    this.responsableService.buscarResponsable(correoElec, telefono).subscribe(
-      resp => {
-        if (resp) {
-          this.usuarioEncontrado = true;
-          this.idResp = resp.idResp;
-          this.buscarForm.disable();
-          this.searchExitoso();
-        } else {
-          console.log('Usuario no encontrado');
-          
+    if (correoElec) {
+      // Llamar al servicio para buscar al usuario
+      this.responsableService.buscarResponsable(correoElec, telefono).subscribe(
+        (usuario) => {
+          if (usuario) {
+            // Usuario encontrado, ahora enviar el correo de verificación
+            this.responsableService.enviarCorreoVerificacion(correoElec).subscribe(
+              () => {
+                this.snackBar.open('Correo de verificación enviado', 'Cerrar', {
+                  duration: 2000,
+                  panelClass: ['success-snackbar']
+                });
+              },
+              (err) => {
+                console.error('Error al enviar el correo de verificación:', err);
+                this.snackBar.open('Error al enviar el correo de verificación', 'Cerrar', {
+                  duration: 2000,
+                  panelClass: ['error-snackbar']
+                });
+              }
+            );
+          } else {
+            // Usuario no encontrado
+            this.snackBar.open('Usuario no encontrado', 'Cerrar', {
+              duration: 2000,
+              panelClass: ['error-snackbar']
+            });
+          }
+        },
+        (err) => {
+          console.error('Error al buscar usuario:', err);
+          this.snackBar.open('Error al buscar usuario', 'Cerrar', {
+            duration: 2000,
+            panelClass: ['error-snackbar']
+          });
         }
-      },
-      err =>{
-
-        console.log(err);
-        this.searchFallido();
-      } 
-        
-    );
+      );
+    }
   }
 
   updateContrasenia(): void {
@@ -91,8 +113,8 @@ export class RecuperarContrasComponent implements OnInit {
     this.snackBar.open('Usuario encontrado', 'Cerrar', {
       duration: 2000,
       panelClass: ['success-snackbar'],
-      horizontalPosition: 'center', 
-      verticalPosition: 'bottom', 
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -107,6 +129,30 @@ export class RecuperarContrasComponent implements OnInit {
     this.buscarForm.reset();
     this.buscarForm.enable();
     this.usuarioEncontrado = false;
+  }
+
+  //verificar correo
+  onEnviarVerificacionCorreo(): void {
+    const correoElec = this.buscarForm.get('correoElec')?.value;
+
+    if (correoElec) {
+      this.responsableService.enviarCorreoVerificacion(correoElec).subscribe(
+        resp => {
+          console.log('Correo de verificación enviado:', resp);
+          this.snackBar.open('Correo de verificación enviado', 'Cerrar', {
+            duration: 2000,
+            panelClass: ['success-snackbar']
+          });
+        },
+        err => {
+          console.error('Error al enviar el correo de verificación:', err);
+          this.snackBar.open('Error al enviar el correo de verificación', 'Cerrar', {
+            duration: 2000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+    }
   }
 
 }

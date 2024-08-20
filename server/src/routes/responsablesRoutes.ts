@@ -18,11 +18,13 @@ class ResponsablesRoutes {
 
         this.router.delete('/:idResp',responsablesControllers.delete);
         this.router.put('/:idResp', responsablesControllers.updateResponsable);
-        this.router.put('/contrasenia/:idResp', responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña}
-        
-
+        this.router.put('/contrasenia/:idResp', responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña
         // Nueva ruta para enviar correo de ascenso
     this.router.post('/ascenso/correo', responsablesControllers.enviarCorreoAscenso);
+    //Nueva ruta para verificar el correo
+    this.router.post('/enviar-verificacion-correo', responsablesControllers.enviarCorreoVerificacion);
+    this.router.get('/verificar-correo/:token', responsablesControllers.verificarToken);
+
     }
 }
 const responsableRoutes = new ResponsablesRoutes();

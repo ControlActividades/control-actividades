@@ -135,30 +135,32 @@
             <form [formGroup]="ingresarForm" (ngSubmit)="searchResponsable()">
                 <h1>Ingresar</h1>
                 <input type="text" formControlName="nombUsuario" placeholder="Usuario*"
-                [matTooltip]="getTooltipMessage('nombUsuario')">
-                
+                    [matTooltip]="getTooltipMessage('nombUsuario')">
+
                 <input [type]="passwordVisibleIngresar ? 'text' : 'password'" formControlName="contrasenia"
                     placeholder="Contraseña">
-                    <div *ngIf="ingresarForm.get('contrasenia')?.invalid && ingresarForm.get('contrasenia')?.touched" class="error-message">
-                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('required')">
-                          La contraseña es obligatoria.
-                        </span>
-                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('minlength')">
-                          La contraseña debe tener al menos 8 caracteres.
-                        </span>
-                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('maxlength')">
-                          La contraseña no puede tener más de 10 caracteres.
-                        </span>
-                        <span *ngIf="ingresarForm.get('contrasenia')?.hasError('passwordStrength')">
-                          La contraseña debe tener al menos un número, una letra mayúscula, una letra minúscula y un carácter especial.
-                        </span>
-                      </div>
+                <div *ngIf="ingresarForm.get('contrasenia')?.invalid && ingresarForm.get('contrasenia')?.touched"
+                    class="error-message">
+                    <span *ngIf="ingresarForm.get('contrasenia')?.hasError('required')">
+                        La contraseña es obligatoria.
+                    </span>
+                    <span *ngIf="ingresarForm.get('contrasenia')?.hasError('minlength')">
+                        La contraseña debe tener al menos 8 caracteres.
+                    </span>
+                    <span *ngIf="ingresarForm.get('contrasenia')?.hasError('maxlength')">
+                        La contraseña no puede tener más de 10 caracteres.
+                    </span>
+                    <span *ngIf="ingresarForm.get('contrasenia')?.hasError('passwordStrength')">
+                        La contraseña debe tener al menos un número, una letra mayúscula, una letra minúscula y un
+                        carácter especial.
+                    </span>
+                </div>
                 <i (click)="togglePasswordVisibilityIngresar()" class="password-icon bi bi-eye"
                     [ngClass]="{'bi-eye': !passwordVisibleIngresar, 'bi-eye-slash': passwordVisibleIngresar}">
                     {{ passwordVisibleIngresar ? ' Ocultar' : ' Mostrar' }} contraseñas
                 </i>
-                <!--                 <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
- --> <button id="register2" >Ingresar</button>
+                <a href="recuperar-contras">¿Olvidaste tu contraseña?</a>
+                <button id="register2">Ingresar</button>
             </form>
         </div>
         <div class="toggle-container">

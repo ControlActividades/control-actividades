@@ -36,10 +36,14 @@ CREATE TABLE responsable (
     numControl VARCHAR(20) NOT NULL,
     grupo VARCHAR(20) NOT NULL,
     idRoles INT NULL,
+    -- Nuevos campos para la verificación de correo
+    correoVerificado BOOLEAN DEFAULT FALSE, -- Indica si el correo ha sido verificado
+    tokenVerificacion VARCHAR(255) NULL, -- Almacena el token de verificación de correo
+    tokenExpiracion DATETIME NULL, -- Almacena la fecha de expiración del token
     FOREIGN KEY (idRoles) REFERENCES rol(idRoles)
 );
 
--- Finalmente, crea la tabla 'reservas', que hace referencia a la tabla 'responsable'
+-- Crea la tabla 'reservas', que hace referencia a la tabla 'responsable'
 CREATE TABLE reservas (
     idReserva INT AUTO_INCREMENT PRIMARY KEY,
     horaInicio TIME NOT NULL,

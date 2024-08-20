@@ -22,6 +22,7 @@ import { RolDosGuard } from './guards/rol-dos.guard';
 import { NoAuthGuard } from './guards/logout.guard';
 import { ContratoComponent } from './components/contrato/contrato.component';
 import { CuatroCeroCuatroComponent } from './components/cuatro-cero-cuatro/cuatro-cero-cuatro.component';
+import { VerificarCorreoComponent } from './components/verificar-correo/verificar-correo.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio/inicio', pathMatch: 'full' },
@@ -46,7 +47,8 @@ const routes: Routes = [
     ]
   },
   { path: 'ingresar', component: IngresarComponent },
-  { path: 'recuperar-contras', component: RecuperarContrasComponent }
+  { path: 'recuperar-contras', component: RecuperarContrasComponent },
+  { path: 'verificar-correo/:token', component: VerificarCorreoComponent }
 ];
 
 @NgModule({

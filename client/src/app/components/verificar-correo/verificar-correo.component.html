@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="progress-wrapper">
+      <mat-progress-bar *ngIf="showProgressBar" mode="indeterminate"></mat-progress-bar>
+      <p>{{ verificationMessage }}</p>
+      <p *ngIf="countdown > 0">Redirigiendo en {{ countdown }} segundos...</p>
+    </div>
+  </div>
+  
