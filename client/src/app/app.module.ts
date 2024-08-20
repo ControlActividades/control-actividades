@@ -23,6 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 // Angular Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -67,6 +69,7 @@ import { DateFormatPipe } from './date-format.pipe';
 import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { CuatroCeroCuatroComponent } from './components/cuatro-cero-cuatro/cuatro-cero-cuatro.component';
+import { VerificarCorreoComponent } from './components/verificar-correo/verificar-correo.component';
 
 
 
@@ -97,7 +100,8 @@ import { CuatroCeroCuatroComponent } from './components/cuatro-cero-cuatro/cuatr
     DateFormatPipe,
     ConfirmDeleteComponent,
     ConfirmDialogComponent,
-    CuatroCeroCuatroComponent
+    CuatroCeroCuatroComponent,
+    VerificarCorreoComponent
   ],
   imports: [
     BrowserModule,
@@ -125,7 +129,8 @@ import { CuatroCeroCuatroComponent } from './components/cuatro-cero-cuatro/cuatr
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   providers: [
     ReservasService,

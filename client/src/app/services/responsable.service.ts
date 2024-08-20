@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Responsable } from '../models/responsable';  // Asegúrate de ajustar la ruta correctamente
+import { Responsable } from '../models/responsable';
+import { RespuestaVerificacion } from '../models/respuesta-verificacion';
 
 
 @Injectable({
@@ -11,6 +12,10 @@ import { Responsable } from '../models/responsable';  // Asegúrate de ajustar l
 export class ResponsableService {
   private API_URI = 'http://localhost:3000/responsables';
   public loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+
+  //validar correo
+  private usuarioEncontradoSubject = new BehaviorSubject<boolean>(false);
+  usuarioEncontrado$ = this.usuarioEncontradoSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -90,9 +95,35 @@ export class ResponsableService {
 
  //correo electrónico
  enviarCorreoAscenso(razon: string): Observable<any> {
-  const userId = this.getUserId(); // Obtiene el ID del usuario autenticado
+  const userId = this.getUserId(); 
   return this.http.post(`${this.API_URI}/ascenso/correo`, { razon, userId });
 }
 
+//verificar el correo
+enviarCorreoVerificacion(correoElec: string): Observable<any> {
+  return this.http.post(`${this.API_URI}/enviar-verificacion-correo`, { correoElec });
+}
+
+verificarToken(token: string): Observable<any> {
+  return this.http.get<RespuestaVerificacion>(`${this.API_URI}/verificar-correo/${token}`).pipe(
+    tap(response => {
+      if (response && response.idResp) {
+     
+        console.log('ID de Responsable:', response.idResp);
+      }
+    }),
+    catchError(error => {
+      console.error('Error al verificar el token:', error);
+      return throwError(error);
+    })
+  );
+}
+
+
+setUsuarioEncontrado(valor: boolean): void {
+  this.usuarioEncontradoSubject.next(valor);
+}
   
+
+
 }

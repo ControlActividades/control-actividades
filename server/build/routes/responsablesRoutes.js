@@ -16,9 +16,12 @@ class ResponsablesRoutes {
         this.router.post('/buscar', responsablesControllers_1.responsablesControllers.buscarResponsable); // Nueva ruta para buscar responsable
         this.router.delete('/:idResp', responsablesControllers_1.responsablesControllers.delete);
         this.router.put('/:idResp', responsablesControllers_1.responsablesControllers.updateResponsable);
-        this.router.put('/contrasenia/:idResp', responsablesControllers_1.responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña}
+        this.router.put('/contrasenia/:idResp', responsablesControllers_1.responsablesControllers.updateContrasenia); // Nueva ruta para actualizar contraseña
         // Nueva ruta para enviar correo de ascenso
         this.router.post('/ascenso/correo', responsablesControllers_1.responsablesControllers.enviarCorreoAscenso);
+        //Nueva ruta para verificar el correo
+        this.router.post('/enviar-verificacion-correo', responsablesControllers_1.responsablesControllers.enviarCorreoVerificacion);
+        this.router.get('/verificar-correo/:token', responsablesControllers_1.responsablesControllers.verificarToken);
     }
 }
 const responsableRoutes = new ResponsablesRoutes();
