@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject, tap } from 'rxjs';
+import { map, Subject, tap } from 'rxjs';
 //models
-import { Reservas } from '../models/Reservas';
+import { Reservas } from '../models/reservas';
 import { ReservasImprimir } from '../models/ReservaImprimir';
+interface CheckReservaResponse {
+  hasAcceptedReserva: boolean;
+  hasNonAcceptedReserva: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -60,9 +64,10 @@ export class ReservasService {
   }
 
   //reserva disponible
-  checkReserva(horaInicio: Date, horaFin: Date, fecha: string) {
-    return this.http.post<{ message: string }>(`${this.API_URI}/check`, { horaInicio, horaFin, fecha });
+  checkReserva(horaInicio: string, horaFin: string, fecha: string) {
+    return this.http.post<CheckReservaResponse>(`${this.API_URI}/check`, { horaInicio, horaFin, fecha });
   }
+
 
 
 }

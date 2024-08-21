@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import pool from '../database';
 
 class ReservasControllers {
-    public async index(req : Request, resp : Response) {
+    public async index(req: Request, resp: Response) {
 
         const reservas = await pool.query('SELECT * FROM reservas');
         resp.json(reservas);
     }
-    
+
     public async getReserva(req: Request, res: Response): Promise<void> {
         const { idReserva } = req.params;
         try {
@@ -21,20 +21,20 @@ class ReservasControllers {
             res.status(500).json({ message: 'Error al obtener la reserva', error });
         }
     }
-    
-    public async create(req : Request, resp : Response):Promise<void>{
+
+    public async create(req: Request, resp: Response): Promise<void> {
         console.log(req.body);
-        await pool.query('INSERT INTO reservas set ?',[req.body]);
-        resp.json({message: 'Reserva guardada'})
+        await pool.query('INSERT INTO reservas set ?', [req.body]);
+        resp.json({ message: 'Reserva guardada' })
     }
 
-    public async delete(req : Request, resp : Response){
+    public async delete(req: Request, resp: Response) {
         const { idReserva } = req.params;
         await pool.query('DELETE FROM reservas WHERE idReserva = ?', [idReserva]);
-        resp.json({message : 'Reserva eliminada'});
+        resp.json({ message: 'Reserva eliminada' });
     }
 
-    public async updateReserva(req: Request, res: Response): Promise<void> { 
+    public async updateReserva(req: Request, res: Response): Promise<void> {
         const { idReserva } = req.params;
         const updateData = req.body;
         try {
@@ -49,7 +49,7 @@ class ReservasControllers {
         }
     }
 
-    
+
 
     //oficios de reservas
 
@@ -66,28 +66,42 @@ class ReservasControllers {
             res.status(500).json({ message: 'Error al obtener la reserva para imprimir', error });
         }
     }
-    
+
     //reserva disponible
     public async checkReserva(req: Request, res: Response): Promise<void> {
         const { horaInicio, horaFin, fecha } = req.body;
         try {
             const result = await pool.query(
                 `SELECT * FROM reservas WHERE fecha = ? 
-                AND ((horaInicio < ? AND horaFin > ?) 
-                OR (horaInicio < ? AND horaFin > ?)
-                OR (horaInicio >= ? AND horaFin <= ?))`,
+            AND ((horaInicio < ? AND horaFin > ?) 
+            OR (horaInicio < ? AND horaFin > ?)
+            OR (horaInicio >= ? AND horaFin <= ?))`,
                 [fecha, horaFin, horaInicio, horaInicio, horaFin, horaInicio, horaFin]
             );
-            if (result.length > 0) {
-                res.status(409).json({ message: 'El horario ya está ocupado' });
-            } else {
-                res.status(200).json({ message: 'El horario está disponible' });
+
+            let hasAcceptedReserva = false;
+            let hasNonAcceptedReserva = false;
+
+            for (const reserva of result) {
+                if (reserva.estado === 'Aceptado') {
+                    hasAcceptedReserva = true;
+                    break;
+                } else if (reserva.estado !== 'Aceptado') {
+                    hasNonAcceptedReserva = true;
+                }
             }
+
+            res.status(hasAcceptedReserva ? 409 : 200).json({
+                hasAcceptedReserva,
+                hasNonAcceptedReserva
+            });
         } catch (error) {
             res.status(500).json({ message: 'Error al verificar la reserva', error });
         }
     }
-    
+
+
+
 
 }
 export const reservasControllers = new ReservasControllers();

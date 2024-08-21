@@ -44,7 +44,7 @@ export class ReservanosComponent implements OnInit {
 
   ngOnInit(): void {
     const today = new Date();
-    const day = (today.getDate() + 1).toString().padStart(2, '0');
+    const day = (today.getDate() + 2).toString().padStart(2, '0');
     const month = (today.getMonth() + 1).toString().padStart(2, '0'); 
     const year = today.getFullYear();
 
@@ -163,20 +163,38 @@ export class ReservanosComponent implements OnInit {
     if (this.isGuardarDisabled || !this.reservaForm.valid) {
       return;
     }
-
+  
+    const currentDateTime = new Date(); // Hora y fecha actuales
+    const reservaDateTime = new Date(this.reservaForm.get('fecha')?.value);
+    const [horaInicioHour, horaInicioMinute] = this.reservaForm.get('horaInicio')?.value.split(':').map(Number);
+  
+    reservaDateTime.setHours(horaInicioHour, horaInicioMinute, 0, 0);
+  
+    // Verifica que la hora de la reserva sea al menos 3 horas después de la hora actual
+    const threeHoursBefore = new Date(currentDateTime.getTime() + 3 * 60 * 60 * 1000); // Hora actual + 3 horas
+  
+    if (reservaDateTime <= threeHoursBefore) {
+      this.snackBar.open('Debe reservar al menos con 3 horas de antelación', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: ['snackbar-info']
+      });
+      return;
+    }
+  
     if (this.reservaForm.valid) {
       const responsableId = this.responsableService.getUserId();
       const reserva = {
         ...this.reservaForm.value,
         idResp: responsableId
       };
-
+  
       this.reservasService.saveReserva(reserva).subscribe(
         resp => {
           this.snackBar.open('Reserva guardada exitosamente', 'Cerrar', {
-            duration: 3000, // Duración de la alerta en milisegundos
+            duration: 3000,
             verticalPosition: 'top',
-            panelClass: ['snackbar-info'] // Posición vertical
+            panelClass: ['snackbar-info']
           });
           this.tabChange.emit(1);
           this.reservaForm.reset();
@@ -185,6 +203,7 @@ export class ReservanosComponent implements OnInit {
       );
     }
   }
+  
 
   reset(): void {
     this.reservaForm.reset();
@@ -204,20 +223,22 @@ export class ReservanosComponent implements OnInit {
     const horaFin = this.reservaForm.get('horaFin')?.value;
     const fecha = new Date(this.reservaForm.get('fecha')?.value).toISOString().split('T')[0];
   
-
     this.reservasService.checkReserva(horaInicio, horaFin, fecha).subscribe(
       (response) => {
-        if (response.message === 'El horario está disponible') {
-          // Proceder con la creación de la reserva
-          this.saveReserva();
-        } else {
-          // Mostrar mensaje de que el horario está ocupado
+        // Asegúrate de que 'response' tenga las propiedades necesarias
+        if (response.hasAcceptedReserva) {
+          this.isGuardarDisabled = true; // Deshabilitar el botón
           this.ingresoFallido();
+        } else {
+          this.isGuardarDisabled = false; // Habilitar el botón
         }
       },
       (error) => {
+        this.isGuardarDisabled = true; // Deshabilitar el botón en caso de error
         this.ingresoFallido();
       }
     );
   }
+  
+  
 }

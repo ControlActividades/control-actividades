@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { ResponsableService } from '../../services/responsable.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { passwordStrengthValidator } from '../ingresar/ingresar.component';
 
 @Component({
   selector: 'app-recuperar-contras',
@@ -14,23 +15,28 @@ export class RecuperarContrasComponent implements OnInit {
   recuperarForm: FormGroup;
   usuarioEncontrado: boolean = false;
   idResp: string | number | null = null;
+  showBuscarForm: boolean = true;
 
   constructor(private fb: FormBuilder, private router: Router,
     private responsableService: ResponsableService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private route : ActivatedRoute
+  ) {
     this.buscarForm = this.fb.group({
-      correoElec: ['', [Validators.email, Validators.maxLength(260)]],
-      telefono: ['', [Validators.pattern('^[0-9]+$'), Validators.maxLength(10), Validators.minLength(10)]]
+      correoElec: ['', [Validators.email, Validators.maxLength(260)]]
     }, { validator: this.conditionalValidator });
 
     this.recuperarForm = this.fb.group({
-      contrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-      confContrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
+      contrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), passwordStrengthValidator()]],
+      confContrasenia: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), passwordStrengthValidator()]]
     });
   }
 
   ngOnInit() {
-
+    this.idResp = this.route.snapshot.paramMap.get('idResp');
+    if(this.idResp){
+      this.showBuscarForm = false;
+    }
     this.responsableService.usuarioEncontrado$.subscribe(valor => {
       this.usuarioEncontrado = valor;
       if (!valor) {
@@ -128,7 +134,11 @@ export class RecuperarContrasComponent implements OnInit {
   cancelar(): void {
     this.buscarForm.reset();
     this.buscarForm.enable();
+    this.recuperarForm.reset();
     this.usuarioEncontrado = false;
+    this.idResp = null;
+    this.showBuscarForm = true;
+    this.router.navigate([]);
   }
 
   //verificar correo

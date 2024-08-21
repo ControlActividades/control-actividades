@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Edificios } from '../models/Edificio';
+import { Edificios } from '../models/edificio';
 import { Subject, tap } from 'rxjs';
 
 @Injectable({

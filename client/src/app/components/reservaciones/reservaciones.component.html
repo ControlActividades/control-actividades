@@ -5,7 +5,7 @@
         <div>
           <div class="mt-5 d-flex justify-content-between align-items-center">
             <h1>Reservaciones</h1>
-           
+
           </div>
         </div>
         <div class="table-responsive">
@@ -47,23 +47,24 @@
 
             <!-- Proximidad Column -->
             <ng-container matColumnDef="proximidad">
-              <th mat-header-cell *matHeaderCellDef> Aceptación </th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Aceptación </th>
               <td mat-cell *matCellDef="let reserva">
-                <span *ngIf="calculateProximityText(reserva.fecha, reserva.estado)"
-                  [style.color]="getProximityColor(calculateProximityText(reserva.fecha, reserva.estado))">
+                <span [style.color]="getProximityColor(calculateProximityText(reserva.fecha, reserva.estado))">
                   {{ calculateProximityText(reserva.fecha, reserva.estado) }}
                 </span>
               </td>
             </ng-container>
+            
 
             <!-- Estado Column -->
             <ng-container matColumnDef="estado">
-              <th mat-header-cell *matHeaderCellDef> Estado </th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
               <td mat-cell *matCellDef="let reserva">
                 <div class="estado-icon">
                   <ng-container [ngSwitch]="reserva.estado">
                     <i *ngSwitchCase="'Aceptado'" class="fa-regular fa-circle-check fa-2x"></i>
                     <i *ngSwitchCase="'Rechazado'" class="fa-regular fa-circle-xmark fa-2x"></i>
+                    <i *ngSwitchCase="'Error'" class="fa-solid fa-circle-exclamation fa-2x text-danger"></i>
                     <i *ngSwitchDefault class="fa-regular fa-circle-question fa-2x"></i>
                   </ng-container>
                 </div>
@@ -92,7 +93,33 @@
 
             <!-- Header and Rows -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+              <ng-container *ngFor="let column of displayedColumns">
+                <td mat-cell *matCellDef="let element"
+                  [class.disabled-row]="row.estado === 'Error' && column !== 'acciones'">
+                  <ng-container *ngIf="column !== 'acciones'">
+                    {{ row[column] }}
+                  </ng-container>
+                  <ng-container *ngIf="column === 'acciones'">
+                    <div class="action-buttons">
+                      <a type="button" class="btn btn-light"
+                        [routerLink]="['../oficios-reservas/edit/', row.idReserva]">
+                        <i class="fas fa-print fa-lg"></i>
+                      </a>
+                      <button type="button" class="btn btn-danger" [disabled]="!canDelete(row.idResp)"
+                        (click)="openConfirmDialog(row.idReserva)">
+                        <i class="bi bi-calendar2-x-fill"></i>
+                      </button>
+                      <button type="button" class="btn btn-success" *ngIf="canEdit()"
+                        [routerLink]="['/inicio/administrar-reservaciones', row.idReserva]">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </ng-container>
+                </td>
+              </ng-container>
+            </tr>
+
 
             <!-- No Data Row -->
             <tr class="mat-row" *matNoDataRow>
@@ -110,7 +137,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>

@@ -6,8 +6,8 @@
       <a mat-list-item routerLink="/inicio/inicio" ><i class="bi bi-house-door fs-5"></i> Inicio</a>
       <a mat-list-item routerLink="/inicio/reservas" *ngIf="canAccess([1, 2 , 4])"><i class="bi bi-calendar-week fs-5"></i> Reservas</a>
       <a mat-list-item routerLink="/inicio/oficios-reservas" *ngIf="canAccess([1, 2 ,4])"><i class="bi bi-filetype-pdf fs-5"></i> Oficios Reservas</a>
-      <a mat-list-item routerLink="/inicio/sugerencias-quejas" > <i class="bi bi-person-exclamation fs-5"></i> Sugerencias y Quejas</a>
-      <a *ngIf="!(isLoggedIn$ | async)" mat-list-item routerLink="/inicio/reservaciones"><i class="bi bi-calendar-week fs-5"></i> Reservaciones</a>
+<!--       <a mat-list-item routerLink="/inicio/sugerencias-quejas" > <i class="bi bi-person-exclamation fs-5"></i> Sugerencias y Quejas</a>
+ -->  <a *ngIf="!(isLoggedIn$ | async)" mat-list-item routerLink="/inicio/reservaciones"><i class="bi bi-calendar-week fs-5"></i> Reservaciones</a>
       <a mat-list-item routerLink="/inicio/registros" *ngIf="canAccess([1, 4])"><i class="bi bi-person-lines-fill fs-5"></i> Registros</a>
       <a mat-list-item routerLink="/inicio/edificios" *ngIf="canAccess([1, 4])"><i class="bi bi-building fs-5"></i> Edificios</a>
       <a mat-list-item routerLink="/inicio/roles" *ngIf="canAccess([4])"><i class="bi bi-person-lock fs-5"></i> Roles</a>

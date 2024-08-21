@@ -103,7 +103,7 @@
                                     
                                     <td>
                                         <button class="btn btn-success btn-sm mb-1" (click)="updateReservas()">Guardar</button>
-                                        <button class="btn btn-danger btn-sm mb-1" (click)="openConfirmDialog()">Eliminar</button>
+                                        <button class="btn btn-danger btn-sm mb-1" (click)="openConfirmDialog(idReserva)">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -201,7 +201,7 @@
                             </li>
                             <li class="list-group-item text-center">
                                 <button class="btn btn-success btn-sm mb-1" (click)="updateReservas()">Guardar</button>
-                                <button class="btn btn-danger btn-sm mb-1" (click)="openConfirmDialog()">Eliminar</button>
+                                <button class="btn btn-danger btn-sm mb-1" (click)="openConfirmDialog(idReserva)">Eliminar</button>
                             </li>
                         </ul>
                     </form>
