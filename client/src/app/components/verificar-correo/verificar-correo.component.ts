@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResponsableService } from '../../services/responsable.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'app-verificar-correo',
   templateUrl: './verificar-correo.component.html',
@@ -14,6 +13,8 @@ export class VerificarCorreoComponent implements OnInit {
   redirectDelay = 5000;
   countdown: number = this.redirectDelay / 1000;
   verificationMessage: string = 'Verificando correo...';
+  token: string | null = null; 
+  idResp: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,11 +24,12 @@ export class VerificarCorreoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const token = this.route.snapshot.paramMap.get('token');
-    if (token) {
-      this.responsableService.verificarToken(token).subscribe(
+    this.token = this.route.snapshot.paramMap.get('token');
+    if (this.token) {
+      this.responsableService.verificarToken(this.token).subscribe(
         resp => {
           console.log('Token verificado:', resp);
+          this.idResp = resp.idResp;
           this.verificationMessage = 'Correo verificado, puedes continuar';
 
           this.snackBar.open(this.verificationMessage, 'Cerrar', {
@@ -51,9 +53,10 @@ export class VerificarCorreoComponent implements OnInit {
         }
       );
     }
+    
   }
 
-  startCountdown(): void {
+  startCountdown() {
     const interval = setInterval(() => {
       this.countdown--;
       if (this.countdown <= 0) {
@@ -64,6 +67,10 @@ export class VerificarCorreoComponent implements OnInit {
   }
 
   redirectToRecuperarContras(): void {
-    this.router.navigate(['/recuperar-contras']);
+    if (this.idResp) {
+      this.router.navigate(['/recuperar-contras', this.idResp]);
+    } else {
+      this.router.navigate(['/recuperar-contras']);
+    }
   }
 }

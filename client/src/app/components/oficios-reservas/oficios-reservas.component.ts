@@ -13,11 +13,6 @@ function phoneNumberValidator(control: AbstractControl): ValidationErrors | null
   return phonePattern.test(control.value) ? null : { invalidPhone: true };
 }
 
-// Validador personalizado para área de uso
-/* function areaUsageValidator(control: AbstractControl): ValidationErrors | null {
-  const validAreas = [' ','danzaFolclorica', 'taekwando', 'baloncestoVoleibol', 'ajedrez'];
-  return validAreas.includes(control.value) ? null : { invalidArea: true };
-} */
 
 @Component({
   selector: 'app-oficios-reservas',
@@ -39,12 +34,13 @@ export class OficiosReservasComponent implements OnInit {
       nombCompleto: ['', [ Validators.pattern(/^[A-Za-z\s]+$/)]],
       telefono: ['', [ phoneNumberValidator]],
       correoElec: ['',  Validators.email],
+      dependencia: [''],
       grupo: ['', [ Validators.pattern(/^[A-Z]{3}\d{4}$/)]],
       numControl: ['', [ Validators.pattern(/^[A-Za-z0-9]+$/)]],
       horaInicio: [''],
       horaFin: [''],
       cargo: ['', [ Validators.pattern(/^[A-Za-z\s]+$/)]],
-      areaUso: [''/* , [areaUsageValidator] */],
+      areaUso: [''],
       razon: [''],
       razon2: ['' ],
       edificio: [''],
@@ -95,6 +91,7 @@ export class OficiosReservasComponent implements OnInit {
             nombCompleto: reserva.nombCompleto,
             telefono: reserva.telefono,
             correoElec: reserva.correoElec,
+            dependencia: reserva.dependencia,
             grupo: reserva.grupo,
             numControl: reserva.numControl,
             horaInicio: reserva.horaInicio,
@@ -186,12 +183,12 @@ export class OficiosReservasComponent implements OnInit {
         areaUso = 'Ajedrez';
         break;
       default:
-        areaUso = 'Vacio';
+        areaUso = '';
         break;
     }
 
     const datos = [
-      { label: '• Nombre completo:', value: nombreCompleto },
+      { label: '• Responsable:', value: nombreCompleto },
       { label: '• Teléfono:', value: telefono },
       { label: '• Correo electrónico:', value: correoElec },
       { label: '• Grupo:', value: grupo },
@@ -200,7 +197,7 @@ export class OficiosReservasComponent implements OnInit {
       { label: '• Hora de fin:', value: horaFin },
       { label: '• Cargo en la UTNG:', value: cargo },
       { label: '• Área a utilizar:', value: areaUso },
-      { label: '• Razones de la reservación:', value: razon }
+      { label: '• Especificaciones:', value: razon }
     ];
 
     let yPosition = 125;  // Coordenada Y inicial
@@ -291,6 +288,7 @@ export class OficiosReservasComponent implements OnInit {
     const nombreCompleto = this.reservaForm.get('nombCompleto')?.value || '________________________';
     const telefono = this.reservaForm.get('telefono')?.value || '________________________';
     const correoElec = this.reservaForm.get('correoElec')?.value || '________________@______';
+    const dependencia = this.reservaForm.get('dependencia')?.value || '_________________________';
     const horaInicio = this.reservaForm.get('horaInicio')?.value || '________________________';
     const horaFin = this.reservaForm.get('horaFin')?.value || '________________________';
     var areaUso = this.reservaForm.get('areaUso')?.value || '________________________';
@@ -311,17 +309,18 @@ switch (areaUso) {
     areaUso = 'Ajedrez';
     break;
   default:
-    areaUso = 'Vacio';
+    areaUso = '';
     break;
 }
     const datos = [
-      { label: '• Nombre completo:', value: nombreCompleto },
+      { label: '• Responsable:', value: nombreCompleto },
       { label: '• Teléfono:', value: telefono },
       { label: '• Correo electrónico:', value: correoElec },
+      { label: '• Dependencia:', value: dependencia },
       { label: '• Hora de inicio:', value: horaInicio },
       { label: '• Hora de fin:', value: horaFin },
       { label: '• Área a utilizar:', value: areaUso },
-      { label: '• Razones de la reservación:', value: razon }
+      { label: '• Especificaciones:', value: razon }
     ];
 
     let yPosition = 125;  // Coordenada Y inicial

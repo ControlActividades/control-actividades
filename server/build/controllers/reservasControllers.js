@@ -94,15 +94,24 @@ class ReservasControllers {
             const { horaInicio, horaFin, fecha } = req.body;
             try {
                 const result = yield database_1.default.query(`SELECT * FROM reservas WHERE fecha = ? 
-                AND ((horaInicio < ? AND horaFin > ?) 
-                OR (horaInicio < ? AND horaFin > ?)
-                OR (horaInicio >= ? AND horaFin <= ?))`, [fecha, horaFin, horaInicio, horaInicio, horaFin, horaInicio, horaFin]);
-                if (result.length > 0) {
-                    res.status(409).json({ message: 'El horario ya está ocupado' });
+            AND ((horaInicio < ? AND horaFin > ?) 
+            OR (horaInicio < ? AND horaFin > ?)
+            OR (horaInicio >= ? AND horaFin <= ?))`, [fecha, horaFin, horaInicio, horaInicio, horaFin, horaInicio, horaFin]);
+                let hasAcceptedReserva = false;
+                let hasNonAcceptedReserva = false;
+                for (const reserva of result) {
+                    if (reserva.estado === 'Aceptado') {
+                        hasAcceptedReserva = true;
+                        break;
+                    }
+                    else if (reserva.estado !== 'Aceptado') {
+                        hasNonAcceptedReserva = true;
+                    }
                 }
-                else {
-                    res.status(200).json({ message: 'El horario está disponible' });
-                }
+                res.status(hasAcceptedReserva ? 409 : 200).json({
+                    hasAcceptedReserva,
+                    hasNonAcceptedReserva
+                });
             }
             catch (error) {
                 res.status(500).json({ message: 'Error al verificar la reserva', error });

@@ -43,6 +43,45 @@ export class ReservacionesComponent {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'estado':
+          return this.getEstadoOrderValue(item.estado);
+        default:
+          return item[property];
+      }
+    };
+
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'proximidad':
+          return this.getEstadoOrderValue(item.estado);
+        default:
+          return item[property];
+      }
+    };
+  }
+
+  getEstadoOrderValue(estado: string): number {
+    switch (estado) {
+      case 'Aceptado': return 1;
+      case 'Rechazado': return 2;
+      case 'Error': return 3;
+      default: return 4;
+    }
+  }
+
+  getEstadoOrderValueP(estado: string): number {
+    switch (estado) {
+      case 'Aceptado': return 1;
+      case 'Rechazado': return 2;
+      case 'Error': return 3;
+      default: return 4;
+    }
   }
 
   applyFilter(event: Event) {
@@ -106,22 +145,8 @@ export class ReservacionesComponent {
         return 'black'; // Color por defecto si no coincide ninguna condición
     }
   }
-  openConfirmDialog(idReserva: string): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
-      data: {
-        message: '¿Estás seguro de que deseas eliminar esta reserva?'
-      }
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.deleteReserva(idReserva);
-      }
-    });
-  }
-  
-  deleteReserva(idReserva: string) {
-    this.reservaService.deleteReserva(idReserva).subscribe(
+  updateReservaEstado(idReserva: string, estado: string) {
+    this.reservaService.updateReserva(idReserva, { estado }).subscribe(
       resp => {
         console.log(resp);
         this.getReservas();
@@ -129,6 +154,21 @@ export class ReservacionesComponent {
       err => console.log(err)
     );
   }
+  
+  openConfirmDialog(idReserva: string): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas marcar esta reserva como "Error"?'
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateReservaEstado(idReserva, 'Error');
+      }
+    });
+  }
+  
 
   canEdit(): boolean {
     const allowedRoles = [1, 4];

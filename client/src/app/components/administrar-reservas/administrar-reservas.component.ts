@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Reservas } from '../../models/Reservas';
+import { Reservas } from '../../models/reservas';
 import { ReservasService } from '../../services/reservas.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -69,34 +69,30 @@ export class AdministrarReservasComponent implements OnInit {
     return date.toISOString().split('T')[0];  
   }
 
-
-  openConfirmDialog(): void {
+  updateReservaEstado(idReserva: string, estado: string) {
+    this.reservaService.updateReserva(idReserva, { estado }).subscribe(
+      resp => {
+        console.log(resp);
+          this.router.navigate(['/inicio/reservas']);
+      },
+      err => console.log(err)
+    );
+  }
+  
+  
+  openConfirmDialog(idReserva: string): void {
     const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
       data: {
-        message: '¿Estás seguro de que deseas eliminar esta reserva?'
+        message: '¿Estás seguro de que deseas marcar esta reserva como "Error"?'
       }
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteReserva();
+        this.updateReservaEstado(idReserva, 'Error');
       }
     });
   }
-  deleteReserva(): void {
-    if (this.idReserva) {
-      this.reservaService.deleteReserva(this.idReserva).subscribe(
-        resp => {
-          console.log('Reserva eliminada:', resp);
-          this.router.navigate(['/inicio/reservas']);
-        },
-        err => console.error('Error al eliminar la reserva:', err)
-      );
-    } else {
-      console.error('ID de reserva no disponible');
-    }
-  }
-
   updateReservas(): void {
 
     if (this.idReserva) {

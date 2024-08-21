@@ -48,6 +48,7 @@ const routes: Routes = [
   },
   { path: 'ingresar', component: IngresarComponent },
   { path: 'recuperar-contras', component: RecuperarContrasComponent },
+  { path: 'recuperar-contras/:idResp', component: RecuperarContrasComponent },
   { path: 'verificar-correo/:token', component: VerificarCorreoComponent }
 ];
 

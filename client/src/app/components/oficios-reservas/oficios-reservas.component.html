@@ -24,7 +24,7 @@
                                         Auditorio de su institución, conforme a los siguientes datos:</p>
                                     <!-- Formulario -->
                                     <div class="form-group">
-                                        <label for="nombreCompleto">Nombre Completo:</label>
+                                        <label for="nombreCompleto">Responsable</label>
                                         <input type="text" class="form-control" formControlName="nombCompleto" />
                                         <div *ngIf="reservaForm.get('nombCompleto')?.invalid && reservaForm.get('nombCompleto')?.touched"
                                             class="error-message">
@@ -164,7 +164,7 @@
                                     Auditorio de su institución, conforme a los siguientes datos:</p>
                                 <!-- Formulario -->
                                 <div class="form-group">
-                                    <label for="nombreCompleto">Nombre Completo:</label>
+                                    <label for="nombreCompleto">Responsable:</label>
                                     <input type="text" class="form-control" formControlName="nombCompleto" />
                                     <div *ngIf="reservaForm.get('nombCompleto')?.invalid && reservaForm.get('nombCompleto')?.touched"
                                         class="error-message">
@@ -195,6 +195,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="dependencia">Dependencia:</label>
+                                    <input type="text" class="form-control" formControlName="dependencia" />
+                                </div>
+                                <div class="form-group">
                                     <label for="horaInicio">Hora de Inicio:</label>
                                     <input type="time" class="form-control" formControlName="horaInicio" />
                                 </div>
@@ -218,7 +222,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="razonesReservacion">Razones de la Reservación:</label>
+                                    <label for="razonesReservacion">Especificaciones:</label>
                                     <textarea class="form-control" formControlName="razon2" rows="3"></textarea>
                                     <label class="end">{{length2}} / 4000</label>
                                 </div>
@@ -226,15 +230,6 @@
                                     <label for="nombreCompleto">Atentamente:</label>
                                     <div class="signature-line"></div>
                                     <input type="text" class="form-control" formControlName="nombCompleto" />
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="edificio">Edificio:</label>
-                                    <select class="form-select" formControlName="edificio" >
-                                        <option value="" disabled selected>Seleccione un edificio</option>
-                                        <option *ngFor="let edificio of edificios" value="{{edificio.nombEdificio}}">
-                                            {{edificio.nombEdificio}}
-                                        </option>
-                                    </select>
                                 </div>
                                 <p>Universidad Tecnológica del Norte de Guanajuato</p>
                                 <img class="img-fluid" src="../../../assets/membrete.png" alt="Encabezado" />

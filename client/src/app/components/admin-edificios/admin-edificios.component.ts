@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Edificios } from '../../models/Edificio';
+import { Edificios } from '../../models/edificio';
 import { EdificioService } from '../../services/edificio.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -125,3 +125,10 @@ export class AdminEdificiosComponent implements OnInit, AfterViewInit {
     });
   }
 }
+
+
+
+
+
+
+

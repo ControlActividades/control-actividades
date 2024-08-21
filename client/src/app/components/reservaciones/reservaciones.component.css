@@ -46,3 +46,8 @@ color: #198754;}
   .fa-circle-question{
     color: rgb(33, 144, 235);
   }
+
+  .disabled-row {
+    opacity: 0.5;
+    pointer-events: none;
+  }

@@ -1,147 +1,110 @@
 <div class="general">
-    <div class="left-side">
-      <h2>Recuperar contraseña</h2>
-  
-      <!-- Formulario para buscar usuario -->
-      <form [formGroup]="buscarForm" (ngSubmit)="onBuscar()">
+  <div class="left-side">
+    <h2>Recuperar contraseña</h2>
+
+    <!-- Formulario para buscar usuario -->
+    <form *ngIf="showBuscarForm" [formGroup]="buscarForm" (ngSubmit)="onBuscar()">
+      <div class="form-group">
+        <label for="correoElec">Correo electrónico</label>
+        <input id="correoElec" type="email" formControlName="correoElec" class="form-control"
+          placeholder="Correo electrónico" />
+        <div *ngIf="buscarForm.get('correoElec')?.touched && buscarForm.get('correoElec')?.invalid">
+          <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['required']">
+            Correo electrónico es obligatorio.
+          </small>
+          <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['email']">
+            El correo electrónico no es válido.
+          </small>
+          <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['maxlength']">
+            El correo electrónico no debe exceder los 260 caracteres.
+          </small>
+        </div>
+
+        <div *ngIf="buscarForm.errors?.['bothRequired']">
+          <small class="text-danger">
+            Debe ingresar al menos un campo: correo electrónico o teléfono.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="!buscarForm.valid">
+          Buscar
+        </button>
+      </div>
+    </form>
+
+    <!-- Formulario para actualizar contraseña -->
+    <div *ngIf="usuarioEncontrado" class="foundCorreo">
+      <h5 class="text-center">Nueva contraseña</h5>
+      <form [formGroup]="recuperarForm" (ngSubmit)="updateContrasenia()">
         <div class="form-group">
-          <label for="correoElec">Correo electrónico</label>
-          <input
-            id="correoElec"
-            type="email"
-            formControlName="correoElec"
-            class="form-control"
-            placeholder="Correo electrónico"
-          />
-          <div
-            *ngIf="buscarForm.get('correoElec')?.touched && buscarForm.get('correoElec')?.invalid"
-          >
-            <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['required']">
-              Correo electrónico es obligatorio.
+          <label for="contrasenia">Nueva contraseña</label>
+          <input id="contrasenia" type="password" formControlName="contrasenia" class="form-control"
+            placeholder="Nueva contraseña" />
+          <div *ngIf="recuperarForm.get('contrasenia')?.touched && recuperarForm.get('contrasenia')?.invalid">
+            <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['required']">
+              Nueva contraseña es obligatoria.
             </small>
-            <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['email']">
-              El correo electrónico no es válido.
+            <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['minlength']">
+              La contraseña debe tener al menos 8 caracteres.
             </small>
-            <small class="text-danger" *ngIf="buscarForm.get('correoElec')?.errors?.['maxlength']">
-              El correo electrónico no debe exceder los 260 caracteres.
+            <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['maxlength']">
+              La contraseña no debe exceder los 10 caracteres.
+            </small>
+            <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['passwordStrength']">
+              La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.
             </small>
           </div>
-  
+
+          <label for="confContrasenia">Confirma la contraseña</label>
+          <input id="confContrasenia" type="password" formControlName="confContrasenia" class="form-control"
+            placeholder="Confirma la contraseña" />
+          <div *ngIf="recuperarForm.get('confContrasenia')?.touched && recuperarForm.get('confContrasenia')?.invalid">
+            <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['required']">
+              Confirmar contraseña es obligatoria.
+            </small>
+            <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['minlength']">
+              La confirmación de contraseña debe tener al menos 8 caracteres.
+            </small>
+            <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['maxlength']">
+              La confirmación de contraseña no debe exceder los 10 caracteres.
+            </small>
+            <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['passwordStrength']">
+              La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.
+            </small>
+          </div>
           <div
-            *ngIf="buscarForm.errors?.['bothRequired']"
-          >
+            *ngIf="recuperarForm.get('contrasenia')?.value !== recuperarForm.get('confContrasenia')?.value && recuperarForm.get('confContrasenia')?.touched">
             <small class="text-danger">
-              Debe ingresar al menos un campo: correo electrónico o teléfono.
+              Las contraseñas no coinciden.
             </small>
           </div>
         </div>
-  
+
         <div class="form-group text-center">
-          <button
-            class="btn btn-primary"
-            type="submit"
-            [disabled]="!buscarForm.valid"
-          >
-            Buscar
+          <button class="btn btn-primary" type="submit" [disabled]="!recuperarForm.valid">
+            Actualizar
+          </button>
+          <button class="btn btn-primary" type="button" (click)="cancelar()">
+            Cancelar
           </button>
         </div>
       </form>
-  
-      <!-- Formulario para actualizar contraseña -->
-      <div *ngIf="usuarioEncontrado" class="foundCorreo">
-        <h5 class="text-center">Nueva contraseña</h5>
-        <form [formGroup]="recuperarForm" (ngSubmit)="updateContrasenia()">
-          <div class="form-group">
-            <label for="contrasenia">Nueva contraseña</label>
-            <input
-              id="contrasenia"
-              type="password"
-              formControlName="contrasenia"
-              class="form-control"
-              placeholder="Nueva contraseña"
-            />
-            <div
-              *ngIf="recuperarForm.get('contrasenia')?.touched && recuperarForm.get('contrasenia')?.invalid"
-            >
-              <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['required']">
-                Nueva contraseña es obligatoria.
-              </small>
-              <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['minlength']">
-                La contraseña debe tener al menos 8 caracteres.
-              </small>
-              <small class="text-danger" *ngIf="recuperarForm.get('contrasenia')?.errors?.['maxlength']">
-                La contraseña no debe exceder los 10 caracteres.
-              </small>
-            </div>
-  
-            <label for="confContrasenia">Confirma la contraseña</label>
-            <input
-              id="confContrasenia"
-              type="password"
-              formControlName="confContrasenia"
-              class="form-control"
-              placeholder="Confirma la contraseña"
-            />
-            <div
-              *ngIf="recuperarForm.get('confContrasenia')?.touched && recuperarForm.get('confContrasenia')?.invalid"
-            >
-              <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['required']">
-                Confirmar contraseña es obligatoria.
-              </small>
-              <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['minlength']">
-                La confirmación de contraseña debe tener al menos 8 caracteres.
-              </small>
-              <small class="text-danger" *ngIf="recuperarForm.get('confContrasenia')?.errors?.['maxlength']">
-                La confirmación de contraseña no debe exceder los 10 caracteres.
-              </small>
-            </div>
-            <div
-              *ngIf="recuperarForm.get('contrasenia')?.value !== recuperarForm.get('confContrasenia')?.value && recuperarForm.get('confContrasenia')?.touched"
-            >
-              <small class="text-danger">
-                Las contraseñas no coinciden.
-              </small>
-            </div>
-          </div>
-  
-          <div class="form-group text-center">
-            <button
-              class="btn btn-primary"
-              type="submit"
-              [disabled]="!recuperarForm.valid"
-            >
-              Actualizar
-            </button>
-            <button
-              class="btn btn-primary"
-              type="button"
-              (click)="cancelar()"
-            >
-              Cancelar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  
-    <div class="right-side">
-      <img
-        class="logo-loger"
-        src="../../../assets/logotipo.svg"
-        alt="UTNG Logo"
-      />
-      <h2>¡Bienvenido!</h2>
-      <p>Regístrate para usar todos nuestros servicios</p>
-      <button
-        class="btn btn-secondary"
-        routerLink="/ingresar"
-      >
-        REGISTRARSE
-      </button>
     </div>
   </div>
-  
-                <!-- <label for="telefono">Teléfono</label>
+
+  <div class="right-side">
+    <img class="logo-loger" src="../../../assets/logotipo.svg" alt="UTNG Logo" />
+    <h2>¡Bienvenido!</h2>
+    <p>Regístrate para usar todos nuestros servicios</p>
+    <button class="btn btn-secondary" routerLink="/ingresar">
+      REGISTRARSE
+    </button>
+  </div>
+</div>
+
+<!-- <label for="telefono">Teléfono</label>
                 <input 
                     id="telefono" 
                     type="tel" 

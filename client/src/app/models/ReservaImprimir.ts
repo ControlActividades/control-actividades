@@ -12,4 +12,5 @@ export interface ReservasImprimir {
     grupo?:string;
     numControl?:string;
     correoElec?:string;
+    dependencia?:string;
 }
