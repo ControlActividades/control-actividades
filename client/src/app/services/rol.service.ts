@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Rol } from '../models/Rol';
+import { Rol } from '../models/rol';
 import { Observable, Subject, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'

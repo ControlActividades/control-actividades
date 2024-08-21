@@ -8,7 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
-import { Rol } from '../../models/Rol';
+import { Rol } from '../../models/rol';
 import { Responsable } from '../../models/responsable';
 
 export function noEHyphenValidator(): ValidatorFn {

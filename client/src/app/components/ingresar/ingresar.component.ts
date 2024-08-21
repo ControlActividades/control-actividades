@@ -4,7 +4,7 @@ import { Responsable } from '../../models/responsable';
 import { RolService } from '../../services/rol.service';
 import { ResponsableService } from '../../services/responsable.service';
 import { Router } from '@angular/router';
-import { Rol } from '../../models/Rol';
+import { Rol } from '../../models/rol';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import anime from 'animejs';
 declare var particlesJS: any;

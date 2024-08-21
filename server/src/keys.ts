@@ -1,8 +1,9 @@
 export default {
     database : {
-        host : 'localhost',
+        host : 'control-actividades.cbyoy8ww6wlm.us-east-2.rds.amazonaws.com',
         user : 'root',
-        password : '',
-        database : 'controlActividadesUtng'
+        password : 'linux2024!',
+        database : 'controlActividadesUtng',
+        port : 3306
     }
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Rol } from '../../models/Rol'; //models
+import { Rol } from '../../models/rol'; //models
 import { RolService } from '../../services/rol.service'; //servicios
 import { MatSnackBar } from '@angular/material/snack-bar';
 
