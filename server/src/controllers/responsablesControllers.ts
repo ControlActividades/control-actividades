@@ -147,7 +147,10 @@ class ResponsablesControllers {
                 service: 'gmail',
                 auth: {
                     user: 'control.actividades.2024@gmail.com', 
-                    pass: 'fmbc obte oenw qkzt' 
+                    pass: 'nxzw oini eywx rbum'
+                },
+                tls: {
+                    rejectUnauthorized: false
                 }
             });
     
@@ -215,7 +218,10 @@ public async enviarCorreoVerificacion(req: Request, res: Response): Promise<void
             service: 'gmail',
             auth: {
                 user: 'control.actividades.2024@gmail.com',
-                pass: 'kimu ybdy gega ckgq'
+                pass: 'nxzw oini eywx rbum'
+            },
+            tls: {
+                rejectUnauthorized: false
             }
         });
 

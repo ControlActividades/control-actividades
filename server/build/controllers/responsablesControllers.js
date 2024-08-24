@@ -176,7 +176,10 @@ class ResponsablesControllers {
                     service: 'gmail',
                     auth: {
                         user: 'control.actividades.2024@gmail.com',
-                        pass: 'fmbc obte oenw qkzt'
+                        pass: 'nxzw oini eywx rbum'
+                    },
+                    tls: {
+                        rejectUnauthorized: false
                     }
                 });
                 const mailOptions = {
@@ -236,7 +239,10 @@ class ResponsablesControllers {
                     service: 'gmail',
                     auth: {
                         user: 'control.actividades.2024@gmail.com',
-                        pass: 'kimu ybdy gega ckgq'
+                        pass: 'nxzw oini eywx rbum'
+                    },
+                    tls: {
+                        rejectUnauthorized: false
                     }
                 });
                 const mailOptions = {

@@ -34,7 +34,7 @@ CREATE TABLE responsable (
     telefono VARCHAR(10) NULL UNIQUE,
     correoElec VARCHAR(260) NULL UNIQUE,
     numControl VARCHAR(20) NOT NULL,
-    grupo VARCHAR(20) NOT NULL,
+    grupo VARCHAR(20) NULL,
     idRoles INT NULL,
     -- Nuevos campos para la verificación de correo
     correoVerificado BOOLEAN DEFAULT FALSE, -- Indica si el correo ha sido verificado
