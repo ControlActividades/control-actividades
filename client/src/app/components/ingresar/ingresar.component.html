@@ -12,6 +12,13 @@
                     <div class="col">
                         <input type="text" formControlName="nombUsuario" placeholder="Usuario*"
                             [matTooltip]="getTooltipMessage('nombUsuario')">
+                        <div *ngIf="ingresarForm.get('nombUsuario')?.invalid && ingresarForm.get('nombUsuario')?.touched"
+                            class="error-message">
+                            <span *ngIf="ingresarForm.get('nombUsuario')?.hasError('noUpperCase')">
+                                El nombre de usuario solo puede contener minúsculas, números, caracteres especiales y no
+                                debe contener mayúsculas.
+                            </span>
+                        </div>
                     </div>
                     <div class="col">
                         <input type="tel" formControlName="telefono" placeholder="Telefono" inputmode="numeric"
@@ -136,6 +143,13 @@
                 <h1>Ingresar</h1>
                 <input type="text" formControlName="nombUsuario" placeholder="Usuario*"
                     [matTooltip]="getTooltipMessage('nombUsuario')">
+                <div *ngIf="ingresarForm.get('nombUsuario')?.invalid && ingresarForm.get('nombUsuario')?.touched"
+                    class="error-message">
+                    <span *ngIf="ingresarForm.get('nombUsuario')?.hasError('noUpperCase')">
+                        El nombre de usuario solo puede contener minúsculas, números, caracteres especiales y no
+                        debe contener mayúsculas.
+                    </span>
+                </div>
 
                 <input [type]="passwordVisibleIngresar ? 'text' : 'password'" formControlName="contrasenia"
                     placeholder="Contraseña">

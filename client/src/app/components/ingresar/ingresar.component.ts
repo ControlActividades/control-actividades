@@ -46,6 +46,25 @@ export function passwordStrengthValidator(): ValidatorFn {
   };
 }
 
+export function specificValueAndNoUpperCase(control: AbstractControl): ValidationErrors | null {
+  const validValue = "MrMexico2014";
+  const regex = /^[a-z0-9!@#\$%\^\&*\)\(+=._-]+$/;  // Acepta minúsculas, números y caracteres especiales
+  const value = control.value as string;
+
+  // Si el valor es "MrMexico2014", es válido, independientemente de otras validaciones
+  if (value === validValue) {
+    return null;
+  }
+
+  // Verifica si el valor contiene alguna mayúscula o si no coincide con el patrón permitido
+  if (/[A-Z]/.test(value) || !regex.test(value)) {
+    return { noUpperCase: true };
+  }
+
+  // Si el valor no es válido según las reglas establecidas
+  return null;
+}
+
 @Component({
   selector: 'app-ingresar',
   templateUrl: './ingresar.component.html',
@@ -87,7 +106,7 @@ export class IngresarComponent implements AfterViewInit {
     private snackBar: MatSnackBar
   ) {
     this.responsableForm = this.fb.group({
-      nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
+      nombUsuario: ['', [Validators.required, Validators.maxLength(50),specificValueAndNoUpperCase]],
       contrasenia: ['', [Validators.required,
       Validators.maxLength(10),
       Validators.minLength(8),
@@ -114,7 +133,7 @@ export class IngresarComponent implements AfterViewInit {
 
 
     this.ingresarForm = this.fb.group({
-      nombUsuario: ['', [Validators.required, Validators.maxLength(50)]],
+      nombUsuario: ['', [Validators.required, Validators.maxLength(50),specificValueAndNoUpperCase]],
       contrasenia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10),passwordStrengthValidator()]]
     });
   }
