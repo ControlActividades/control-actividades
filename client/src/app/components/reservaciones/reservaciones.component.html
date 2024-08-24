@@ -30,7 +30,7 @@
             <!-- Fecha Column -->
             <ng-container matColumnDef="fecha">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha (MM/DD/YYYY) </th>
-              <td mat-cell *matCellDef="let reserva"> {{ reserva.fecha | dateFormat }} </td>
+              <td mat-cell *matCellDef="let reserva"> {{ reserva.fecha | date:'dd/MM/yyyy' }} </td>
             </ng-container>
 
             <!-- Razón del Uso Column -->
