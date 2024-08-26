@@ -99,14 +99,6 @@ INSERT INTO `responsable` (`idResp`, `nombUsuario`, `contrasenia`, `nombres`, `a
 -- Disparadores `responsable`
 --
 DELIMITER $$
-CREATE TRIGGER `before_insert_responsable` BEFORE INSERT ON `responsable` FOR EACH ROW BEGIN
-    IF NOT NEW.grupo REGEXP '^[A-Z]{3}[0-9]{4}$' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El campo grupo debe seguir el patrón: 3 letras seguidas de 4 números.';
-    END IF;
-END
-$$
-DELIMITER ;
-DELIMITER $$
 CREATE TRIGGER `before_insert_update_responsable` BEFORE INSERT ON `responsable` FOR EACH ROW BEGIN
     -- Verifica si el nombre de usuario ya existe
     IF EXISTS (SELECT 1 FROM responsable WHERE nombUsuario = NEW.nombUsuario) THEN
