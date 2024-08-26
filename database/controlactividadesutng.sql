@@ -78,7 +78,7 @@ CREATE TABLE `responsable` (
   `appMaterno` varchar(50) DEFAULT NULL,
   `telefono` varchar(10) DEFAULT NULL,
   `correoElec` varchar(260) DEFAULT NULL,
-  `numControl` varchar(20) NOT NULL,
+  `numControl` varchar(20) NULL,
   `grupo` varchar(20) NULL,
   `idRoles` int(11) DEFAULT NULL,
   `correoVerificado` tinyint(1) DEFAULT 0,
